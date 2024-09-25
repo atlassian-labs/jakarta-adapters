@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.java.util;
 import java.util.Enumeration;
 import java.util.function.Function;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class EnumerationAdapter<S, T> implements Enumeration<T> {
@@ -22,6 +23,6 @@ public class EnumerationAdapter<S, T> implements Enumeration<T> {
 
     @Override
     public T nextElement() {
-        return adapter.apply(delegate.nextElement());
+        return applyIfNonNull(delegate.nextElement(), adapter);
     }
 }
