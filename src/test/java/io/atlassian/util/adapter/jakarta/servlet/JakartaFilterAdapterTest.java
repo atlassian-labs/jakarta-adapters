@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaFilterAdapterTest {
+class JakartaFilterAdapterTest {
 
     @Mock
     private Filter originalFilter;
@@ -28,12 +28,12 @@ public class JakartaFilterAdapterTest {
     private Filter biAdaptedFilter;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         biAdaptedFilter = new JakartaFilterAdapter(new JavaXFilterAdapter(originalFilter));
     }
 
     @Test
-    public void init() throws Exception {
+    void init() throws Exception {
         var filterConfig = mock(FilterConfig.class);
         when(filterConfig.getFilterName()).thenReturn("foo");
 
@@ -43,7 +43,7 @@ public class JakartaFilterAdapterTest {
     }
 
     @Test
-    public void doFilter() throws Exception {
+    void doFilter() throws Exception {
         var servletRequest = mock(ServletRequest.class);
         when(servletRequest.getRemoteAddr()).thenReturn("foo");
 
@@ -53,14 +53,14 @@ public class JakartaFilterAdapterTest {
     }
 
     @Test
-    public void destroy() {
+    void destroy() {
         biAdaptedFilter.destroy();
 
         verify(originalFilter).destroy();
     }
 
     @Test
-    public void getDelegate() {
+    void getDelegate() {
         var adaptedFilter = new JavaXFilterAdapter(originalFilter);
         assertEquals(originalFilter, adaptedFilter.getDelegate());
 

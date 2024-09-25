@@ -20,10 +20,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaAdaptersTest {
+class JakartaAdaptersTest {
 
     @Test
-    public void servletContext() {
+    void servletContext() {
         var delegate = mock(ServletContext.class);
         when(delegate.getContextPath()).thenReturn("foo");
 
@@ -34,7 +34,7 @@ public class JakartaAdaptersTest {
     }
 
     @Test
-    public void servletContext_null() {
+    void servletContext_null() {
         var delegate = mock(ServletContext.class);
         doReturn(null).when(delegate).getContext("test");
 
@@ -49,7 +49,7 @@ public class JakartaAdaptersTest {
      * {@link jakarta.servlet.ServletRequest}.
      */
     @Test
-    public void servletRequest() {
+    void servletRequest() {
         var delegate = mock(HttpServletRequest.class);
         when(delegate.getAuthType()).thenReturn("foo");
 
@@ -60,7 +60,7 @@ public class JakartaAdaptersTest {
     }
 
     @Test
-    public void httpServletRequest() {
+    void httpServletRequest() {
         var delegate = mock(HttpServletRequest.class);
         when(delegate.getAuthType()).thenReturn("foo");
 
@@ -76,7 +76,7 @@ public class JakartaAdaptersTest {
      * {@link jakarta.servlet.ServletResponse}.
      */
     @Test
-    public void servletResponse() {
+    void servletResponse() {
         var delegate = mock(HttpServletResponse.class);
         when(delegate.getStatus()).thenReturn(200);
 
@@ -87,7 +87,7 @@ public class JakartaAdaptersTest {
     }
 
     @Test
-    public void httpServletResponse() {
+    void httpServletResponse() {
         var delegate = mock(HttpServletResponse.class);
         when(delegate.getStatus()).thenReturn(200);
 
@@ -98,7 +98,7 @@ public class JakartaAdaptersTest {
     }
 
     @Test
-    public void servletFilter() throws Exception {
+    void servletFilter() throws Exception {
         var delegate = mock(Filter.class);
         var filterConfig = mock(jakarta.servlet.FilterConfig.class);
         when(filterConfig.getFilterName()).thenReturn("foo");
@@ -110,7 +110,7 @@ public class JakartaAdaptersTest {
     }
 
     @Test
-    public void servlet() {
+    void servlet() {
         var delegate = mock(Servlet.class);
         when(delegate.getServletInfo()).thenReturn("foo");
 
@@ -121,7 +121,7 @@ public class JakartaAdaptersTest {
     }
 
     @Test
-    public void dynamicAdapter() {
+    void dynamicAdapter() {
         assertThat(JakartaAdapters.asJakartaIfJavaX(mock(Servlet.class))).isInstanceOf(jakarta.servlet.Servlet.class);
         assertThat(JakartaAdapters.asJakartaIfJavaX(mock(ServletRequest.class))).isInstanceOf(jakarta.servlet.ServletRequest.class);
         assertThat(JakartaAdapters.asJakartaIfJavaX(mock(HttpServletRequest.class))).isInstanceOf(jakarta.servlet.http.HttpServletRequest.class);

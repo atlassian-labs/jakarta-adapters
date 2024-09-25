@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EnumerationAdapterTest {
+class EnumerationAdapterTest {
 
     private Enumeration<String> originalEnumeration;
     private Enumeration<String> biAdaptedEnumeration;
@@ -25,7 +25,7 @@ public class EnumerationAdapterTest {
     }
 
     @Test
-    public void enumerate() {
+    void enumerate() {
         initEnumerations(List.of("a", "b", "c"));
 
         assertTrue(biAdaptedEnumeration.hasMoreElements());
@@ -40,7 +40,7 @@ public class EnumerationAdapterTest {
     }
 
     @Test
-    public void nullValue() {
+    void nullValue() {
         List<String> list = new ArrayList<>();
         list.add(null);
         initEnumerations(list);

@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaHttpServletResponseAdapterTest {
+class JakartaHttpServletResponseAdapterTest {
 
     @Mock
     private HttpServletResponse originalResponse;
@@ -32,26 +32,26 @@ public class JakartaHttpServletResponseAdapterTest {
     private HttpServletResponse biAdaptedResponse;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         biAdaptedResponse = new JakartaHttpServletResponseAdapter(new JavaXHttpServletResponseAdapter(originalResponse));
     }
 
     @Test
-    public void getCharacterEncoding() {
+    void getCharacterEncoding() {
         when(originalResponse.getCharacterEncoding()).thenReturn("UTF-8");
 
         assertEquals("UTF-8", biAdaptedResponse.getCharacterEncoding());
     }
 
     @Test
-    public void getContentType() {
+    void getContentType() {
         when(originalResponse.getContentType()).thenReturn("text/html");
 
         assertEquals("text/html", biAdaptedResponse.getContentType());
     }
 
     @Test
-    public void getOutputStream() throws Exception {
+    void getOutputStream() throws Exception {
         var retValue = mock(ServletOutputStream.class);
         when(retValue.isReady()).thenReturn(true);
         when(originalResponse.getOutputStream()).thenReturn(retValue);
@@ -60,7 +60,7 @@ public class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    public void getWriter() throws Exception {
+    void getWriter() throws Exception {
         var retValue = mock(PrintWriter.class);
         when(originalResponse.getWriter()).thenReturn(retValue);
 
@@ -68,77 +68,77 @@ public class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    public void setCharacterEncoding() {
+    void setCharacterEncoding() {
         biAdaptedResponse.setCharacterEncoding("UTF-16");
 
         verify(originalResponse).setCharacterEncoding("UTF-16");
     }
 
     @Test
-    public void setContentLength() {
+    void setContentLength() {
         biAdaptedResponse.setContentLength(100);
 
         verify(originalResponse).setContentLength(100);
     }
 
     @Test
-    public void setContentLengthLong() {
+    void setContentLengthLong() {
         biAdaptedResponse.setContentLengthLong(100L);
 
         verify(originalResponse).setContentLengthLong(100L);
     }
 
     @Test
-    public void setContentType() {
+    void setContentType() {
         biAdaptedResponse.setContentType("text/plain");
 
         verify(originalResponse).setContentType("text/plain");
     }
 
     @Test
-    public void setBufferSize() {
+    void setBufferSize() {
         biAdaptedResponse.setBufferSize(100);
 
         verify(originalResponse).setBufferSize(100);
     }
 
     @Test
-    public void getBufferSize() {
+    void getBufferSize() {
         when(originalResponse.getBufferSize()).thenReturn(100);
 
         assertEquals(100, biAdaptedResponse.getBufferSize());
     }
 
     @Test
-    public void flushBuffer() throws Exception {
+    void flushBuffer() throws Exception {
         biAdaptedResponse.flushBuffer();
 
         verify(originalResponse).flushBuffer();
     }
 
     @Test
-    public void resetBuffer() {
+    void resetBuffer() {
         biAdaptedResponse.resetBuffer();
 
         verify(originalResponse).resetBuffer();
     }
 
     @Test
-    public void isCommitted() {
+    void isCommitted() {
         when(originalResponse.isCommitted()).thenReturn(true);
 
         assertTrue(biAdaptedResponse.isCommitted());
     }
 
     @Test
-    public void reset() {
+    void reset() {
         biAdaptedResponse.reset();
 
         verify(originalResponse).reset();
     }
 
     @Test
-    public void setLocale() {
+    void setLocale() {
         var locale = new Locale("en", "US");
         biAdaptedResponse.setLocale(locale);
 
@@ -146,7 +146,7 @@ public class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    public void getLocale() {
+    void getLocale() {
         var locale = new Locale("en", "US");
         when(originalResponse.getLocale()).thenReturn(locale);
 
@@ -154,7 +154,7 @@ public class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    public void setTrailerFields() {
+    void setTrailerFields() {
         Supplier<Map<String, String>> supplier = () -> Map.of("test", "value");
         biAdaptedResponse.setTrailerFields(supplier);
 
@@ -162,14 +162,14 @@ public class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    public void getTrailerFields() {
+    void getTrailerFields() {
         when(originalResponse.getTrailerFields()).thenReturn(() -> Map.of("test", "value"));
 
         assertEquals("value", biAdaptedResponse.getTrailerFields().get().get("test"));
     }
 
     @Test
-    public void addCookie() {
+    void addCookie() {
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn("test");
         biAdaptedResponse.addCookie(cookie);
@@ -178,147 +178,147 @@ public class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    public void containsHeader() {
+    void containsHeader() {
         when(originalResponse.containsHeader("test")).thenReturn(true);
 
         assertTrue(biAdaptedResponse.containsHeader("test"));
     }
 
     @Test
-    public void encodeURL() {
+    void encodeURL() {
         when(originalResponse.encodeURL("test")).thenReturn("test");
 
         assertEquals("test", biAdaptedResponse.encodeURL("test"));
     }
 
     @Test
-    public void encodeRedirectURL() {
+    void encodeRedirectURL() {
         when(originalResponse.encodeRedirectURL("test")).thenReturn("test");
 
         assertEquals("test", biAdaptedResponse.encodeRedirectURL("test"));
     }
 
     @Test
-    public void encodeUrl() {
+    void encodeUrl() {
         when(originalResponse.encodeUrl("test")).thenReturn("test");
 
         assertEquals("test", biAdaptedResponse.encodeUrl("test"));
     }
 
     @Test
-    public void encodeRedirectUrl() {
+    void encodeRedirectUrl() {
         when(originalResponse.encodeRedirectUrl("test")).thenReturn("test");
 
         assertEquals("test", biAdaptedResponse.encodeRedirectUrl("test"));
     }
 
     @Test
-    public void sendError() throws Exception {
+    void sendError() throws Exception {
         biAdaptedResponse.sendError(404, "Not Found");
 
         verify(originalResponse).sendError(404, "Not Found");
     }
 
     @Test
-    public void testSendError() throws Exception {
+    void testSendError() throws Exception {
         biAdaptedResponse.sendError(404);
 
         verify(originalResponse).sendError(404);
     }
 
     @Test
-    public void sendRedirect() throws Exception {
+    void sendRedirect() throws Exception {
         biAdaptedResponse.sendRedirect("http://localhost:8080");
 
         verify(originalResponse).sendRedirect("http://localhost:8080");
     }
 
     @Test
-    public void setDateHeader() {
+    void setDateHeader() {
         biAdaptedResponse.setDateHeader("test", 100L);
 
         verify(originalResponse).setDateHeader("test", 100L);
     }
 
     @Test
-    public void addDateHeader() {
+    void addDateHeader() {
         biAdaptedResponse.addDateHeader("test", 100L);
 
         verify(originalResponse).addDateHeader("test", 100L);
     }
 
     @Test
-    public void setHeader() {
+    void setHeader() {
         biAdaptedResponse.setHeader("test", "value");
 
         verify(originalResponse).setHeader("test", "value");
     }
 
     @Test
-    public void addHeader() {
+    void addHeader() {
         biAdaptedResponse.addHeader("test", "value");
 
         verify(originalResponse).addHeader("test", "value");
     }
 
     @Test
-    public void setIntHeader() {
+    void setIntHeader() {
         biAdaptedResponse.setIntHeader("test", 100);
 
         verify(originalResponse).setIntHeader("test", 100);
     }
 
     @Test
-    public void addIntHeader() {
+    void addIntHeader() {
         biAdaptedResponse.addIntHeader("test", 100);
 
         verify(originalResponse).addIntHeader("test", 100);
     }
 
     @Test
-    public void setStatus() {
+    void setStatus() {
         biAdaptedResponse.setStatus(200);
 
         verify(originalResponse).setStatus(200);
     }
 
     @Test
-    public void testSetStatus() {
+    void testSetStatus() {
         biAdaptedResponse.setStatus(200, "OK");
 
         verify(originalResponse).setStatus(200, "OK");
     }
 
     @Test
-    public void getStatus() {
+    void getStatus() {
         when(originalResponse.getStatus()).thenReturn(200);
 
         assertEquals(200, biAdaptedResponse.getStatus());
     }
 
     @Test
-    public void getHeader() {
+    void getHeader() {
         when(originalResponse.getHeader("test")).thenReturn("value");
 
         assertEquals("value", biAdaptedResponse.getHeader("test"));
     }
 
     @Test
-    public void getHeaders() {
+    void getHeaders() {
         when(originalResponse.getHeaders("test")).thenReturn(List.of("value"));
 
         assertEquals("value", biAdaptedResponse.getHeaders("test").iterator().next());
     }
 
     @Test
-    public void getHeaderNames() {
+    void getHeaderNames() {
         when(originalResponse.getHeaderNames()).thenReturn(List.of("test"));
 
         assertEquals("test", biAdaptedResponse.getHeaderNames().iterator().next());
     }
 
     @Test
-    public void getDelegate() {
+    void getDelegate() {
         var adaptedResponse = new JavaXHttpServletResponseAdapter(originalResponse);
         assertEquals(originalResponse, adaptedResponse.getDelegate());
 

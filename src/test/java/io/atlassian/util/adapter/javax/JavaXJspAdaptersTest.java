@@ -9,10 +9,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class JavaXJspAdaptersTest {
+class JavaXJspAdaptersTest {
 
     @Test
-    public void jspFactory() {
+    void jspFactory() {
         var delegate = mock(JspFactory.class);
         var pageContext = mock(javax.servlet.jsp.PageContext.class);
         when(pageContext.getPage()).thenReturn("foo");

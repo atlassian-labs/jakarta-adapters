@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaCookieAdapterTest {
+class JakartaCookieAdapterTest {
 
     @Mock
     private Cookie originalCookie;
@@ -22,110 +22,110 @@ public class JakartaCookieAdapterTest {
     private Cookie biAdaptedCookie;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         biAdaptedCookie = new JakartaCookieAdapter(new JavaXCookieAdapter(originalCookie));
     }
 
     @Test
-    public void setComment() {
+    void setComment() {
         biAdaptedCookie.setComment("comment");
 
         verify(originalCookie).setComment("comment");
     }
 
     @Test
-    public void getComment() {
+    void getComment() {
         when(originalCookie.getComment()).thenReturn("comment");
 
         assertEquals("comment", biAdaptedCookie.getComment());
     }
 
     @Test
-    public void setDomain() {
+    void setDomain() {
         biAdaptedCookie.setDomain("domain");
 
         verify(originalCookie).setDomain("domain");
     }
 
     @Test
-    public void getDomain() {
+    void getDomain() {
         when(originalCookie.getDomain()).thenReturn("domain");
 
         assertEquals("domain", biAdaptedCookie.getDomain());
     }
 
     @Test
-    public void setMaxAge() {
+    void setMaxAge() {
         biAdaptedCookie.setMaxAge(1);
 
         verify(originalCookie).setMaxAge(1);
     }
 
     @Test
-    public void getMaxAge() {
+    void getMaxAge() {
         when(originalCookie.getMaxAge()).thenReturn(1);
 
         assertEquals(1, biAdaptedCookie.getMaxAge());
     }
 
     @Test
-    public void setPath() {
+    void setPath() {
         biAdaptedCookie.setPath("path");
 
         verify(originalCookie).setPath("path");
     }
 
     @Test
-    public void getPath() {
+    void getPath() {
         when(originalCookie.getPath()).thenReturn("path");
 
         assertEquals("path", biAdaptedCookie.getPath());
     }
 
     @Test
-    public void setSecure() {
+    void setSecure() {
         biAdaptedCookie.setSecure(true);
 
         verify(originalCookie).setSecure(true);
     }
 
     @Test
-    public void getSecure() {
+    void getSecure() {
         when(originalCookie.getSecure()).thenReturn(true);
 
         assertTrue(biAdaptedCookie.getSecure());
     }
 
     @Test
-    public void getName() {
+    void getName() {
         when(originalCookie.getName()).thenReturn("name");
 
         assertEquals("name", biAdaptedCookie.getName());
     }
 
     @Test
-    public void setValue() {
+    void setValue() {
         biAdaptedCookie.setValue("value");
 
         verify(originalCookie).setValue("value");
     }
 
     @Test
-    public void getValue() {
+    void getValue() {
         when(originalCookie.getValue()).thenReturn("value");
 
         assertEquals("value", biAdaptedCookie.getValue());
     }
 
     @Test
-    public void getVersion() {
+    void getVersion() {
         when(originalCookie.getVersion()).thenReturn(1);
 
         assertEquals(1, biAdaptedCookie.getVersion());
     }
 
     @Test
-    public void setVersion() {
+    void setVersion() {
         biAdaptedCookie.setVersion(1);
 
         verify(originalCookie).setVersion(1);
@@ -137,7 +137,7 @@ public class JakartaCookieAdapterTest {
      * actual underlying delegate object to be cloned.
      */
     @Test
-    public void testClone() {
+    void testClone() {
         var cookie = new Cookie("name", "value1");
         biAdaptedCookie = new JakartaCookieAdapter(new JavaXCookieAdapter(cookie));
 
@@ -154,14 +154,14 @@ public class JakartaCookieAdapterTest {
     }
 
     @Test
-    public void setHttpOnly() {
+    void setHttpOnly() {
         biAdaptedCookie.setHttpOnly(true);
 
         verify(originalCookie).setHttpOnly(true);
     }
 
     @Test
-    public void isHttpOnly() {
+    void isHttpOnly() {
         when(originalCookie.isHttpOnly()).thenReturn(true);
 
         assertTrue(biAdaptedCookie.isHttpOnly());
