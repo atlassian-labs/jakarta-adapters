@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -118,6 +119,17 @@ class JakartaAdaptersTest {
 
         assertThat(proxy.getServletInfo()).isEqualTo("foo");
         verify(delegate).getServletInfo();
+    }
+
+    @Test
+    void servletConfig() {
+        var delegate = mock(ServletConfig.class);
+        when(delegate.getServletName()).thenReturn("foo");
+
+        var proxy = JakartaAdapters.asJakarta(delegate);
+
+        assertThat(proxy.getServletName()).isEqualTo("foo");
+        verify(delegate).getServletName();
     }
 
     @Test
