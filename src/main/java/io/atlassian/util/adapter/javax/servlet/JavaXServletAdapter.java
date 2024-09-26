@@ -1,6 +1,5 @@
 package io.atlassian.util.adapter.javax.servlet;
 
-import io.atlassian.util.adapter.jakarta.servlet.JakartaServletConfigAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 
@@ -11,7 +10,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
-import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
+import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static java.util.Objects.requireNonNull;
 
 public class JavaXServletAdapter implements Servlet {
@@ -29,7 +29,7 @@ public class JavaXServletAdapter implements Servlet {
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
         try {
-            delegate.init(applyIfNonNull(servletConfig, JakartaServletConfigAdapter::new));
+            delegate.init(asJakarta(servletConfig));
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -37,7 +37,7 @@ public class JavaXServletAdapter implements Servlet {
 
     @Override
     public ServletConfig getServletConfig() {
-        return applyIfNonNull(delegate.getServletConfig(), JavaXServletConfigAdapter::new);
+        return asJavaX(delegate.getServletConfig());
     }
 
     @Override

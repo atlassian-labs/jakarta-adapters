@@ -1,6 +1,5 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
-import io.atlassian.util.adapter.jakarta.servlet.JakartaServletConfigAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpSessionAdapter;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
@@ -78,7 +77,7 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
 
     @Override
     public ServletConfig getServletConfig() {
-        return applyIfNonNull(delegate.getServletConfig(), JakartaServletConfigAdapter::new);
+        return asJakarta(delegate.getServletConfig());
     }
 
     @Override

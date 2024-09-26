@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -117,6 +118,17 @@ class JavaXAdaptersTest {
 
         assertThat(proxy.getServletInfo()).isEqualTo("foo");
         verify(delegate).getServletInfo();
+    }
+
+    @Test
+    void servletConfig() {
+        var delegate = mock(ServletConfig.class);
+        when(delegate.getServletName()).thenReturn("foo");
+
+        var proxy = JavaXAdapters.asJavaX(delegate);
+
+        assertThat(proxy.getServletName()).isEqualTo("foo");
+        verify(delegate).getServletName();
     }
 
     @Test

@@ -4,6 +4,7 @@ import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterChainAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterConfigAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletConfigAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
@@ -58,6 +59,10 @@ public final class JakartaAdapters {
 
     public static jakarta.servlet.Servlet asJakarta(javax.servlet.Servlet delegate) {
         return applyIfNonNull(delegate, JakartaServletAdapter::new);
+    }
+
+    public static jakarta.servlet.ServletConfig asJakarta(javax.servlet.ServletConfig delegate) {
+        return applyIfNonNull(delegate, JakartaServletConfigAdapter::new);
     }
 
     public static jakarta.servlet.http.HttpServletRequest asJakarta(javax.servlet.http.HttpServletRequest delegate) {

@@ -1,6 +1,5 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
-import io.atlassian.util.adapter.javax.servlet.JavaXServletConfigAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
 
 import javax.el.ELContext;
@@ -80,7 +79,7 @@ public class JavaXPageContextAdapter extends PageContext {
 
     @Override
     public ServletConfig getServletConfig() {
-        return applyIfNonNull(delegate.getServletConfig(), JavaXServletConfigAdapter::new);
+        return asJavaX(delegate.getServletConfig());
     }
 
     @Override
