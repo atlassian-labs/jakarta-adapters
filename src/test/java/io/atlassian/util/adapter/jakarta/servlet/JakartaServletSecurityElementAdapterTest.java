@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaServletSecurityElementAdapterTest {
+class JakartaServletSecurityElementAdapterTest {
 
     @Mock
     private ServletSecurityElement original;
@@ -25,12 +25,12 @@ public class JakartaServletSecurityElementAdapterTest {
     private ServletSecurityElement biAdapted;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        biAdapted = new JakartaServletSecurityElementAdapter((new JavaXServletSecurityElementAdapter(original)));
+    void setUp() throws Exception {
+        biAdapted = new JakartaServletSecurityElementAdapter(new JavaXServletSecurityElementAdapter(original));
     }
 
     @Test
-    public void getHttpMethodConstraints() {
+    void getHttpMethodConstraints() {
         var retValue = mock(HttpMethodConstraintElement.class);
         when(retValue.getMethodName()).thenReturn("GET");
         when(original.getHttpMethodConstraints()).thenReturn(List.of(retValue));
@@ -39,28 +39,28 @@ public class JakartaServletSecurityElementAdapterTest {
     }
 
     @Test
-    public void getMethodNames() {
+    void getMethodNames() {
         when(original.getMethodNames()).thenReturn(List.of("GET"));
 
         assertEquals("GET", biAdapted.getMethodNames().iterator().next());
     }
 
     @Test
-    public void getEmptyRoleSemantic() {
+    void getEmptyRoleSemantic() {
         when(original.getEmptyRoleSemantic()).thenReturn(ServletSecurity.EmptyRoleSemantic.DENY);
 
         assertEquals(ServletSecurity.EmptyRoleSemantic.DENY, biAdapted.getEmptyRoleSemantic());
     }
 
     @Test
-    public void getTransportGuarantee() {
+    void getTransportGuarantee() {
         when(original.getTransportGuarantee()).thenReturn(ServletSecurity.TransportGuarantee.NONE);
 
         assertEquals(ServletSecurity.TransportGuarantee.NONE, biAdapted.getTransportGuarantee());
     }
 
     @Test
-    public void getRolesAllowed() {
+    void getRolesAllowed() {
         when(original.getRolesAllowed()).thenReturn(new String[]{"role"});
 
         assertEquals("role", biAdapted.getRolesAllowed()[0]);

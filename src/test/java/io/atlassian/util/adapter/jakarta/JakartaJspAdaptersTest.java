@@ -10,10 +10,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class JakartaJspAdaptersTest {
+class JakartaJspAdaptersTest {
 
     @Test
-    public void jspFactory() {
+    void jspFactory() {
         var delegate = mock(JspFactory.class);
         var pageContext = mock(jakarta.servlet.jsp.PageContext.class);
         when(pageContext.getPage()).thenReturn("foo");

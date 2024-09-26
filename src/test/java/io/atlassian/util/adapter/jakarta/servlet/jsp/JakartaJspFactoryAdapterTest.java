@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaJspFactoryAdapterTest {
+class JakartaJspFactoryAdapterTest {
 
     @Mock
     private JspFactory original;
@@ -29,12 +29,12 @@ public class JakartaJspFactoryAdapterTest {
     private JspFactory biAdapted;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         biAdapted = new JakartaJspFactoryAdapter(new JavaXJspFactoryAdapter(original));
     }
 
     @Test
-    public void getPageContext() {
+    void getPageContext() {
         var servlet = mock(Servlet.class);
         var servletRequest = mock(ServletRequest.class);
         var servletResponse = mock(ServletResponse.class);
@@ -57,7 +57,7 @@ public class JakartaJspFactoryAdapterTest {
     }
 
     @Test
-    public void releasePageContext() {
+    void releasePageContext() {
         var pageContext = mock(PageContext.class);
         when(pageContext.getPage()).thenReturn("foo");
 
@@ -67,12 +67,12 @@ public class JakartaJspFactoryAdapterTest {
     }
 
     @Test
-    public void getEngineInfo() {
+    void getEngineInfo() {
         assertThrows(UnsupportedOperationException.class, () -> biAdapted.getEngineInfo());
     }
 
     @Test
-    public void getJspApplicationContext() {
+    void getJspApplicationContext() {
         assertThrows(UnsupportedOperationException.class, () -> biAdapted.getJspApplicationContext(null));
     }
 }

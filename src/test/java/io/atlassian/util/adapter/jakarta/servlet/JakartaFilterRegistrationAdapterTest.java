@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaFilterRegistrationAdapterTest {
+class JakartaFilterRegistrationAdapterTest {
 
     @Mock
     private FilterRegistration original;
@@ -25,47 +25,47 @@ public class JakartaFilterRegistrationAdapterTest {
     private FilterRegistration biAdapted;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        biAdapted = new JakartaFilterRegistrationAdapter((new JavaXFilterRegistrationAdapter(original)));
+    void setUp() throws Exception {
+        biAdapted = new JakartaFilterRegistrationAdapter(new JavaXFilterRegistrationAdapter(original));
     }
 
     @Test
-    public void addMappingForServletNames() {
+    void addMappingForServletNames() {
         biAdapted.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, "servletName");
 
         verify(original).addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, "servletName");
     }
 
     @Test
-    public void addMappingForServletNames_null() {
+    void addMappingForServletNames_null() {
         biAdapted.addMappingForServletNames(null, false, (String) null);
 
         verify(original).addMappingForServletNames(null, false, (String) null);
     }
 
     @Test
-    public void getServletNameMappings() {
+    void getServletNameMappings() {
         when(original.getServletNameMappings()).thenReturn(List.of("servletName"));
 
         assertEquals(List.of("servletName"), biAdapted.getServletNameMappings());
     }
 
     @Test
-    public void addMappingForUrlPatterns() {
+    void addMappingForUrlPatterns() {
         biAdapted.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "urlPattern");
 
         verify(original).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "urlPattern");
     }
 
     @Test
-    public void addMappingForUrlPatterns_null() {
+    void addMappingForUrlPatterns_null() {
         biAdapted.addMappingForUrlPatterns(null, false, (String) null);
 
         verify(original).addMappingForUrlPatterns(null, false, (String) null);
     }
 
     @Test
-    public void getUrlPatternMappings() {
+    void getUrlPatternMappings() {
         when(original.getUrlPatternMappings()).thenReturn(List.of("urlPattern"));
 
         assertEquals(List.of("urlPattern"), biAdapted.getUrlPatternMappings());

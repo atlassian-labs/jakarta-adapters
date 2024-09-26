@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaServletAdapterTest {
+class JakartaServletAdapterTest {
 
     @Mock
     private jakarta.servlet.Servlet originalServlet;
@@ -26,12 +26,12 @@ public class JakartaServletAdapterTest {
     private jakarta.servlet.Servlet biAdaptedServlet;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        biAdaptedServlet = new JakartaServletAdapter(new JavaXServletAdapter((originalServlet)));
+    void setUp() throws Exception {
+        biAdaptedServlet = new JakartaServletAdapter(new JavaXServletAdapter(originalServlet));
     }
 
     @Test
-    public void init() throws Exception {
+    void init() throws Exception {
         var servletConfig = mock(ServletConfig.class);
         when(servletConfig.getServletName()).thenReturn("foo");
 
@@ -41,7 +41,7 @@ public class JakartaServletAdapterTest {
     }
 
     @Test
-    public void getServletConfig() {
+    void getServletConfig() {
         var servletConfig = mock(ServletConfig.class);
         when(servletConfig.getServletName()).thenReturn("foo");
         when(originalServlet.getServletConfig()).thenReturn(servletConfig);
@@ -50,7 +50,7 @@ public class JakartaServletAdapterTest {
     }
 
     @Test
-    public void service() throws Exception {
+    void service() throws Exception {
         var servletRequest = mock(ServletRequest.class);
         when(servletRequest.getRemoteAddr()).thenReturn("foo");
 
@@ -60,21 +60,21 @@ public class JakartaServletAdapterTest {
     }
 
     @Test
-    public void getServletInfo() {
+    void getServletInfo() {
         when(originalServlet.getServletInfo()).thenReturn("foo");
 
         assertEquals("foo", biAdaptedServlet.getServletInfo());
     }
 
     @Test
-    public void destroy() {
+    void destroy() {
         biAdaptedServlet.destroy();
 
         verify(originalServlet).destroy();
     }
 
     @Test
-    public void getDelegate() {
+    void getDelegate() {
         var adaptedServlet = new JavaXServletAdapter(originalServlet);
         assertEquals(originalServlet, adaptedServlet.getDelegate());
 

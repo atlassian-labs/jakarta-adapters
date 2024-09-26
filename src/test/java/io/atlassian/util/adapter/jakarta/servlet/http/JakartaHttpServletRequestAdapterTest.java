@@ -39,7 +39,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaHttpServletRequestAdapterTest {
+class JakartaHttpServletRequestAdapterTest {
 
     @Mock
     private HttpServletRequest originalRequest;
@@ -47,19 +47,19 @@ public class JakartaHttpServletRequestAdapterTest {
     private HttpServletRequest biAdaptedRequest;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         biAdaptedRequest = new JakartaHttpServletRequestAdapter(new JavaXHttpServletRequestAdapter(originalRequest));
     }
 
     @Test
-    public void getAttribute() {
+    void getAttribute() {
         when(originalRequest.getAttribute("test")).thenReturn("value");
 
         assertEquals("value", biAdaptedRequest.getAttribute("test"));
     }
 
     @Test
-    public void getAttributeNames() {
+    void getAttributeNames() {
         var retValue = mock(Enumeration.class);
         when(originalRequest.getAttributeNames()).thenReturn(retValue);
 
@@ -67,42 +67,42 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getCharacterEncoding() {
+    void getCharacterEncoding() {
         when(originalRequest.getCharacterEncoding()).thenReturn("UTF-8");
 
         assertEquals("UTF-8", biAdaptedRequest.getCharacterEncoding());
     }
 
     @Test
-    public void setCharacterEncoding() throws Exception {
+    void setCharacterEncoding() throws Exception {
         biAdaptedRequest.setCharacterEncoding("UTF-8");
 
         verify(originalRequest).setCharacterEncoding("UTF-8");
     }
 
     @Test
-    public void getContentLength() {
+    void getContentLength() {
         when(originalRequest.getContentLength()).thenReturn(10);
 
         assertEquals(10, biAdaptedRequest.getContentLength());
     }
 
     @Test
-    public void getContentLengthLong() {
+    void getContentLengthLong() {
         when(originalRequest.getContentLengthLong()).thenReturn(10L);
 
         assertEquals(10L, biAdaptedRequest.getContentLengthLong());
     }
 
     @Test
-    public void getContentType() {
+    void getContentType() {
         when(originalRequest.getContentType()).thenReturn("text/plain");
 
         assertEquals("text/plain", biAdaptedRequest.getContentType());
     }
 
     @Test
-    public void getInputStream() throws Exception {
+    void getInputStream() throws Exception {
         var inputStream = mock(ServletInputStream.class);
         when(inputStream.read()).thenReturn(-1);
         when(originalRequest.getInputStream()).thenReturn(inputStream);
@@ -111,14 +111,14 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getParameter() {
+    void getParameter() {
         when(originalRequest.getParameter("test")).thenReturn("value");
 
         assertEquals("value", biAdaptedRequest.getParameter("test"));
     }
 
     @Test
-    public void getParameterNames() {
+    void getParameterNames() {
         var retValue = mock(Enumeration.class);
         when(originalRequest.getParameterNames()).thenReturn(retValue);
 
@@ -126,49 +126,49 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getParameterValues() {
+    void getParameterValues() {
         when(originalRequest.getParameterValues("test")).thenReturn(new String[]{"value"});
 
         assertArrayEquals(new String[]{"value"}, biAdaptedRequest.getParameterValues("test"));
     }
 
     @Test
-    public void getParameterMap() {
+    void getParameterMap() {
         when(originalRequest.getParameterMap()).thenReturn(Map.of("test", new String[]{"value"}));
 
         assertEquals("value", biAdaptedRequest.getParameterMap().get("test")[0]);
     }
 
     @Test
-    public void getProtocol() {
+    void getProtocol() {
         when(originalRequest.getProtocol()).thenReturn("HTTP/1.1");
 
         assertEquals("HTTP/1.1", biAdaptedRequest.getProtocol());
     }
 
     @Test
-    public void getScheme() {
+    void getScheme() {
         when(originalRequest.getScheme()).thenReturn("http");
 
         assertEquals("http", biAdaptedRequest.getScheme());
     }
 
     @Test
-    public void getServerName() {
+    void getServerName() {
         when(originalRequest.getServerName()).thenReturn("localhost");
 
         assertEquals("localhost", biAdaptedRequest.getServerName());
     }
 
     @Test
-    public void getServerPort() {
+    void getServerPort() {
         when(originalRequest.getServerPort()).thenReturn(8080);
 
         assertEquals(8080, biAdaptedRequest.getServerPort());
     }
 
     @Test
-    public void getReader() throws Exception {
+    void getReader() throws Exception {
         var retValue = mock(BufferedReader.class);
         when(originalRequest.getReader()).thenReturn(retValue);
 
@@ -176,42 +176,42 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getRemoteAddr() {
+    void getRemoteAddr() {
         when(originalRequest.getRemoteAddr()).thenReturn("127.0.0.1");
 
         assertEquals("127.0.0.1", biAdaptedRequest.getRemoteAddr());
     }
 
     @Test
-    public void getRemoteHost() {
+    void getRemoteHost() {
         when(originalRequest.getRemoteHost()).thenReturn("localhost");
 
         assertEquals("localhost", biAdaptedRequest.getRemoteHost());
     }
 
     @Test
-    public void setAttribute() {
+    void setAttribute() {
         biAdaptedRequest.setAttribute("test", "value");
 
         verify(originalRequest).setAttribute("test", "value");
     }
 
     @Test
-    public void removeAttribute() {
+    void removeAttribute() {
         biAdaptedRequest.removeAttribute("test");
 
         verify(originalRequest).removeAttribute("test");
     }
 
     @Test
-    public void getLocale() {
+    void getLocale() {
         when(originalRequest.getLocale()).thenReturn(new Locale("en"));
 
         assertEquals(new Locale("en"), biAdaptedRequest.getLocale());
     }
 
     @Test
-    public void getLocales() {
+    void getLocales() {
         var retValue = mock(Enumeration.class);
         when(originalRequest.getLocales()).thenReturn(retValue);
 
@@ -219,14 +219,14 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void isSecure() {
+    void isSecure() {
         when(originalRequest.isSecure()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isSecure());
     }
 
     @Test
-    public void getRequestDispatcher() throws Exception {
+    void getRequestDispatcher() throws Exception {
         var retValue = mock(RequestDispatcher.class);
         when(originalRequest.getRequestDispatcher("test")).thenReturn(retValue);
 
@@ -239,42 +239,42 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getRealPath() {
+    void getRealPath() {
         when(originalRequest.getRealPath("test")).thenReturn("path");
 
         assertEquals("path", biAdaptedRequest.getRealPath("test"));
     }
 
     @Test
-    public void getRemotePort() {
+    void getRemotePort() {
         when(originalRequest.getRemotePort()).thenReturn(8080);
 
         assertEquals(8080, biAdaptedRequest.getRemotePort());
     }
 
     @Test
-    public void getLocalName() {
+    void getLocalName() {
         when(originalRequest.getLocalName()).thenReturn("localhost");
 
         assertEquals("localhost", biAdaptedRequest.getLocalName());
     }
 
     @Test
-    public void getLocalAddr() {
+    void getLocalAddr() {
         when(originalRequest.getLocalAddr()).thenReturn("127.0.0.1");
 
         assertEquals("127.0.0.1", biAdaptedRequest.getLocalAddr());
     }
 
     @Test
-    public void getLocalPort() {
+    void getLocalPort() {
         when(originalRequest.getLocalPort()).thenReturn(8080);
 
         assertEquals(8080, biAdaptedRequest.getLocalPort());
     }
 
     @Test
-    public void getServletContext() {
+    void getServletContext() {
         var retValue = mock(ServletContext.class);
         when(retValue.getContextPath()).thenReturn("test");
         when(originalRequest.getServletContext()).thenReturn(retValue);
@@ -283,7 +283,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void startAsync() {
+    void startAsync() {
         var retValue = mock(AsyncContext.class);
         when(retValue.getTimeout()).thenReturn(10L);
         when(originalRequest.startAsync()).thenReturn(retValue);
@@ -292,7 +292,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void testStartAsync() {
+    void testStartAsync() {
         var retValue = mock(AsyncContext.class);
         when(retValue.getTimeout()).thenReturn(10L);
         when(originalRequest.startAsync(any(), any())).thenReturn(retValue);
@@ -301,21 +301,21 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void isAsyncStarted() {
+    void isAsyncStarted() {
         when(originalRequest.isAsyncStarted()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isAsyncStarted());
     }
 
     @Test
-    public void isAsyncSupported() {
+    void isAsyncSupported() {
         when(originalRequest.isAsyncSupported()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isAsyncSupported());
     }
 
     @Test
-    public void getAsyncContext() {
+    void getAsyncContext() {
         var retValue = mock(AsyncContext.class);
         when(retValue.getTimeout()).thenReturn(10L);
         when(originalRequest.getAsyncContext()).thenReturn(retValue);
@@ -324,14 +324,14 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getDispatcherType() {
+    void getDispatcherType() {
         when(originalRequest.getDispatcherType()).thenReturn(DispatcherType.ASYNC);
 
         assertEquals(DispatcherType.ASYNC, biAdaptedRequest.getDispatcherType());
     }
 
     @Test
-    public void getHttpServletMapping() {
+    void getHttpServletMapping() {
         var retValue = mock(HttpServletMapping.class);
         when(retValue.getMatchValue()).thenReturn("test");
         when(originalRequest.getHttpServletMapping()).thenReturn(retValue);
@@ -340,7 +340,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void newPushBuilder() {
+    void newPushBuilder() {
         var retValue = mock(PushBuilder.class);
         when(retValue.getMethod()).thenReturn("GET");
         when(originalRequest.newPushBuilder()).thenReturn(retValue);
@@ -349,28 +349,28 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getTrailerFields() {
+    void getTrailerFields() {
         when(originalRequest.getTrailerFields()).thenReturn(Map.of("test", "value"));
 
         assertEquals(Map.of("test", "value"), biAdaptedRequest.getTrailerFields());
     }
 
     @Test
-    public void isTrailerFieldsReady() {
+    void isTrailerFieldsReady() {
         when(originalRequest.isTrailerFieldsReady()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isTrailerFieldsReady());
     }
 
     @Test
-    public void getAuthType() {
+    void getAuthType() {
         when(originalRequest.getAuthType()).thenReturn("BASIC");
 
         assertEquals("BASIC", biAdaptedRequest.getAuthType());
     }
 
     @Test
-    public void getCookies() {
+    void getCookies() {
         var cookie = mock(Cookie.class);
         when(cookie.getName()).thenReturn("test");
         when(originalRequest.getCookies()).thenReturn(new Cookie[]{cookie});
@@ -381,28 +381,28 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getCookies_null() {
+    void getCookies_null() {
         when(originalRequest.getCookies()).thenReturn(null);
 
         assertNull(biAdaptedRequest.getCookies());
     }
 
     @Test
-    public void getDateHeader() {
+    void getDateHeader() {
         when(originalRequest.getDateHeader("test")).thenReturn(10L);
 
         assertEquals(10L, biAdaptedRequest.getDateHeader("test"));
     }
 
     @Test
-    public void getHeader() {
+    void getHeader() {
         when(originalRequest.getHeader("test")).thenReturn("value");
 
         assertEquals("value", biAdaptedRequest.getHeader("test"));
     }
 
     @Test
-    public void getHeaders() {
+    void getHeaders() {
         var retValue = mock(Enumeration.class);
         when(originalRequest.getHeaders("test")).thenReturn(retValue);
 
@@ -410,7 +410,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getHeaderNames() {
+    void getHeaderNames() {
         var retValue = mock(Enumeration.class);
         when(originalRequest.getHeaderNames()).thenReturn(retValue);
 
@@ -418,63 +418,63 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getIntHeader() {
+    void getIntHeader() {
         when(originalRequest.getIntHeader("test")).thenReturn(10);
 
         assertEquals(10, biAdaptedRequest.getIntHeader("test"));
     }
 
     @Test
-    public void getMethod() {
+    void getMethod() {
         when(originalRequest.getMethod()).thenReturn("GET");
 
         assertEquals("GET", biAdaptedRequest.getMethod());
     }
 
     @Test
-    public void getPathInfo() {
+    void getPathInfo() {
         when(originalRequest.getPathInfo()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getPathInfo());
     }
 
     @Test
-    public void getPathTranslated() {
+    void getPathTranslated() {
         when(originalRequest.getPathTranslated()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getPathTranslated());
     }
 
     @Test
-    public void getContextPath() {
+    void getContextPath() {
         when(originalRequest.getContextPath()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getContextPath());
     }
 
     @Test
-    public void getQueryString() {
+    void getQueryString() {
         when(originalRequest.getQueryString()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getQueryString());
     }
 
     @Test
-    public void getRemoteUser() {
+    void getRemoteUser() {
         when(originalRequest.getRemoteUser()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getRemoteUser());
     }
 
     @Test
-    public void isUserInRole() {
+    void isUserInRole() {
         when(originalRequest.isUserInRole("test")).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isUserInRole("test"));
     }
 
     @Test
-    public void getUserPrincipal() {
+    void getUserPrincipal() {
         var retValue = mock(java.security.Principal.class);
         when(originalRequest.getUserPrincipal()).thenReturn(retValue);
 
@@ -482,21 +482,21 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getRequestedSessionId() {
+    void getRequestedSessionId() {
         when(originalRequest.getRequestedSessionId()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getRequestedSessionId());
     }
 
     @Test
-    public void getRequestURI() {
+    void getRequestURI() {
         when(originalRequest.getRequestURI()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getRequestURI());
     }
 
     @Test
-    public void getRequestURL() {
+    void getRequestURL() {
         var retValue = new StringBuffer("test");
         when(originalRequest.getRequestURL()).thenReturn(retValue);
 
@@ -504,14 +504,14 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getServletPath() {
+    void getServletPath() {
         when(originalRequest.getServletPath()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.getServletPath());
     }
 
     @Test
-    public void getSession() {
+    void getSession() {
         var retValue = mock(HttpSession.class);
         when(retValue.getId()).thenReturn("test");
         when(originalRequest.getSession()).thenReturn(retValue);
@@ -520,7 +520,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void testGetSession() {
+    void testGetSession() {
         var retValue = mock(HttpSession.class);
         when(retValue.getId()).thenReturn("test");
         when(originalRequest.getSession(true)).thenReturn(retValue);
@@ -529,42 +529,42 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void changeSessionId() {
+    void changeSessionId() {
         when(originalRequest.changeSessionId()).thenReturn("test");
 
         assertEquals("test", biAdaptedRequest.changeSessionId());
     }
 
     @Test
-    public void isRequestedSessionIdValid() {
+    void isRequestedSessionIdValid() {
         when(originalRequest.isRequestedSessionIdValid()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isRequestedSessionIdValid());
     }
 
     @Test
-    public void isRequestedSessionIdFromCookie() {
+    void isRequestedSessionIdFromCookie() {
         when(originalRequest.isRequestedSessionIdFromCookie()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isRequestedSessionIdFromCookie());
     }
 
     @Test
-    public void isRequestedSessionIdFromURL() {
+    void isRequestedSessionIdFromURL() {
         when(originalRequest.isRequestedSessionIdFromURL()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isRequestedSessionIdFromURL());
     }
 
     @Test
-    public void isRequestedSessionIdFromUrl() {
+    void isRequestedSessionIdFromUrl() {
         when(originalRequest.isRequestedSessionIdFromUrl()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isRequestedSessionIdFromUrl());
     }
 
     @Test
-    public void authenticate() throws Exception {
+    void authenticate() throws Exception {
         when(originalRequest.authenticate(argThat(r -> r.getStatus() == 2))).thenReturn(true);
 
         var response = mock(HttpServletResponse.class);
@@ -573,21 +573,21 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void login() throws Exception {
+    void login() throws Exception {
         biAdaptedRequest.login("test", "test");
 
         verify(originalRequest).login("test", "test");
     }
 
     @Test
-    public void logout() throws Exception {
+    void logout() throws Exception {
         biAdaptedRequest.logout();
 
         verify(originalRequest).logout();
     }
 
     @Test
-    public void getParts() throws Exception {
+    void getParts() throws Exception {
         var part = mock(Part.class);
         when(part.getName()).thenReturn("test");
         when(originalRequest.getParts()).thenReturn(Set.of(part));
@@ -598,7 +598,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getPart() throws Exception {
+    void getPart() throws Exception {
         var part = mock(Part.class);
         when(part.getName()).thenReturn("test");
         when(originalRequest.getPart("test")).thenReturn(part);
@@ -607,7 +607,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void upgrade() throws Exception {
+    void upgrade() throws Exception {
         var retValue = mock(HttpUpgradeHandler.class);
         when(originalRequest.upgrade(HttpUpgradeHandler.class)).thenReturn(retValue);
 
@@ -616,7 +616,7 @@ public class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    public void getDelegate() {
+    void getDelegate() {
         var adaptedRequest = new JavaXHttpServletRequestAdapter(originalRequest);
         assertEquals(originalRequest, adaptedRequest.getDelegate());
 

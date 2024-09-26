@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class JakartaPageContextAdapterTest {
+class JakartaPageContextAdapterTest {
 
     @Mock
     private PageContext original;
@@ -35,12 +35,12 @@ public class JakartaPageContextAdapterTest {
     private PageContext biAdapted;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         biAdapted = new JakartaPageContextAdapter(new JavaXPageContextAdapter(original));
     }
 
     @Test
-    public void initialize() throws Exception {
+    void initialize() throws Exception {
         var servlet = mock(Servlet.class);
         var servletRequest = mock(ServletRequest.class);
         var servletResponse = mock(ServletResponse.class);
@@ -57,14 +57,14 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void release() {
+    void release() {
         biAdapted.release();
 
         verify(original).release();
     }
 
     @Test
-    public void getSession() {
+    void getSession() {
         var session = mock(HttpSession.class);
         when(session.getId()).thenReturn("foo");
         when(original.getSession()).thenReturn(session);
@@ -73,14 +73,14 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void getPage() {
+    void getPage() {
         when(original.getPage()).thenReturn("foo");
 
         assertEquals("foo", biAdapted.getPage());
     }
 
     @Test
-    public void getRequest() {
+    void getRequest() {
         var request = mock(HttpServletRequest.class);
         when(request.getRemoteAddr()).thenReturn("foo");
         when(original.getRequest()).thenReturn(request);
@@ -89,7 +89,7 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void getResponse() {
+    void getResponse() {
         var response = mock(ServletResponse.class);
         when(response.getCharacterEncoding()).thenReturn("foo");
         when(original.getResponse()).thenReturn(response);
@@ -98,7 +98,7 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void getException() {
+    void getException() {
         var exception = new Exception();
         when(original.getException()).thenReturn(exception);
 
@@ -106,7 +106,7 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void getServletConfig() {
+    void getServletConfig() {
         var servlet = mock(ServletConfig.class);
         when(servlet.getServletName()).thenReturn("foo");
         when(original.getServletConfig()).thenReturn(servlet);
@@ -115,7 +115,7 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void getServletContext() {
+    void getServletContext() {
         var servlet = mock(ServletContext.class);
         when(servlet.getContextPath()).thenReturn("foo");
         when(original.getServletContext()).thenReturn(servlet);
@@ -124,28 +124,28 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void forward() throws Exception {
+    void forward() throws Exception {
         biAdapted.forward("foo");
 
         verify(original).forward("foo");
     }
 
     @Test
-    public void include() throws Exception {
+    void include() throws Exception {
         biAdapted.include("foo");
 
         verify(original).include("foo");
     }
 
     @Test
-    public void testInclude() throws Exception {
+    void testInclude() throws Exception {
         biAdapted.include("foo", false);
 
         verify(original).include("foo", false);
     }
 
     @Test
-    public void handlePageException() throws Exception {
+    void handlePageException() throws Exception {
         var exception = new Exception();
         biAdapted.handlePageException(exception);
 
@@ -153,7 +153,7 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void testHandlePageException() throws Exception {
+    void testHandlePageException() throws Exception {
         Throwable exception = new Exception();
         biAdapted.handlePageException(exception);
 
@@ -162,85 +162,85 @@ public class JakartaPageContextAdapterTest {
     }
 
     @Test
-    public void setAttribute() {
+    void setAttribute() {
         biAdapted.setAttribute("foo", "bar");
 
         verify(original).setAttribute("foo", "bar");
     }
 
     @Test
-    public void testSetAttribute() {
+    void testSetAttribute() {
         biAdapted.setAttribute("foo", "bar", 0);
 
         verify(original).setAttribute("foo", "bar", 0);
     }
 
     @Test
-    public void getAttribute() {
+    void getAttribute() {
         when(original.getAttribute("foo")).thenReturn("bar");
 
         assertEquals("bar", biAdapted.getAttribute("foo"));
     }
 
     @Test
-    public void testGetAttribute() {
+    void testGetAttribute() {
         when(original.getAttribute("foo", 0)).thenReturn("bar");
 
         assertEquals("bar", biAdapted.getAttribute("foo", 0));
     }
 
     @Test
-    public void findAttribute() {
+    void findAttribute() {
         when(original.findAttribute("foo")).thenReturn("bar");
 
         assertEquals("bar", biAdapted.findAttribute("foo"));
     }
 
     @Test
-    public void removeAttribute() {
+    void removeAttribute() {
         biAdapted.removeAttribute("foo");
 
         verify(original).removeAttribute("foo");
     }
 
     @Test
-    public void testRemoveAttribute() {
+    void testRemoveAttribute() {
         biAdapted.removeAttribute("foo", 0);
 
         verify(original).removeAttribute("foo", 0);
     }
 
     @Test
-    public void getAttributesScope() {
+    void getAttributesScope() {
         when(original.getAttributesScope("foo")).thenReturn(0);
 
         assertEquals(0, biAdapted.getAttributesScope("foo"));
     }
 
     @Test
-    public void getAttributeNamesInScope() {
+    void getAttributeNamesInScope() {
         when(original.getAttributeNamesInScope(0)).thenReturn(enumeration(List.of("foo")));
 
         assertEquals("foo", biAdapted.getAttributeNamesInScope(0).nextElement());
     }
 
     @Test
-    public void getOut() {
+    void getOut() {
         assertThrows(UnsupportedOperationException.class, () -> biAdapted.getOut());
     }
 
     @Test
-    public void getExpressionEvaluator() {
+    void getExpressionEvaluator() {
         assertThrows(UnsupportedOperationException.class, () -> biAdapted.getExpressionEvaluator());
     }
 
     @Test
-    public void getVariableResolver() {
+    void getVariableResolver() {
         assertThrows(UnsupportedOperationException.class, () -> biAdapted.getVariableResolver());
     }
 
     @Test
-    public void getELContext() {
+    void getELContext() {
         assertThrows(UnsupportedOperationException.class, () -> biAdapted.getELContext());
     }
 }
