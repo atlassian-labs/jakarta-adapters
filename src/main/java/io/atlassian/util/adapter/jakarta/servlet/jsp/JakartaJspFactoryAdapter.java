@@ -41,11 +41,11 @@ public class JakartaJspFactoryAdapter extends JspFactory {
 
     @Override
     public JspEngineInfo getEngineInfo() {
-        throw new UnsupportedOperationException();
+        return applyIfNonNull(delegate.getEngineInfo(), JakartaJspEngineInfoAdapter::new);
     }
 
     @Override
     public JspApplicationContext getJspApplicationContext(ServletContext servletContext) {
-        throw new UnsupportedOperationException();
+        return applyIfNonNull(delegate.getJspApplicationContext(asJavaX(servletContext)), JakartaJspApplicationContextAdapter::new);
     }
 }

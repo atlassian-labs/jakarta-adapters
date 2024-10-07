@@ -1,6 +1,8 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
+import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXExpressionEvaluatorAdapter;
+import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXVariableResolverAdapter;
 
 import javax.el.ELContext;
 import javax.servlet.Servlet;
@@ -21,6 +23,7 @@ import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
+import static io.atlassian.util.adapter.javax.JavaXJspAdapters.asJavaXJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
@@ -175,21 +178,21 @@ public class JavaXPageContextAdapter extends PageContext {
 
     @Override
     public JspWriter getOut() {
-        throw new UnsupportedOperationException();
+        return JavaXJspWriterAdapter.from(delegate.getOut());
     }
 
     @Override
     public ExpressionEvaluator getExpressionEvaluator() {
-        throw new UnsupportedOperationException();
+        return applyIfNonNull(delegate.getExpressionEvaluator(), JavaXExpressionEvaluatorAdapter::new);
     }
 
     @Override
     public VariableResolver getVariableResolver() {
-        throw new UnsupportedOperationException();
+        return applyIfNonNull(delegate.getVariableResolver(), JavaXVariableResolverAdapter::new);
     }
 
     @Override
     public ELContext getELContext() {
-        throw new UnsupportedOperationException();
+        return asJavaXJsp(delegate.getELContext());
     }
 }

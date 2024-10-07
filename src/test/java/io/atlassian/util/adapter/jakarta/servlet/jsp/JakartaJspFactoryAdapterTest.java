@@ -2,8 +2,10 @@ package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspFactoryAdapter;
 import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.jsp.JspEngineInfo;
 import jakarta.servlet.jsp.JspFactory;
 import jakarta.servlet.jsp.PageContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -29,7 +30,7 @@ class JakartaJspFactoryAdapterTest {
     private JspFactory biAdapted;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         biAdapted = new JakartaJspFactoryAdapter(new JavaXJspFactoryAdapter(original));
     }
 
@@ -68,11 +69,20 @@ class JakartaJspFactoryAdapterTest {
 
     @Test
     void getEngineInfo() {
-        assertThrows(UnsupportedOperationException.class, () -> biAdapted.getEngineInfo());
+        var engineInfo = mock(JspEngineInfo.class);
+        when(engineInfo.getSpecificationVersion()).thenReturn("foo");
+        when(original.getEngineInfo()).thenReturn(engineInfo);
+
+        assertEquals("foo", biAdapted.getEngineInfo().getSpecificationVersion());
     }
 
     @Test
     void getJspApplicationContext() {
-        assertThrows(UnsupportedOperationException.class, () -> biAdapted.getJspApplicationContext(null));
+        var servletContext = mock(ServletContext.class);
+        when(servletContext.getContextPath()).thenReturn("foo");
+
+        biAdapted.getJspApplicationContext(servletContext);
+
+        verify(original).getJspApplicationContext(argThat(sC -> sC.getContextPath().equals("foo")));
     }
 }

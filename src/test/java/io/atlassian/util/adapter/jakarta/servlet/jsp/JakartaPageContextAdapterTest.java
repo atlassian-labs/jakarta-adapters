@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXPageContextAdapter;
+import jakarta.el.ELContext;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -8,7 +9,10 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.el.ExpressionEvaluator;
+import jakarta.servlet.jsp.el.VariableResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +23,7 @@ import java.util.List;
 
 import static java.util.Collections.enumeration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -225,22 +229,39 @@ class JakartaPageContextAdapterTest {
     }
 
     @Test
-    void getOut() {
-        assertThrows(UnsupportedOperationException.class, () -> biAdapted.getOut());
+    void getOut() throws Exception {
+        var writer = mock(JspWriter.class);
+        when(original.getOut()).thenReturn(writer);
+
+        biAdapted.getOut().newLine();
+
+        verify(writer).newLine();
     }
 
     @Test
-    void getExpressionEvaluator() {
-        assertThrows(UnsupportedOperationException.class, () -> biAdapted.getExpressionEvaluator());
+    void getExpressionEvaluator() throws Exception {
+        var exprEvaluator = mock(ExpressionEvaluator.class);
+        when(exprEvaluator.evaluate("foo", String.class, null, null)).thenReturn("bar");
+        when(original.getExpressionEvaluator()).thenReturn(exprEvaluator);
+
+        assertEquals("bar", biAdapted.getExpressionEvaluator().evaluate("foo", String.class, null, null));
     }
 
     @Test
-    void getVariableResolver() {
-        assertThrows(UnsupportedOperationException.class, () -> biAdapted.getVariableResolver());
+    void getVariableResolver() throws Exception {
+        var resolver = mock(VariableResolver.class);
+        when(resolver.resolveVariable("foo")).thenReturn("bar");
+        when(original.getVariableResolver()).thenReturn(resolver);
+
+        assertEquals("bar", biAdapted.getVariableResolver().resolveVariable("foo"));
     }
 
     @Test
     void getELContext() {
-        assertThrows(UnsupportedOperationException.class, () -> biAdapted.getELContext());
+        var context = mock(ELContext.class);
+        when(context.isPropertyResolved()).thenReturn(true);
+        when(original.getELContext()).thenReturn(context);
+
+        assertTrue(biAdapted.getELContext().isPropertyResolved());
     }
 }

@@ -31,7 +31,7 @@
 
         <servlet.api5.version>5.0.0</servlet.api5.version>
         <servlet.jsp.api5.version>3.0.0</servlet.jsp.api5.version>
-        <servlet.el.api5.version>5.0.0</servlet.el.api5.version>
+        <servlet.el.api5.version>4.0.0</servlet.el.api5.version>
 
         <junit.version>5.11.0</junit.version>
         <mockito.version>5.13.0</mockito.version>
