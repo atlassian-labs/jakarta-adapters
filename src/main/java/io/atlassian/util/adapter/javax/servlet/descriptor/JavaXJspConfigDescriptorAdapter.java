@@ -5,8 +5,8 @@ import javax.servlet.descriptor.JspPropertyGroupDescriptor;
 import javax.servlet.descriptor.TaglibDescriptor;
 import java.util.Collection;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.transformIfNonNull;
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
 
 public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor {
 
@@ -18,16 +18,11 @@ public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor {
 
     @Override
     public Collection<JspPropertyGroupDescriptor> getJspPropertyGroups() {
-        var jspPropertyGroups = delegate.getJspPropertyGroups();
-        if (jspPropertyGroups == null) {
-            return null;
-        }
-        return jspPropertyGroups.stream().map(JavaXJspPropertyGroupDescriptorAdapter::new).collect(toList());
+        return transformIfNonNull(delegate.getJspPropertyGroups(), JavaXJspPropertyGroupDescriptorAdapter::new);
     }
 
     @Override
     public Collection<TaglibDescriptor> getTaglibs() {
-        var taglibs = delegate.getTaglibs();
-        return taglibs.stream().map(JavaXTaglibDescriptorAdapter::new).collect(toList());
+        return transformIfNonNull(delegate.getTaglibs(), JavaXTaglibDescriptorAdapter::new);
     }
 }

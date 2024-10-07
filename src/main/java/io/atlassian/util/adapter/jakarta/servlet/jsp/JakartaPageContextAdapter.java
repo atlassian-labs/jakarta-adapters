@@ -38,11 +38,7 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
                            boolean b,
                            int i,
                            boolean b1) throws IOException, IllegalStateException, IllegalArgumentException {
-        delegate.initialize(
-                asJavaX(servlet),
-                asJavaX(servletRequest),
-                asJavaX(servletResponse),
-                s, b, i, b1);
+        delegate.initialize(asJavaX(servlet), asJavaX(servletRequest), asJavaX(servletResponse), s, b, i, b1);
     }
 
     @Override

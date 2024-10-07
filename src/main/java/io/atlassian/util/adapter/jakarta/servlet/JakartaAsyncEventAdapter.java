@@ -5,6 +5,7 @@ import jakarta.servlet.AsyncEvent;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
+import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
@@ -24,12 +25,12 @@ public class JakartaAsyncEventAdapter extends AsyncEvent {
 
     @Override
     public ServletRequest getSuppliedRequest() {
-        return JakartaServletRequestAdapter.from(delegate.getSuppliedRequest());
+        return asJakarta(delegate.getSuppliedRequest());
     }
 
     @Override
     public ServletResponse getSuppliedResponse() {
-        return JakartaServletResponseAdapter.from(delegate.getSuppliedResponse());
+        return asJakarta(delegate.getSuppliedResponse());
     }
 
     @Override

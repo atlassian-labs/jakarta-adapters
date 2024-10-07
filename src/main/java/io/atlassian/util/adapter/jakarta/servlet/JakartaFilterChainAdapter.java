@@ -1,7 +1,5 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
-import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -9,6 +7,7 @@ import jakarta.servlet.ServletResponse;
 
 import java.io.IOException;
 
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaFilterChainAdapter implements FilterChain {
@@ -22,7 +21,7 @@ public class JakartaFilterChainAdapter implements FilterChain {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException {
         try {
-            delegate.doFilter(JavaXServletRequestAdapter.from(request), JavaXServletResponseAdapter.from(response));
+            delegate.doFilter(asJavaX(request), asJavaX(response));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }

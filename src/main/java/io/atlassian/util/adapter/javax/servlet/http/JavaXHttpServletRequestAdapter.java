@@ -20,8 +20,8 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
+import static io.atlassian.util.adapter.util.WrapperUtil.transformIfNonNull;
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
 
 public class JavaXHttpServletRequestAdapter extends JavaXServletRequestAdapter implements HttpServletRequest {
 
@@ -216,10 +216,7 @@ public class JavaXHttpServletRequestAdapter extends JavaXServletRequestAdapter i
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
-        if (parts == null) {
-            return null;
-        }
-        return parts.stream().map(JavaXPartAdapter::new).collect(toList());
+        return transformIfNonNull(parts, JavaXPartAdapter::new);
     }
 
     @Override

@@ -5,8 +5,8 @@ import javax.servlet.ServletSecurityElement;
 import javax.servlet.annotation.ServletSecurity;
 import java.util.Collection;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.transformIfNonNull;
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
 
 public class JavaXServletSecurityElementAdapter extends ServletSecurityElement {
 
@@ -18,11 +18,7 @@ public class JavaXServletSecurityElementAdapter extends ServletSecurityElement {
 
     @Override
     public Collection<HttpMethodConstraintElement> getHttpMethodConstraints() {
-        var constraints = delegate.getHttpMethodConstraints();
-        if (constraints == null) {
-            return null;
-        }
-        return constraints.stream().map(JavaXHttpMethodConstraintElementAdapter::new).collect(toList());
+        return transformIfNonNull(delegate.getHttpMethodConstraints(), JavaXHttpMethodConstraintElementAdapter::new);
     }
 
     @Override

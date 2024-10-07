@@ -1,7 +1,5 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
-import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -9,6 +7,7 @@ import jakarta.servlet.ServletResponse;
 
 import java.io.IOException;
 
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaRequestDispatcherAdapter implements RequestDispatcher {
@@ -21,7 +20,7 @@ public class JakartaRequestDispatcherAdapter implements RequestDispatcher {
     @Override
     public void forward(ServletRequest request, ServletResponse response) throws ServletException, IOException {
         try {
-            delegate.forward(JavaXServletRequestAdapter.from(request), JavaXServletResponseAdapter.from(response));
+            delegate.forward(asJavaX(request), asJavaX(response));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -30,7 +29,7 @@ public class JakartaRequestDispatcherAdapter implements RequestDispatcher {
     @Override
     public void include(ServletRequest request, ServletResponse response) throws ServletException, IOException {
         try {
-            delegate.include(JavaXServletRequestAdapter.from(request), JavaXServletResponseAdapter.from(response));
+            delegate.include(asJavaX(request), asJavaX(response));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }
