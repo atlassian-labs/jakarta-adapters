@@ -1,5 +1,7 @@
 # Jakarta Adapters
 
+**Maven Coordinates:** `io.atlassian.util.adapter:jakarta-adapters`
+
 An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.
 
 Simply bundle this library with your application and wrap objects in the appropriate adapter. You must also bundle the
