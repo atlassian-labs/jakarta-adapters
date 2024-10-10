@@ -1,7 +1,5 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
-import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -44,7 +42,7 @@ public class JakartaServletAdapter implements Servlet {
     public void service(ServletRequest servletRequest,
                         ServletResponse servletResponse) throws ServletException, IOException {
         try {
-            delegate.service(JavaXServletRequestAdapter.from(servletRequest), JavaXServletResponseAdapter.from(servletResponse));
+            delegate.service(asJavaX(servletRequest), asJavaX(servletResponse));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }

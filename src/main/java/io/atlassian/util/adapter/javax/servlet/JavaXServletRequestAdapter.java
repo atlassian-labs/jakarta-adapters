@@ -1,7 +1,5 @@
 package io.atlassian.util.adapter.javax.servlet;
 
-import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
-import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
 
 import javax.servlet.AsyncContext;
@@ -18,6 +16,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -206,9 +205,7 @@ public class JavaXServletRequestAdapter implements ServletRequest {
     public AsyncContext startAsync(ServletRequest servletRequest,
                                    ServletResponse servletResponse) throws IllegalStateException {
         return applyIfNonNull(
-                delegate.startAsync(
-                        JakartaServletRequestAdapter.from(servletRequest),
-                        JakartaServletResponseAdapter.from(servletResponse)),
+                delegate.startAsync(asJakarta(servletRequest), asJakarta(servletResponse)),
                 JavaXAsyncContextAdapter::new);
     }
 

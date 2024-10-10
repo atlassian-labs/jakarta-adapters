@@ -2,8 +2,6 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncListenerAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.AsyncListener;
 import jakarta.servlet.ServletContext;
@@ -11,6 +9,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
+import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
@@ -24,12 +24,12 @@ public class JakartaAsyncContextAdapter implements AsyncContext {
 
     @Override
     public ServletRequest getRequest() {
-        return JakartaServletRequestAdapter.from(delegate.getRequest());
+        return asJakarta(delegate.getRequest());
     }
 
     @Override
     public ServletResponse getResponse() {
-        return JakartaServletResponseAdapter.from(delegate.getResponse());
+        return asJakarta(delegate.getResponse());
     }
 
     @Override
@@ -69,10 +69,7 @@ public class JakartaAsyncContextAdapter implements AsyncContext {
 
     @Override
     public void addListener(AsyncListener listener, ServletRequest servletRequest, ServletResponse servletResponse) {
-        delegate.addListener(
-                applyIfNonNull(listener, JavaXAsyncListenerAdapter::new),
-                JavaXServletRequestAdapter.from(servletRequest),
-                JavaXServletResponseAdapter.from(servletResponse));
+        delegate.addListener(applyIfNonNull(listener, JavaXAsyncListenerAdapter::new), asJavaX(servletRequest), asJavaX(servletResponse));
     }
 
     @Override

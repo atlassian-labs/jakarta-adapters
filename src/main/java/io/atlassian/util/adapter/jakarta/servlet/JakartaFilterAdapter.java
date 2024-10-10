@@ -2,8 +2,6 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterChainAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterConfigAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -13,6 +11,7 @@ import jakarta.servlet.ServletResponse;
 
 import java.io.IOException;
 
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
@@ -42,10 +41,7 @@ public class JakartaFilterAdapter implements Filter {
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         try {
-            delegate.doFilter(
-                    JavaXServletRequestAdapter.from(servletRequest),
-                    JavaXServletResponseAdapter.from(servletResponse),
-                    applyIfNonNull(filterChain, JavaXFilterChainAdapter::new));
+            delegate.doFilter(asJavaX(servletRequest), asJavaX(servletResponse), applyIfNonNull(filterChain, JavaXFilterChainAdapter::new));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }

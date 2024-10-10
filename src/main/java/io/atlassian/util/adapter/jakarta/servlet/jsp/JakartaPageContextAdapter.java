@@ -1,6 +1,9 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpSessionAdapter;
+import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaExpressionEvaluatorAdapter;
+import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaVariableResolverAdapter;
+import jakarta.el.ELContext;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -17,6 +20,7 @@ import java.util.Enumeration;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
+import static io.atlassian.util.adapter.jakarta.JakartaJspAdapters.asJakartaJsp;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -38,11 +42,7 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
                            boolean b,
                            int i,
                            boolean b1) throws IOException, IllegalStateException, IllegalArgumentException {
-        delegate.initialize(
-                asJavaX(servlet),
-                asJavaX(servletRequest),
-                asJavaX(servletResponse),
-                s, b, i, b1);
+        delegate.initialize(asJavaX(servlet), asJavaX(servletRequest), asJavaX(servletResponse), s, b, i, b1);
     }
 
     @Override
@@ -177,21 +177,21 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
 
     @Override
     public JspWriter getOut() {
-        throw new UnsupportedOperationException();
+        return JakartaJspWriterAdapter.from(delegate.getOut());
     }
 
     @Override
     public ExpressionEvaluator getExpressionEvaluator() {
-        throw new UnsupportedOperationException();
+        return applyIfNonNull(delegate.getExpressionEvaluator(), JakartaExpressionEvaluatorAdapter::new);
     }
 
     @Override
     public VariableResolver getVariableResolver() {
-        throw new UnsupportedOperationException();
+        return applyIfNonNull(delegate.getVariableResolver(), JakartaVariableResolverAdapter::new);
     }
 
     @Override
-    public jakarta.el.ELContext getELContext() {
-        throw new UnsupportedOperationException();
+    public ELContext getELContext() {
+        return asJakartaJsp(delegate.getELContext());
     }
 }
