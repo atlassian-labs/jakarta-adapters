@@ -10,7 +10,7 @@
     <artifactId>jakarta-adapters</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>Jakarta Adapters</name>
-    <description>A collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.</description>
+    <description>An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.</description>
     <scm>
         <connection>scm:git:git@bitbucket.org:atlassian/jakarta-adapters.git</connection>
         <developerConnection>scm:git:git@bitbucket.org:atlassian/jakarta-adapters.git</developerConnection>

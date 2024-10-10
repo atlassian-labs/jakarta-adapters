@@ -1,6 +1,6 @@
 # Jakarta Adapters
 
-**Maven Coordinates:** `io.atlassian.util.adapter:jakarta-adapters`
+[![Maven Central](https://img.shields.io/maven-central/v/io.atlassian.util.adapter/jakarta-adapters?style=flat-square&logo=apache-maven&color=276bc0)](https://central.sonatype.com/artifact/io.atlassian.util.adapter/jakarta-adapters)
 
 An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.
 
