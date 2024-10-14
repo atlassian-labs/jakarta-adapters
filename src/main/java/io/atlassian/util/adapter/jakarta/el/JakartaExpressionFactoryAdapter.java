@@ -50,7 +50,7 @@ public class JakartaExpressionFactoryAdapter extends ExpressionFactory {
     }
 
     @Override
-    public Object coerceToType(Object obj, Class<?> targetType) {
-        return delegate.coerceToType(obj, targetType);
+    public <T> T coerceToType(Object obj, Class<T> targetType) {
+        return (T) delegate.coerceToType(obj, targetType);
     }
 }

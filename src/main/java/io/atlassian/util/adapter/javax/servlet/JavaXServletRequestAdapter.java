@@ -168,7 +168,7 @@ public class JavaXServletRequestAdapter implements ServletRequest {
 
     @Override
     public String getRealPath(String path) {
-        return delegate.getRealPath(path);
+        return delegate.getServletContext().getRealPath(path);
     }
 
     @Override

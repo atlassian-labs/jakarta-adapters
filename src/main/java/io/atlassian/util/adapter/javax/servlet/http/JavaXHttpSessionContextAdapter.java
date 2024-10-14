@@ -4,23 +4,22 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 import java.util.Enumeration;
 
-import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
-import static java.util.Objects.requireNonNull;
+import static java.util.Collections.emptyEnumeration;
 
 public class JavaXHttpSessionContextAdapter implements HttpSessionContext {
-    private final jakarta.servlet.http.HttpSessionContext delegate;
 
-    public JavaXHttpSessionContextAdapter(jakarta.servlet.http.HttpSessionContext delegate) {
-        this.delegate = requireNonNull(delegate);
+    public static final HttpSessionContext INSTANCE = new JavaXHttpSessionContextAdapter();
+
+    private JavaXHttpSessionContextAdapter() {
     }
 
     @Override
     public HttpSession getSession(String sessionId) {
-        return applyIfNonNull(delegate.getSession(sessionId), JavaXHttpSessionAdapter::new);
+        return null;
     }
 
     @Override
     public Enumeration<String> getIds() {
-        return delegate.getIds();
+        return emptyEnumeration();
     }
 }

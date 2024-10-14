@@ -25,6 +25,12 @@ public class JakartaJspPropertyGroupDescriptorAdapter implements JspPropertyGrou
     }
 
     @Override
+    public String getErrorOnELNotFound() {
+        // Unadaptable
+        return Boolean.FALSE.toString();
+    }
+
+    @Override
     public String getPageEncoding() {
         return delegate.getPageEncoding();
     }

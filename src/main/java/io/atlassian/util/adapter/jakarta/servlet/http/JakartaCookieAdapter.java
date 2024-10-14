@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import jakarta.servlet.http.Cookie;
 
+import java.util.Map;
+
 import static java.util.Objects.requireNonNull;
 
 public class JakartaCookieAdapter extends Cookie {
@@ -24,6 +26,23 @@ public class JakartaCookieAdapter extends Cookie {
     @Override
     public String getComment() {
         return delegate.getComment();
+    }
+
+    @Override
+    public void setAttribute(String name, String value) {
+        // Unadaptable
+    }
+
+    @Override
+    public String getAttribute(String name) {
+        // Unadaptable
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getAttributes() {
+        // Unadaptable
+        return Map.of();
     }
 
     @Override

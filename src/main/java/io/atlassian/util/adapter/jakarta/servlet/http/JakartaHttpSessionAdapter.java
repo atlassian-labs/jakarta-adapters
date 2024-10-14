@@ -3,7 +3,6 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpSessionContext;
 
 import java.util.Enumeration;
 
@@ -49,17 +48,17 @@ public class JakartaHttpSessionAdapter implements HttpSession {
         return delegate.getMaxInactiveInterval();
     }
 
-    @Override
-    public HttpSessionContext getSessionContext() {
-        return applyIfNonNull(delegate.getSessionContext(), JakartaHttpSessionContextAdapter::new);
-    }
+    // @Override Servlet API 5.0
+    // public jakarta.servlet.http.HttpSessionContext getSessionContext() {
+    //     return applyIfNonNull(delegate.getSessionContext(), JakartaHttpSessionContextAdapter::new);
+    // }
 
     @Override
     public Object getAttribute(String name) {
         return asJakartaIfJavaX(delegate.getAttribute(name));
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public Object getValue(String name) {
         return asJakartaIfJavaX(delegate.getValue(name));
     }
@@ -69,7 +68,7 @@ public class JakartaHttpSessionAdapter implements HttpSession {
         return delegate.getAttributeNames();
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public String[] getValueNames() {
         return delegate.getValueNames();
     }
@@ -79,7 +78,7 @@ public class JakartaHttpSessionAdapter implements HttpSession {
         delegate.setAttribute(name, asJavaXIfJakarta(value));
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public void putValue(String name, Object value) {
         delegate.putValue(name, asJavaXIfJakarta(value));
     }
@@ -89,7 +88,7 @@ public class JakartaHttpSessionAdapter implements HttpSession {
         delegate.removeAttribute(name);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public void removeValue(String name) {
         delegate.removeAttribute(name);
     }

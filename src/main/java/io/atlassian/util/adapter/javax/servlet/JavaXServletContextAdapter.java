@@ -3,7 +3,6 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
-import io.atlassian.util.adapter.java.util.EnumerationAdapter;
 import io.atlassian.util.adapter.javax.servlet.descriptor.JavaXJspConfigDescriptorAdapter;
 
 import javax.servlet.Filter;
@@ -30,6 +29,7 @@ import java.util.Set;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
+import static java.util.Collections.emptyEnumeration;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
 
@@ -103,25 +103,20 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public Servlet getServlet(String name) throws ServletException {
-        try {
-            return applyIfNonNull(delegate.getServlet(name), JavaXServletAdapter::new);
-        } catch (jakarta.servlet.ServletException e) {
-            throw new ServletException(e);
-        }
+        // Unadaptable
+        return null;
     }
 
     @Override
     public Enumeration<Servlet> getServlets() {
-        var servlets = delegate.getServlets();
-        if (servlets == null) {
-            return null;
-        }
-        return new EnumerationAdapter<>(delegate.getServlets(), JavaXServletAdapter::new);
+        // Unadaptable
+        return emptyEnumeration();
     }
 
     @Override
     public Enumeration<String> getServletNames() {
-        return delegate.getServletNames();
+        // Unadaptable
+        return emptyEnumeration();
     }
 
     @Override
@@ -131,7 +126,7 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public void log(Exception exception, String msg) {
-        delegate.log(exception, msg);
+        log(msg, exception);
     }
 
     @Override

@@ -151,31 +151,6 @@ class JakartaServletContextAdapterTest {
     }
 
     @Test
-    void getServlet() throws Exception {
-        var retValue = mock(Servlet.class);
-        when(retValue.getServletInfo()).thenReturn("info");
-        when(originalContext.getServlet("name")).thenReturn(retValue);
-
-        assertEquals("info", biAdaptedContext.getServlet("name").getServletInfo());
-    }
-
-    @Test
-    void getServlets() {
-        var innerServlet = mock(Servlet.class);
-        when(innerServlet.getServletInfo()).thenReturn("info");
-        when(originalContext.getServlets()).thenReturn(enumeration(List.of(innerServlet)));
-
-        assertEquals("info", biAdaptedContext.getServlets().nextElement().getServletInfo());
-    }
-
-    @Test
-    void getServletNames() {
-        when(originalContext.getServletNames()).thenReturn(enumeration(List.of("value")));
-
-        assertEquals("value", biAdaptedContext.getServletNames().nextElement());
-    }
-
-    @Test
     void log() {
         biAdaptedContext.log("message");
 
@@ -188,14 +163,6 @@ class JakartaServletContextAdapterTest {
         biAdaptedContext.log("message", exception);
 
         verify(originalContext).log("message", exception);
-    }
-
-    @Test
-    void testLog1() {
-        var exception = new Exception();
-        biAdaptedContext.log(exception, "message");
-
-        verify(originalContext).log(exception, "message");
     }
 
     @Test

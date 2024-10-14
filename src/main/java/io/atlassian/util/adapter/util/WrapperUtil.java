@@ -1,6 +1,9 @@
 package io.atlassian.util.adapter.util;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.function.Function;
 
@@ -23,5 +26,10 @@ public class WrapperUtil {
             return null;
         }
         return delegates.stream().map(delegate -> applyIfNonNull(delegate, wrapper)).toList();
+    }
+
+    public static <T> T[] enumerationToArray(Enumeration<T> enumeration, Class<T> clazz) {
+        List<T> list = Collections.list(enumeration);
+        return list.toArray((T[]) Array.newInstance(clazz, list.size()));
     }
 }
