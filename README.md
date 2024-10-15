@@ -32,7 +32,7 @@ You may prefer the solution offered by this library if you desire to:
 
 ### License
 
-Distribution of this library is under the terms of the [Apache License, Version 2.0](LICENSE).
+Distribution of this library is under the terms of the [Apache License, Version 2.0](LICENSE.txt).
 
 ### Disclaimer
 
