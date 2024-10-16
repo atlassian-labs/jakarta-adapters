@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta;
 
+import jakarta.servlet.ServletContextEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -8,12 +9,14 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -130,6 +133,18 @@ class JakartaAdaptersTest {
 
         assertThat(proxy.getServletName()).isEqualTo("foo");
         verify(delegate).getServletName();
+    }
+
+    @Test
+    void servletContextListener() {
+        var delegate = mock(ServletContextListener.class);
+        var servletContextEvent = mock(ServletContextEvent.class);
+        when(servletContextEvent.getServletContext()).thenReturn(mock(jakarta.servlet.ServletContext.class));
+
+        var proxy = JakartaAdapters.asJakarta(delegate);
+        proxy.contextInitialized(servletContextEvent);
+
+        verify(delegate).contextInitialized(any());
     }
 
     @Test

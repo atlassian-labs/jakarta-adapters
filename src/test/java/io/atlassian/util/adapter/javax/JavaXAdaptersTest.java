@@ -4,6 +4,7 @@ import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.servlet.ServletContextEvent;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -129,6 +133,18 @@ class JavaXAdaptersTest {
 
         assertThat(proxy.getServletName()).isEqualTo("foo");
         verify(delegate).getServletName();
+    }
+
+    @Test
+    void servletContextListener() {
+        var delegate = mock(ServletContextListener.class);
+        var servletContextEvent = mock(ServletContextEvent.class);
+        when(servletContextEvent.getServletContext()).thenReturn(mock(javax.servlet.ServletContext.class));
+
+        var proxy = JavaXAdapters.asJavaX(delegate);
+        proxy.contextInitialized(servletContextEvent);
+
+        verify(delegate).contextInitialized(any());
     }
 
     @Test
