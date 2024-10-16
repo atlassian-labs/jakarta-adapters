@@ -101,7 +101,7 @@ public class JakartaServletContextAdapter implements ServletContext {
         return applyIfNonNull(delegate.getNamedDispatcher(name), JakartaRequestDispatcherAdapter::new);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public Servlet getServlet(String name) throws ServletException {
         try {
             return applyIfNonNull(delegate.getServlet(name), JakartaServletAdapter::new);
@@ -110,7 +110,7 @@ public class JakartaServletContextAdapter implements ServletContext {
         }
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public Enumeration<Servlet> getServlets() {
         var servlets = delegate.getServlets();
         if (servlets == null) {
@@ -119,7 +119,7 @@ public class JakartaServletContextAdapter implements ServletContext {
         return new EnumerationAdapter<>(delegate.getServlets(), JakartaServletAdapter::new);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public Enumeration<String> getServletNames() {
         return delegate.getServletNames();
     }
@@ -129,7 +129,7 @@ public class JakartaServletContextAdapter implements ServletContext {
         delegate.log(msg);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public void log(Exception exception, String msg) {
         delegate.log(exception, msg);
     }

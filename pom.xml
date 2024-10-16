@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.atlassian.util.adapter</groupId>
     <artifactId>jakarta-adapters</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>Jakarta Adapters</name>
     <description>An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.</description>
     <scm>
@@ -25,13 +25,13 @@
         </license>
     </licenses>
     <properties>
-        <servlet.api4.version>4.0.1</servlet.api4.version>
-        <servlet.jsp.api4.version>2.3.3</servlet.jsp.api4.version>
-        <servlet.el.api4.version>3.0.0</servlet.el.api4.version>
+        <servlet.tc90.version>4.0.1</servlet.tc90.version>
+        <servlet.jsp.tc90.version>2.3.3</servlet.jsp.tc90.version>
+        <servlet.el.tc90.version>3.0.0</servlet.el.tc90.version>
 
-        <servlet.api5.version>5.0.0</servlet.api5.version>
-        <servlet.jsp.api5.version>3.0.0</servlet.jsp.api5.version>
-        <servlet.el.api5.version>4.0.0</servlet.el.api5.version>
+        <servlet.tc101.version>6.0.0</servlet.tc101.version>
+        <servlet.jsp.tc101.version>3.1.1</servlet.jsp.tc101.version>
+        <servlet.el.tc101.version>5.0.1</servlet.el.tc101.version>
 
         <junit.version>5.11.0</junit.version>
         <mockito.version>5.13.0</mockito.version>
@@ -66,37 +66,37 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>${servlet.api5.version}</version>
+            <version>${servlet.tc101.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.api4.version}</version>
+            <version>${servlet.tc90.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
             <artifactId>jakarta.servlet.jsp-api</artifactId>
-            <version>${servlet.jsp.api5.version}</version>
+            <version>${servlet.jsp.tc101.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>${servlet.jsp.api4.version}</version>
+            <version>${servlet.jsp.tc90.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.el</groupId>
             <artifactId>jakarta.el-api</artifactId>
-            <version>${servlet.el.api5.version}</version>
+            <version>${servlet.el.tc101.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>javax.el-api</artifactId>
-            <version>${servlet.el.api4.version}</version>
+            <version>${servlet.el.tc90.version}</version>
             <scope>provided</scope>
         </dependency>
 

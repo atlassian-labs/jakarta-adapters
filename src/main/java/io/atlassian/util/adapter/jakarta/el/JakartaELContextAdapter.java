@@ -125,7 +125,7 @@ public class JakartaELContextAdapter extends ELContext {
     }
 
     @Override
-    public Object convertToType(Object obj, Class<?> targetType) {
-        return delegate.convertToType(obj, targetType);
+    public <T> T convertToType(Object obj, Class<T> targetType) {
+        return (T) delegate.convertToType(obj, targetType);
     }
 }

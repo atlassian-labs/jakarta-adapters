@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
+import static io.atlassian.util.adapter.util.WrapperUtil.enumerationToArray;
 import static java.util.Objects.requireNonNull;
 
 public class JavaXHttpSessionAdapter implements HttpSession {
@@ -51,7 +52,8 @@ public class JavaXHttpSessionAdapter implements HttpSession {
 
     @Override
     public HttpSessionContext getSessionContext() {
-        return applyIfNonNull(delegate.getSessionContext(), JavaXHttpSessionContextAdapter::new);
+        // Unadaptable
+        return JavaXHttpSessionContextAdapter.INSTANCE;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class JavaXHttpSessionAdapter implements HttpSession {
 
     @Override
     public Object getValue(String name) {
-        return asJavaXIfJakarta(delegate.getValue(name));
+        return getAttribute(name);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class JavaXHttpSessionAdapter implements HttpSession {
 
     @Override
     public String[] getValueNames() {
-        return delegate.getValueNames();
+        return enumerationToArray(getAttributeNames(), String.class);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class JavaXHttpSessionAdapter implements HttpSession {
 
     @Override
     public void putValue(String name, Object value) {
-        delegate.putValue(name, asJakartaIfJavaX(value));
+        setAttribute(name, asJakartaIfJavaX(value));
     }
 
     @Override

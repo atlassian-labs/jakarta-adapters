@@ -49,12 +49,12 @@ public class JavaXHttpServletResponseAdapter extends JavaXServletResponseAdapter
 
     @Override
     public String encodeUrl(String url) {
-        return delegate.encodeUrl(url);
+        return encodeURL(url);
     }
 
     @Override
     public String encodeRedirectUrl(String url) {
-        return delegate.encodeRedirectUrl(url);
+        return encodeRedirectURL(url);
     }
 
     @Override
@@ -109,7 +109,8 @@ public class JavaXHttpServletResponseAdapter extends JavaXServletResponseAdapter
 
     @Override
     public void setStatus(int sc, String sm) {
-        delegate.setStatus(sc, sm);
+        // Unadaptable
+        setStatus(sc);
     }
 
     @Override

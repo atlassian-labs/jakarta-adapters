@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import jakarta.servlet.SessionCookieConfig;
 
+import java.util.Map;
+
 import static java.util.Objects.requireNonNull;
 
 public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig {
@@ -80,5 +82,22 @@ public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig {
     @Override
     public int getMaxAge() {
         return delegate.getMaxAge();
+    }
+
+    @Override
+    public void setAttribute(String name, String value) {
+        // Unadaptable
+    }
+
+    @Override
+    public String getAttribute(String name) {
+        // Unadaptable
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getAttributes() {
+        // Unadaptable
+        return Map.of();
     }
 }

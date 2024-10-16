@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.atlassian.util.adapter/jakarta-adapters?style=flat-square&logo=apache-maven&color=276bc0)](https://central.sonatype.com/artifact/io.atlassian.util.adapter/jakarta-adapters)
 
-An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.
+An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 6.0 and vice versa.
 
 Simply bundle this library with your application and wrap objects in the appropriate adapter. You must also bundle the
 Servlet API dependencies that are not already provided by the container/environment.
@@ -19,7 +19,7 @@ this solution suitable.
 ## Use Cases
 
 This library of adapters is useful when you want to integrate a dependency that relies upon Servlet API 4.0 in a Servlet
-API 5.0+ environment, or vice versa. They serve as an alternative to tools such as Eclipse Transformer which transforms
+API 6.0 environment, or vice versa. They serve as an alternative to tools such as Eclipse Transformer which transforms
 the bytecode of your dependencies at build time.
 
 You may prefer the solution offered by this library if you desire to:
@@ -27,8 +27,10 @@ You may prefer the solution offered by this library if you desire to:
 - Avoid additional complexity of build time transformation configuration, including for your project's consumers
 - Improved static analysis and developer experience as your IDE/tools do not need to account for transformed
   dependencies
+- Avoid bytecode errors for dependencies that use deleted APIs as the adapters will bridge to the most compatible
+  alternative or return null/empty values
 - If your project exposes Servlet API 4.0 based APIs, it is possible to provide a transitionary period for consumers by
-  exposing and supporting both Servlet API 4.0 and 5.0+ based APIs simultaneously
+  exposing and supporting both Servlet API 4.0 and 6.0 based APIs simultaneously
 
 ### License
 

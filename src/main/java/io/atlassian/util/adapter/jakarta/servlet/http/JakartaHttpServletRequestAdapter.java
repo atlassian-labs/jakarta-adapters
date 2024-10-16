@@ -176,7 +176,7 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
         return delegate.isRequestedSessionIdFromURL();
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public boolean isRequestedSessionIdFromUrl() {
         return delegate.isRequestedSessionIdFromUrl();
     }

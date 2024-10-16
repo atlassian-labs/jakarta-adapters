@@ -199,20 +199,6 @@ class JakartaHttpServletResponseAdapterTest {
     }
 
     @Test
-    void encodeUrl() {
-        when(originalResponse.encodeUrl("test")).thenReturn("test");
-
-        assertEquals("test", biAdaptedResponse.encodeUrl("test"));
-    }
-
-    @Test
-    void encodeRedirectUrl() {
-        when(originalResponse.encodeRedirectUrl("test")).thenReturn("test");
-
-        assertEquals("test", biAdaptedResponse.encodeRedirectUrl("test"));
-    }
-
-    @Test
     void sendError() throws Exception {
         biAdaptedResponse.sendError(404, "Not Found");
 
@@ -280,13 +266,6 @@ class JakartaHttpServletResponseAdapterTest {
         biAdaptedResponse.setStatus(200);
 
         verify(originalResponse).setStatus(200);
-    }
-
-    @Test
-    void testSetStatus() {
-        biAdaptedResponse.setStatus(200, "OK");
-
-        verify(originalResponse).setStatus(200, "OK");
     }
 
     @Test

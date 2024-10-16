@@ -178,7 +178,7 @@ public class JavaXHttpServletRequestAdapter extends JavaXServletRequestAdapter i
 
     @Override
     public boolean isRequestedSessionIdFromUrl() {
-        return delegate.isRequestedSessionIdFromUrl();
+        return isRequestedSessionIdFromURL();
     }
 
     @Override

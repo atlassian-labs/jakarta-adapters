@@ -47,12 +47,12 @@ public class JakartaHttpServletResponseAdapter extends JakartaServletResponseAda
         return delegate.encodeRedirectURL(url);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public String encodeUrl(String url) {
         return delegate.encodeUrl(url);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public String encodeRedirectUrl(String url) {
         return delegate.encodeRedirectUrl(url);
     }
@@ -107,7 +107,7 @@ public class JakartaHttpServletResponseAdapter extends JakartaServletResponseAda
         delegate.setStatus(sc);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public void setStatus(int sc, String sm) {
         delegate.setStatus(sc, sm);
     }

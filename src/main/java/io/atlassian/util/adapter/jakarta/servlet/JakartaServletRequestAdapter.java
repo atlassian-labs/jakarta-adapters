@@ -4,6 +4,7 @@ import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletRequestA
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConnection;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletRequest;
@@ -166,7 +167,7 @@ public class JakartaServletRequestAdapter implements ServletRequest {
         return applyIfNonNull(delegate.getRequestDispatcher(path), JakartaRequestDispatcherAdapter::new);
     }
 
-    @Override
+    // @Override Servlet API 5.0
     public String getRealPath(String path) {
         return delegate.getRealPath(path);
     }
@@ -227,5 +228,23 @@ public class JakartaServletRequestAdapter implements ServletRequest {
     @Override
     public DispatcherType getDispatcherType() {
         return DispatcherType.valueOf(delegate.getDispatcherType().name());
+    }
+
+    @Override
+    public String getRequestId() {
+        // Unadaptable
+        return "";
+    }
+
+    @Override
+    public String getProtocolRequestId() {
+        // Unadaptable
+        return "";
+    }
+
+    @Override
+    public ServletConnection getServletConnection() {
+        // Unadaptable
+        return null;
     }
 }

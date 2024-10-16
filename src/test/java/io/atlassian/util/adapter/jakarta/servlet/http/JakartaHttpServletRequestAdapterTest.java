@@ -239,13 +239,6 @@ class JakartaHttpServletRequestAdapterTest {
     }
 
     @Test
-    void getRealPath() {
-        when(originalRequest.getRealPath("test")).thenReturn("path");
-
-        assertEquals("path", biAdaptedRequest.getRealPath("test"));
-    }
-
-    @Test
     void getRemotePort() {
         when(originalRequest.getRemotePort()).thenReturn(8080);
 
@@ -554,13 +547,6 @@ class JakartaHttpServletRequestAdapterTest {
         when(originalRequest.isRequestedSessionIdFromURL()).thenReturn(true);
 
         assertTrue(biAdaptedRequest.isRequestedSessionIdFromURL());
-    }
-
-    @Test
-    void isRequestedSessionIdFromUrl() {
-        when(originalRequest.isRequestedSessionIdFromUrl()).thenReturn(true);
-
-        assertTrue(biAdaptedRequest.isRequestedSessionIdFromUrl());
     }
 
     @Test
