@@ -6,6 +6,7 @@ import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterConfigAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletConfigAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextListenerAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletRequestAdapter;
@@ -81,11 +82,11 @@ public final class JakartaAdapters {
         return applyIfNonNull(delegate, JakartaServletResponseAdapter::from);
     }
 
-    /**
-     * Creates an object of type {@link jakarta.servlet.ServletContext} whose methods delegate to a target
-     * {@link javax.servlet.ServletContext}.
-     */
     public static jakarta.servlet.ServletContext asJakarta(javax.servlet.ServletContext delegate) {
         return applyIfNonNull(delegate, JakartaServletContextAdapter::new);
+    }
+
+    public static jakarta.servlet.ServletContextListener asJakarta(javax.servlet.ServletContextListener delegate) {
+        return applyIfNonNull(delegate, JakartaServletContextListenerAdapter::new);
     }
 }

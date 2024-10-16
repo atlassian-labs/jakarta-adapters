@@ -6,6 +6,7 @@ import io.atlassian.util.adapter.javax.servlet.JavaXFilterConfigAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletConfigAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextAdapter;
+import io.atlassian.util.adapter.javax.servlet.JavaXServletContextListenerAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
@@ -83,5 +84,9 @@ public class JavaXAdapters {
 
     public static javax.servlet.ServletContext asJavaX(jakarta.servlet.ServletContext delegate) {
         return applyIfNonNull(delegate, JavaXServletContextAdapter::new);
+    }
+
+    public static javax.servlet.ServletContextListener asJavaX(jakarta.servlet.ServletContextListener delegate) {
+        return applyIfNonNull(delegate, JavaXServletContextListenerAdapter::new);
     }
 }
