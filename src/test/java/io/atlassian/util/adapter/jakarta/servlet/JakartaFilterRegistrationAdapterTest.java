@@ -26,7 +26,7 @@ class JakartaFilterRegistrationAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdapted = new JakartaFilterRegistrationAdapter(new JavaXFilterRegistrationAdapter(original));
+        biAdapted = new JakartaFilterRegistrationAdapter(JavaXFilterRegistrationAdapter.from(original));
     }
 
     @Test

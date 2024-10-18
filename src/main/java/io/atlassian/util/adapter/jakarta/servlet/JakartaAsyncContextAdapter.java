@@ -1,7 +1,7 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.javax.servlet.JavaXAsyncContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncListenerAdapter;
-import io.atlassian.util.adapter.javax.servlet.JavaXServletContextAdapter;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.AsyncListener;
 import jakarta.servlet.ServletContext;
@@ -18,8 +18,19 @@ public class JakartaAsyncContextAdapter implements AsyncContext {
 
     private final javax.servlet.AsyncContext delegate;
 
-    public JakartaAsyncContextAdapter(javax.servlet.AsyncContext delegate) {
+    public static AsyncContext from(javax.servlet.AsyncContext delegate) {
+        if (delegate instanceof JavaXAsyncContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaAsyncContextAdapter::new);
+    }
+
+    JakartaAsyncContextAdapter(javax.servlet.AsyncContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.AsyncContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -49,7 +60,7 @@ public class JakartaAsyncContextAdapter implements AsyncContext {
 
     @Override
     public void dispatch(ServletContext context, String path) {
-        delegate.dispatch(applyIfNonNull(context, JavaXServletContextAdapter::new), path);
+        delegate.dispatch(asJavaX(context), path);
     }
 
     @Override
@@ -64,12 +75,12 @@ public class JakartaAsyncContextAdapter implements AsyncContext {
 
     @Override
     public void addListener(AsyncListener listener) {
-        delegate.addListener(applyIfNonNull(listener, JavaXAsyncListenerAdapter::new));
+        delegate.addListener(JavaXAsyncListenerAdapter.from(listener));
     }
 
     @Override
     public void addListener(AsyncListener listener, ServletRequest servletRequest, ServletResponse servletResponse) {
-        delegate.addListener(applyIfNonNull(listener, JavaXAsyncListenerAdapter::new), asJavaX(servletRequest), asJavaX(servletResponse));
+        delegate.addListener(JavaXAsyncListenerAdapter.from(listener), asJavaX(servletRequest), asJavaX(servletResponse));
     }
 
     @Override

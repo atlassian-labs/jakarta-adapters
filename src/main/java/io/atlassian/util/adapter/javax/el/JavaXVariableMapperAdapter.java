@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.javax.el;
 
 import io.atlassian.util.adapter.jakarta.el.JakartaValueExpressionAdapter;
+import io.atlassian.util.adapter.jakarta.el.JakartaVariableMapperAdapter;
 
 import javax.el.ValueExpression;
 import javax.el.VariableMapper;
@@ -12,17 +13,28 @@ public class JavaXVariableMapperAdapter extends VariableMapper {
 
     private final jakarta.el.VariableMapper delegate;
 
+    public static VariableMapper from(jakarta.el.VariableMapper delegate) {
+        if (delegate instanceof JakartaVariableMapperAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXVariableMapperAdapter::new);
+    }
+
     public JavaXVariableMapperAdapter(jakarta.el.VariableMapper delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
+    public jakarta.el.VariableMapper getDelegate() {
+        return delegate;
+    }
+
     @Override
     public ValueExpression resolveVariable(String s) {
-        return applyIfNonNull(delegate.resolveVariable(s), JavaXValueExpressionAdapter::new);
+        return JavaXValueExpressionAdapter.from(delegate.resolveVariable(s));
     }
 
     @Override
     public ValueExpression setVariable(String s, ValueExpression valueExpression) {
-        return applyIfNonNull(delegate.setVariable(s, applyIfNonNull(valueExpression, JakartaValueExpressionAdapter::new)), JavaXValueExpressionAdapter::new);
+        return JavaXValueExpressionAdapter.from(delegate.setVariable(s, JakartaValueExpressionAdapter.from(valueExpression)));
     }
 }

@@ -1,17 +1,30 @@
 package io.atlassian.util.adapter.jakarta.servlet.descriptor;
 
+import io.atlassian.util.adapter.javax.servlet.descriptor.JavaXJspPropertyGroupDescriptorAdapter;
 import jakarta.servlet.descriptor.JspPropertyGroupDescriptor;
 
 import java.util.Collection;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaJspPropertyGroupDescriptorAdapter implements JspPropertyGroupDescriptor {
 
     private final javax.servlet.descriptor.JspPropertyGroupDescriptor delegate;
 
+    public static JspPropertyGroupDescriptor from(javax.servlet.descriptor.JspPropertyGroupDescriptor delegate) {
+        if (delegate instanceof JavaXJspPropertyGroupDescriptorAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaJspPropertyGroupDescriptorAdapter::new);
+    }
+
     public JakartaJspPropertyGroupDescriptorAdapter(javax.servlet.descriptor.JspPropertyGroupDescriptor delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.descriptor.JspPropertyGroupDescriptor getDelegate() {
+        return delegate;
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletInputStreamAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletOutputStreamAdapter;
+import io.atlassian.util.adapter.javax.servlet.http.JavaXWebConnectionAdapter;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.WebConnection;
@@ -14,18 +15,29 @@ import static java.util.Objects.requireNonNull;
 public class JakartaWebConnectionAdapter implements WebConnection {
     private final javax.servlet.http.WebConnection delegate;
 
-    public JakartaWebConnectionAdapter(javax.servlet.http.WebConnection delegate) {
+    public static WebConnection from(javax.servlet.http.WebConnection delegate) {
+        if (delegate instanceof JavaXWebConnectionAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaWebConnectionAdapter::new);
+    }
+
+    JakartaWebConnectionAdapter(javax.servlet.http.WebConnection delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.http.WebConnection getDelegate() {
+        return delegate;
     }
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        return applyIfNonNull(delegate.getInputStream(), JakartaServletInputStreamAdapter::new);
+        return JakartaServletInputStreamAdapter.from(delegate.getInputStream());
     }
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
-        return applyIfNonNull(delegate.getOutputStream(), JakartaServletOutputStreamAdapter::new);
+        return JakartaServletOutputStreamAdapter.from(delegate.getOutputStream());
     }
 
     @Override

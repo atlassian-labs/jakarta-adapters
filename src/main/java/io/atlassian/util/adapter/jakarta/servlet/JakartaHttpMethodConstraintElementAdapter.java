@@ -1,17 +1,30 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.javax.servlet.JavaXHttpMethodConstraintElementAdapter;
 import jakarta.servlet.HttpMethodConstraintElement;
 import jakarta.servlet.annotation.ServletSecurity;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaHttpMethodConstraintElementAdapter extends HttpMethodConstraintElement {
 
     private final javax.servlet.HttpMethodConstraintElement delegate;
 
-    public JakartaHttpMethodConstraintElementAdapter(javax.servlet.HttpMethodConstraintElement delegate) {
+    public static HttpMethodConstraintElement from(javax.servlet.HttpMethodConstraintElement delegate) {
+        if (delegate instanceof JavaXHttpMethodConstraintElementAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaHttpMethodConstraintElementAdapter::new);
+    }
+
+    JakartaHttpMethodConstraintElementAdapter(javax.servlet.HttpMethodConstraintElement delegate) {
         super("null");
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.HttpMethodConstraintElement getDelegate() {
+        return delegate;
     }
 
     @Override

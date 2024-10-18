@@ -28,7 +28,7 @@ class JakartaBodyContentAdapterTest {
 
     @BeforeEach
     void setUp() {
-        biAdapted = new JakartaBodyContentAdapter(new JavaXBodyContentAdapter(original));
+        biAdapted = new JakartaBodyContentAdapter(JavaXBodyContentAdapter.from(original));
     }
 
     @Test
@@ -145,14 +145,14 @@ class JakartaBodyContentAdapterTest {
     }
 
     @Test
-    void testPrintln3() throws Exception{
+    void testPrintln3() throws Exception {
         biAdapted.println(42L);
 
         verify(original).println(42L);
     }
 
     @Test
-    void testPrintln4() throws Exception{
+    void testPrintln4() throws Exception {
         biAdapted.println(42.0f);
 
         verify(original).println(42.0f);
@@ -173,14 +173,14 @@ class JakartaBodyContentAdapterTest {
     }
 
     @Test
-    void testPrintln7() throws Exception{
+    void testPrintln7() throws Exception {
         biAdapted.println("test");
 
         verify(original).println("test");
     }
 
     @Test
-    void testPrintln8() throws Exception{
+    void testPrintln8() throws Exception {
         var obj = new Object();
         biAdapted.println(obj);
 

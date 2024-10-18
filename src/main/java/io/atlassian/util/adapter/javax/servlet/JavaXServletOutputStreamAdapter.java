@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletOutputStreamAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaWriteListenerAdapter;
 
 import javax.servlet.ServletOutputStream;
@@ -13,8 +14,19 @@ public class JavaXServletOutputStreamAdapter extends ServletOutputStream {
 
     private final jakarta.servlet.ServletOutputStream delegate;
 
-    public JavaXServletOutputStreamAdapter(jakarta.servlet.ServletOutputStream delegate) {
+    public static ServletOutputStream from(jakarta.servlet.ServletOutputStream delegate) {
+        if (delegate instanceof JakartaServletOutputStreamAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXServletOutputStreamAdapter::new);
+    }
+
+    JavaXServletOutputStreamAdapter(jakarta.servlet.ServletOutputStream delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.ServletOutputStream getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -119,7 +131,7 @@ public class JavaXServletOutputStreamAdapter extends ServletOutputStream {
 
     @Override
     public void setWriteListener(WriteListener writeListener) {
-        delegate.setWriteListener(applyIfNonNull(writeListener, JakartaWriteListenerAdapter::new));
+        delegate.setWriteListener(JakartaWriteListenerAdapter.from(writeListener));
     }
 
     @Override

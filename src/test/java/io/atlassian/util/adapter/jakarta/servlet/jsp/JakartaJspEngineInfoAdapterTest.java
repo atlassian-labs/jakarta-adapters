@@ -21,7 +21,7 @@ class JakartaJspEngineInfoAdapterTest {
 
     @BeforeEach
     void setUp() {
-        biAdapted = new JakartaJspEngineInfoAdapter(new JavaXJspEngineInfoAdapter(original));
+        biAdapted = new JakartaJspEngineInfoAdapter(JavaXJspEngineInfoAdapter.from(original));
     }
 
     @Test

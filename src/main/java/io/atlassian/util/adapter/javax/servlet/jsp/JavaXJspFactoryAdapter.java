@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
+import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspFactoryAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaPageContextAdapter;
 
 import javax.servlet.Servlet;
@@ -18,8 +19,19 @@ import static java.util.Objects.requireNonNull;
 public class JavaXJspFactoryAdapter extends JspFactory {
     private final jakarta.servlet.jsp.JspFactory delegate;
 
-    public JavaXJspFactoryAdapter(jakarta.servlet.jsp.JspFactory delegate) {
+    public static JspFactory from(jakarta.servlet.jsp.JspFactory delegate) {
+        if (delegate instanceof JakartaJspFactoryAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXJspFactoryAdapter::new);
+    }
+
+    JavaXJspFactoryAdapter(jakarta.servlet.jsp.JspFactory delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.jsp.JspFactory getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -30,23 +42,22 @@ public class JavaXJspFactoryAdapter extends JspFactory {
                                       boolean b,
                                       int i,
                                       boolean b1) {
-        return applyIfNonNull(
-                delegate.getPageContext(asJakarta(servlet), asJakarta(servletRequest), asJakarta(servletResponse), s, b, i, b1),
-                JavaXPageContextAdapter::new);
+        return JavaXPageContextAdapter.from(
+                delegate.getPageContext(asJakarta(servlet), asJakarta(servletRequest), asJakarta(servletResponse), s, b, i, b1));
     }
 
     @Override
     public void releasePageContext(PageContext pageContext) {
-        delegate.releasePageContext(applyIfNonNull(pageContext, JakartaPageContextAdapter::new));
+        delegate.releasePageContext(JakartaPageContextAdapter.from(pageContext));
     }
 
     @Override
     public JspEngineInfo getEngineInfo() {
-        return applyIfNonNull(delegate.getEngineInfo(), JavaXJspEngineInfoAdapter::new);
+        return JavaXJspEngineInfoAdapter.from(delegate.getEngineInfo());
     }
 
     @Override
     public JspApplicationContext getJspApplicationContext(ServletContext servletContext) {
-        return applyIfNonNull(delegate.getJspApplicationContext(asJakarta(servletContext)), JavaXJspApplicationContextAdapter::new);
+        return JavaXJspApplicationContextAdapter.from(delegate.getJspApplicationContext(asJakarta(servletContext)));
     }
 }

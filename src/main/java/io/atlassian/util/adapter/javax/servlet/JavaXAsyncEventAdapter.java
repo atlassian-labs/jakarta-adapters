@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncEventAdapter;
+
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.ServletRequest;
@@ -13,14 +15,25 @@ public class JavaXAsyncEventAdapter extends AsyncEvent {
 
     private final jakarta.servlet.AsyncEvent delegate;
 
-    public JavaXAsyncEventAdapter(jakarta.servlet.AsyncEvent delegate) {
+    public static AsyncEvent from(jakarta.servlet.AsyncEvent delegate) {
+        if (delegate instanceof JakartaAsyncEventAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXAsyncEventAdapter::new);
+    }
+
+    JavaXAsyncEventAdapter(jakarta.servlet.AsyncEvent delegate) {
         super(null, null, null);
         this.delegate = requireNonNull(delegate);
     }
 
+    public jakarta.servlet.AsyncEvent getDelegate() {
+        return delegate;
+    }
+
     @Override
     public AsyncContext getAsyncContext() {
-        return applyIfNonNull(delegate.getAsyncContext(), JavaXAsyncContextAdapter::new);
+        return JavaXAsyncContextAdapter.from(delegate.getAsyncContext());
     }
 
     @Override

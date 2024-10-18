@@ -1,18 +1,32 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
+import io.atlassian.util.adapter.jakarta.servlet.http.JakartaPartAdapter;
+
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class JavaXPartAdapter implements Part {
 
     private final jakarta.servlet.http.Part delegate;
 
-    public JavaXPartAdapter(jakarta.servlet.http.Part delegate) {
+    public static Part from(jakarta.servlet.http.Part delegate) {
+        if (delegate instanceof JakartaPartAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXPartAdapter::new);
+    }
+
+    JavaXPartAdapter(jakarta.servlet.http.Part delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.http.Part getDelegate() {
+        return delegate;
     }
 
     @Override

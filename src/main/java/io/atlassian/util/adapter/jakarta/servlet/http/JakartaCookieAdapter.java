@@ -1,7 +1,9 @@
 package io.atlassian.util.adapter.jakarta.servlet.http;
 
+import io.atlassian.util.adapter.javax.servlet.http.JavaXCookieAdapter;
 import jakarta.servlet.http.Cookie;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaCookieAdapter extends Cookie {
@@ -11,9 +13,20 @@ public class JakartaCookieAdapter extends Cookie {
      */
     private javax.servlet.http.Cookie delegate;
 
-    public JakartaCookieAdapter(javax.servlet.http.Cookie delegate) {
+    public static Cookie from(javax.servlet.http.Cookie delegate) {
+        if (delegate instanceof JavaXCookieAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaCookieAdapter::new);
+    }
+
+    JakartaCookieAdapter(javax.servlet.http.Cookie delegate) {
         super("null", null);
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.http.Cookie getDelegate() {
+        return delegate;
     }
 
     @Override

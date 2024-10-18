@@ -33,7 +33,7 @@ class JakartaHttpServletResponseAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdaptedResponse = new JakartaHttpServletResponseAdapter(new JavaXHttpServletResponseAdapter(originalResponse));
+        biAdaptedResponse = new JakartaHttpServletResponseAdapter(JavaXHttpServletResponseAdapter.from(originalResponse));
     }
 
     @Test
@@ -319,10 +319,18 @@ class JakartaHttpServletResponseAdapterTest {
 
     @Test
     void getDelegate() {
-        var adaptedResponse = new JavaXHttpServletResponseAdapter(originalResponse);
-        assertEquals(originalResponse, adaptedResponse.getDelegate());
+        var adaptedResponse = JavaXHttpServletResponseAdapter.from(originalResponse);
+        assertEquals(originalResponse, ((JavaXHttpServletResponseAdapter) adaptedResponse).getDelegate());
 
-        var biAdaptedResponse = new JakartaHttpServletResponseAdapter(adaptedResponse);
-        assertEquals(adaptedResponse, biAdaptedResponse.getDelegate());
+        var javaXOriginal = mock(javax.servlet.http.HttpServletResponse.class);
+        var adaptedResponse2 = JakartaHttpServletResponseAdapter.from(javaXOriginal);
+        assertEquals(javaXOriginal, ((JakartaHttpServletResponseAdapter) adaptedResponse2).getDelegate());
+    }
+
+    @Test
+    void doubleAdaptShortCircuit() {
+        var adaptedResponse = JavaXHttpServletResponseAdapter.from(originalResponse);
+        var biAdaptedResponse = JakartaHttpServletResponseAdapter.from(adaptedResponse);
+        assertEquals(originalResponse, biAdaptedResponse);
     }
 }

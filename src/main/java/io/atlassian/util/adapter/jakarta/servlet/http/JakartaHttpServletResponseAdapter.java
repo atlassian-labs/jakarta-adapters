@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXCookieAdapter;
+import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletResponseAdapter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,7 +18,14 @@ public class JakartaHttpServletResponseAdapter extends JakartaServletResponseAda
 
     private final javax.servlet.http.HttpServletResponse delegate;
 
-    public JakartaHttpServletResponseAdapter(javax.servlet.http.HttpServletResponse delegate) {
+    public static HttpServletResponse from(javax.servlet.http.HttpServletResponse delegate) {
+        if (delegate instanceof JavaXHttpServletResponseAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaHttpServletResponseAdapter::new);
+    }
+
+    JakartaHttpServletResponseAdapter(javax.servlet.http.HttpServletResponse delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }
@@ -29,7 +37,7 @@ public class JakartaHttpServletResponseAdapter extends JakartaServletResponseAda
 
     @Override
     public void addCookie(Cookie cookie) {
-        delegate.addCookie(applyIfNonNull(cookie, JavaXCookieAdapter::new));
+        delegate.addCookie(JavaXCookieAdapter.from(cookie));
     }
 
     @Override

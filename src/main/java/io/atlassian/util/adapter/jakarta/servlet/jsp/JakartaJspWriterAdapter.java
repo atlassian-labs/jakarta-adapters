@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
 import io.atlassian.util.adapter.jakarta.servlet.jsp.tagext.JakartaBodyContentAdapter;
+import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspWriterAdapter;
 import jakarta.servlet.jsp.JspWriter;
 
 import java.io.IOException;
@@ -14,14 +15,21 @@ public class JakartaJspWriterAdapter extends JspWriter {
 
     public static JspWriter from(javax.servlet.jsp.JspWriter delegate) {
         if (delegate instanceof javax.servlet.jsp.tagext.BodyContent castDelegate) {
-            return new JakartaBodyContentAdapter(castDelegate);
+            return JakartaBodyContentAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXJspWriterAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaJspWriterAdapter::new);
     }
 
-    private JakartaJspWriterAdapter(javax.servlet.jsp.JspWriter delegate) {
+    JakartaJspWriterAdapter(javax.servlet.jsp.JspWriter delegate) {
         super(0, false);
         this.delegate = delegate;
+    }
+
+    public javax.servlet.jsp.JspWriter getDelegate() {
+        return delegate;
     }
 
     @Override

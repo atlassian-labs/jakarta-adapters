@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.jakarta.servlet.JakartaReadListenerAdapter;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletInputStreamAdapter;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -14,8 +15,19 @@ public class JavaXServletInputStreamAdapter extends ServletInputStream {
 
     private final jakarta.servlet.ServletInputStream delegate;
 
-    public JavaXServletInputStreamAdapter(jakarta.servlet.ServletInputStream delegate) {
+    public static ServletInputStream from(jakarta.servlet.ServletInputStream delegate) {
+        if (delegate instanceof JakartaServletInputStreamAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXServletInputStreamAdapter::new);
+    }
+
+    JavaXServletInputStreamAdapter(jakarta.servlet.ServletInputStream delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.ServletInputStream getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -100,7 +112,7 @@ public class JavaXServletInputStreamAdapter extends ServletInputStream {
 
     @Override
     public void setReadListener(ReadListener readListener) {
-        delegate.setReadListener(applyIfNonNull(readListener, JakartaReadListenerAdapter::new));
+        delegate.setReadListener(JakartaReadListenerAdapter.from(readListener));
     }
 
     @Override

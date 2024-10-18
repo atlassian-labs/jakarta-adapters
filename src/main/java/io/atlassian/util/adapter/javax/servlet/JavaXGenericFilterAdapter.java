@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.jakarta.servlet.JakartaGenericFilterAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpFilterAdapter;
 
 import javax.servlet.FilterChain;
@@ -23,12 +24,15 @@ public class JavaXGenericFilterAdapter extends GenericFilter {
 
     public static javax.servlet.GenericFilter from(jakarta.servlet.GenericFilter delegate) {
         if (delegate instanceof jakarta.servlet.http.HttpFilter castDelegate) {
-            return new JavaXHttpFilterAdapter(castDelegate);
+            return JavaXHttpFilterAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaGenericFilterAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXGenericFilterAdapter::new);
     }
 
-    private JavaXGenericFilterAdapter(jakarta.servlet.GenericFilter delegate) {
+    JavaXGenericFilterAdapter(jakarta.servlet.GenericFilter delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
