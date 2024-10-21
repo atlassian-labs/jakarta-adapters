@@ -129,7 +129,7 @@ public class JakartaServletContextAdapter implements ServletContext, Adapted<jav
         if (servlets == null) {
             return null;
         }
-        return new EnumerationAdapter<>(delegate.getServlets(), JakartaServletAdapter::from);
+        return new EnumerationAdapter<>(servlets, JakartaServletAdapter::from);
     }
 
     // @Override Servlet API 5.0
