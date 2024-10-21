@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
 import io.atlassian.util.adapter.jakarta.el.JakartaExpressionFactoryAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXELContextListenerAdapter;
+import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspApplicationContextAdapter;
 import jakarta.el.ELContextListener;
 import jakarta.el.ELResolver;
 import jakarta.el.ExpressionFactory;
@@ -14,8 +15,19 @@ public class JakartaJspApplicationContextAdapter implements JspApplicationContex
 
     private final javax.servlet.jsp.JspApplicationContext delegate;
 
-    public JakartaJspApplicationContextAdapter(javax.servlet.jsp.JspApplicationContext delegate) {
+    public static JspApplicationContext from(javax.servlet.jsp.JspApplicationContext delegate) {
+        if (delegate instanceof JavaXJspApplicationContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaJspApplicationContextAdapter::new);
+    }
+
+    JakartaJspApplicationContextAdapter(javax.servlet.jsp.JspApplicationContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.jsp.JspApplicationContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -25,11 +37,11 @@ public class JakartaJspApplicationContextAdapter implements JspApplicationContex
 
     @Override
     public ExpressionFactory getExpressionFactory() {
-        return applyIfNonNull(delegate.getExpressionFactory(), JakartaExpressionFactoryAdapter::new);
+        return JakartaExpressionFactoryAdapter.from(delegate.getExpressionFactory());
     }
 
     @Override
     public void addELContextListener(ELContextListener listener) {
-        delegate.addELContextListener(applyIfNonNull(listener, JavaXELContextListenerAdapter::new));
+        delegate.addELContextListener(JavaXELContextListenerAdapter.from(listener));
     }
 }

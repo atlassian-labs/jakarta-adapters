@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.jakarta.el.JakartaELContextAdapter;
 import io.atlassian.util.adapter.jakarta.el.JakartaEvaluationListenerAdapter;
 
 import javax.el.ELContext;
@@ -20,8 +21,19 @@ public class JavaXELContextAdapter extends ELContext {
 
     private final jakarta.el.ELContext delegate;
 
-    public JavaXELContextAdapter(jakarta.el.ELContext delegate) {
+    public static ELContext from(jakarta.el.ELContext delegate) {
+        if (delegate instanceof JakartaELContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXELContextAdapter::new);
+    }
+
+    JavaXELContextAdapter(jakarta.el.ELContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.el.ELContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -56,12 +68,12 @@ public class JavaXELContextAdapter extends ELContext {
 
     @Override
     public ImportHandler getImportHandler() {
-        return applyIfNonNull(delegate.getImportHandler(), JavaXImportHandlerAdapter::new);
+        return JavaXImportHandlerAdapter.from(delegate.getImportHandler());
     }
 
     @Override
     public FunctionMapper getFunctionMapper() {
-        return applyIfNonNull(delegate.getFunctionMapper(), JavaXFunctionMapperAdapter::new);
+        return JavaXFunctionMapperAdapter.from(delegate.getFunctionMapper());
     }
 
     @Override
@@ -76,17 +88,17 @@ public class JavaXELContextAdapter extends ELContext {
 
     @Override
     public VariableMapper getVariableMapper() {
-        return applyIfNonNull(delegate.getVariableMapper(), JavaXVariableMapperAdapter::new);
+        return JavaXVariableMapperAdapter.from(delegate.getVariableMapper());
     }
 
     @Override
     public void addEvaluationListener(EvaluationListener listener) {
-        delegate.addEvaluationListener(applyIfNonNull(listener, JakartaEvaluationListenerAdapter::new));
+        delegate.addEvaluationListener(JakartaEvaluationListenerAdapter.from(listener));
     }
 
     @Override
     public List<EvaluationListener> getEvaluationListeners() {
-        return transformListIfNonNull(delegate.getEvaluationListeners(), JavaXEvaluationListenerAdapter::new);
+        return transformListIfNonNull(delegate.getEvaluationListeners(), JavaXEvaluationListenerAdapter::from);
     }
 
     @Override

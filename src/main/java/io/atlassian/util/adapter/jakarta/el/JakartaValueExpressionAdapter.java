@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.javax.el.JavaXValueExpressionAdapter;
 import jakarta.el.ELContext;
 import jakarta.el.ValueExpression;
 import jakarta.el.ValueReference;
@@ -12,13 +13,24 @@ public class JakartaValueExpressionAdapter extends ValueExpression {
 
     private final javax.el.ValueExpression delegate;
 
-    public JakartaValueExpressionAdapter(javax.el.ValueExpression delegate) {
+    public static ValueExpression from(javax.el.ValueExpression delegate) {
+        if (delegate instanceof JavaXValueExpressionAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaValueExpressionAdapter::new);
+    }
+
+    JakartaValueExpressionAdapter(javax.el.ValueExpression delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.el.ValueExpression getDelegate() {
+        return delegate;
     }
 
     @Override
     public ValueReference getValueReference(ELContext context) {
-        return applyIfNonNull(delegate.getValueReference(asJavaXJsp(context)), JakartaValueReferenceAdapter::new);
+        return JakartaValueReferenceAdapter.from(delegate.getValueReference(asJavaXJsp(context)));
     }
 
     @Override

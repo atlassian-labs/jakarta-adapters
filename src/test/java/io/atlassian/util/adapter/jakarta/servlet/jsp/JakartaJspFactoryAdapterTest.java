@@ -31,7 +31,7 @@ class JakartaJspFactoryAdapterTest {
 
     @BeforeEach
     void setUp() {
-        biAdapted = new JakartaJspFactoryAdapter(new JavaXJspFactoryAdapter(original));
+        biAdapted = new JakartaJspFactoryAdapter(JavaXJspFactoryAdapter.from(original));
     }
 
     @Test

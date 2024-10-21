@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.jakarta.servlet.JakartaGenericServletAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletAdapter;
 
 import javax.servlet.GenericServlet;
@@ -22,12 +23,15 @@ public class JavaXGenericServletAdapter extends GenericServlet {
 
     public static javax.servlet.GenericServlet from(jakarta.servlet.GenericServlet delegate) {
         if (delegate instanceof jakarta.servlet.http.HttpServlet castDelegate) {
-            return new JavaXHttpServletAdapter(castDelegate);
+            return JavaXHttpServletAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaGenericServletAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXGenericServletAdapter::new);
     }
 
-    private JavaXGenericServletAdapter(jakarta.servlet.GenericServlet delegate) {
+    JavaXGenericServletAdapter(jakarta.servlet.GenericServlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

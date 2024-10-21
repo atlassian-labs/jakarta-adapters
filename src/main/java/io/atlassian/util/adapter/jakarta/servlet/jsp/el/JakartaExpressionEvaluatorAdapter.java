@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp.el;
 
+import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXFunctionMapperAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXVariableResolverAdapter;
 import jakarta.servlet.jsp.el.ELException;
@@ -15,14 +16,25 @@ public class JakartaExpressionEvaluatorAdapter extends ExpressionEvaluator {
 
     private final javax.servlet.jsp.el.ExpressionEvaluator delegate;
 
-    public JakartaExpressionEvaluatorAdapter(javax.servlet.jsp.el.ExpressionEvaluator delegate) {
+    public static ExpressionEvaluator from(javax.servlet.jsp.el.ExpressionEvaluator delegate) {
+        if (delegate instanceof JavaXExpressionEvaluatorAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaExpressionEvaluatorAdapter::new);
+    }
+
+    JakartaExpressionEvaluatorAdapter(javax.servlet.jsp.el.ExpressionEvaluator delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.jsp.el.ExpressionEvaluator getDelegate() {
+        return delegate;
     }
 
     @Override
     public Expression parseExpression(String s, Class<?> aClass, FunctionMapper functionMapper) throws ELException {
         try {
-            return applyIfNonNull(delegate.parseExpression(s, aClass, applyIfNonNull(functionMapper, JavaXFunctionMapperAdapter::new)), JakartaExpressionAdapter::new);
+            return JakartaExpressionAdapter.from(delegate.parseExpression(s, aClass, JavaXFunctionMapperAdapter.from(functionMapper)));
         } catch (javax.servlet.jsp.el.ELException e) {
             throw new ELException(e);
         }
@@ -34,7 +46,7 @@ public class JakartaExpressionEvaluatorAdapter extends ExpressionEvaluator {
                            VariableResolver variableResolver,
                            FunctionMapper functionMapper) throws ELException {
         try {
-            return delegate.evaluate(s, aClass, applyIfNonNull(variableResolver, JavaXVariableResolverAdapter::new), applyIfNonNull(functionMapper, JavaXFunctionMapperAdapter::new));
+            return delegate.evaluate(s, aClass, JavaXVariableResolverAdapter.from(variableResolver), JavaXFunctionMapperAdapter.from(functionMapper));
         } catch (javax.servlet.jsp.el.ELException e) {
             throw new ELException(e);
         }

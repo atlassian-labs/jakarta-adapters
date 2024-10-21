@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
+import io.atlassian.util.adapter.jakarta.servlet.http.JakartaPushBuilderAdapter;
+
 import javax.servlet.http.PushBuilder;
 import java.util.Set;
 
@@ -10,43 +12,54 @@ public class JavaXPushBuilderAdapter implements PushBuilder {
 
     private final jakarta.servlet.http.PushBuilder delegate;
 
-    public JavaXPushBuilderAdapter(jakarta.servlet.http.PushBuilder delegate) {
+    public static PushBuilder from(jakarta.servlet.http.PushBuilder delegate) {
+        if (delegate instanceof JakartaPushBuilderAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXPushBuilderAdapter::new);
+    }
+
+    JavaXPushBuilderAdapter(jakarta.servlet.http.PushBuilder delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.http.PushBuilder getDelegate() {
+        return delegate;
     }
 
     @Override
     public PushBuilder method(String method) {
-        return applyIfNonNull(delegate.method(method), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.method(method));
     }
 
     @Override
     public PushBuilder queryString(String queryString) {
-        return applyIfNonNull(delegate.queryString(queryString), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.queryString(queryString));
     }
 
     @Override
     public PushBuilder sessionId(String sessionId) {
-        return applyIfNonNull(delegate.sessionId(sessionId), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.sessionId(sessionId));
     }
 
     @Override
     public PushBuilder setHeader(String name, String value) {
-        return applyIfNonNull(delegate.setHeader(name, value), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.setHeader(name, value));
     }
 
     @Override
     public PushBuilder addHeader(String name, String value) {
-        return applyIfNonNull(delegate.addHeader(name, value), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.addHeader(name, value));
     }
 
     @Override
     public PushBuilder removeHeader(String name) {
-        return applyIfNonNull(delegate.removeHeader(name), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.removeHeader(name));
     }
 
     @Override
     public PushBuilder path(String path) {
-        return applyIfNonNull(delegate.path(path), JavaXPushBuilderAdapter::new);
+        return JavaXPushBuilderAdapter.from(delegate.path(path));
     }
 
     @Override

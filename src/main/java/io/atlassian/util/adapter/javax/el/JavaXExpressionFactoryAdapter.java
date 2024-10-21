@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.jakarta.el.JakartaExpressionFactoryAdapter;
+
 import javax.el.ELContext;
 import javax.el.ELResolver;
 import javax.el.ExpressionFactory;
@@ -16,8 +18,19 @@ public class JavaXExpressionFactoryAdapter extends ExpressionFactory {
 
     private final jakarta.el.ExpressionFactory delegate;
 
-    public JavaXExpressionFactoryAdapter(jakarta.el.ExpressionFactory delegate) {
+    public static ExpressionFactory from(jakarta.el.ExpressionFactory delegate) {
+        if (delegate instanceof JakartaExpressionFactoryAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXExpressionFactoryAdapter::new);
+    }
+
+    JavaXExpressionFactoryAdapter(jakarta.el.ExpressionFactory delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.el.ExpressionFactory getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -32,12 +45,12 @@ public class JavaXExpressionFactoryAdapter extends ExpressionFactory {
 
     @Override
     public ValueExpression createValueExpression(ELContext context, String expression, Class<?> expectedType) {
-        return applyIfNonNull(delegate.createValueExpression(asJakartaJsp(context), expression, expectedType), JavaXValueExpressionAdapter::new);
+        return JavaXValueExpressionAdapter.from(delegate.createValueExpression(asJakartaJsp(context), expression, expectedType));
     }
 
     @Override
     public ValueExpression createValueExpression(Object instance, Class<?> expectedType) {
-        return applyIfNonNull(delegate.createValueExpression(instance, expectedType), JavaXValueExpressionAdapter::new);
+        return JavaXValueExpressionAdapter.from(delegate.createValueExpression(instance, expectedType));
     }
 
     @Override
@@ -45,7 +58,7 @@ public class JavaXExpressionFactoryAdapter extends ExpressionFactory {
                                                    String expression,
                                                    Class<?> expectedReturnType,
                                                    Class<?>[] expectedParamTypes) {
-        return applyIfNonNull(delegate.createMethodExpression(asJakartaJsp(context), expression, expectedReturnType, expectedParamTypes), JavaXMethodExpressionAdapter::new);
+        return JavaXMethodExpressionAdapter.from(delegate.createMethodExpression(asJakartaJsp(context), expression, expectedReturnType, expectedParamTypes));
     }
 
     @Override

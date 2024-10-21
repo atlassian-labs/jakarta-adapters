@@ -1,19 +1,36 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.javax.servlet.JavaXServletRegistrationAdapter;
 import jakarta.servlet.ServletRegistration;
 
 import java.util.Collection;
 import java.util.Set;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaServletRegistrationAdapter extends JakartaRegistrationAdapter implements ServletRegistration {
 
     private final javax.servlet.ServletRegistration delegate;
 
-    public JakartaServletRegistrationAdapter(javax.servlet.ServletRegistration delegate) {
+    public static ServletRegistration from(javax.servlet.ServletRegistration delegate) {
+        if (delegate instanceof javax.servlet.ServletRegistration.Dynamic castDelegate) {
+            return JakartaDynamicServletRegistrationAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXServletRegistrationAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaServletRegistrationAdapter::new);
+    }
+
+    JakartaServletRegistrationAdapter(javax.servlet.ServletRegistration delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.servlet.ServletRegistration getDelegate() {
+        return delegate;
     }
 
     @Override

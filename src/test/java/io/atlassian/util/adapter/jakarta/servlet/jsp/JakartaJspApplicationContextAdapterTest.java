@@ -33,7 +33,7 @@ class JakartaJspApplicationContextAdapterTest {
 
     @BeforeEach
     void setUp() {
-        biAdapted = new JakartaJspApplicationContextAdapter(new JavaXJspApplicationContextAdapter(original));
+        biAdapted = new JakartaJspApplicationContextAdapter(JavaXJspApplicationContextAdapter.from(original));
     }
 
     @Test

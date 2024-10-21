@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.jakarta.el.JakartaMethodExpressionAdapter;
+
 import javax.el.ELContext;
 import javax.el.MethodExpression;
 import javax.el.MethodInfo;
@@ -12,8 +14,19 @@ public class JavaXMethodExpressionAdapter extends MethodExpression {
 
     private final jakarta.el.MethodExpression delegate;
 
-    public JavaXMethodExpressionAdapter(jakarta.el.MethodExpression delegate) {
+    public static MethodExpression from(jakarta.el.MethodExpression delegate) {
+        if (delegate instanceof JakartaMethodExpressionAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXMethodExpressionAdapter::new);
+    }
+
+    JavaXMethodExpressionAdapter(jakarta.el.MethodExpression delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.el.MethodExpression getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -23,7 +36,7 @@ public class JavaXMethodExpressionAdapter extends MethodExpression {
 
     @Override
     public MethodInfo getMethodInfo(ELContext context) {
-        return applyIfNonNull(delegate.getMethodInfo(asJakartaJsp(context)), JavaXMethodInfoAdapter::new);
+        return JavaXMethodInfoAdapter.from(delegate.getMethodInfo(asJakartaJsp(context)));
     }
 
     @Override

@@ -1,10 +1,13 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletSecurityElementAdapter;
+
 import javax.servlet.HttpMethodConstraintElement;
 import javax.servlet.ServletSecurityElement;
 import javax.servlet.annotation.ServletSecurity;
 import java.util.Collection;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static io.atlassian.util.adapter.util.WrapperUtil.transformIfNonNull;
 import static java.util.Objects.requireNonNull;
 
@@ -12,13 +15,24 @@ public class JavaXServletSecurityElementAdapter extends ServletSecurityElement {
 
     private final jakarta.servlet.ServletSecurityElement delegate;
 
-    public JavaXServletSecurityElementAdapter(jakarta.servlet.ServletSecurityElement delegate) {
+    public static ServletSecurityElement from(jakarta.servlet.ServletSecurityElement delegate) {
+        if (delegate instanceof JakartaServletSecurityElementAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXServletSecurityElementAdapter::new);
+    }
+
+    JavaXServletSecurityElementAdapter(jakarta.servlet.ServletSecurityElement delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.ServletSecurityElement getDelegate() {
+        return delegate;
     }
 
     @Override
     public Collection<HttpMethodConstraintElement> getHttpMethodConstraints() {
-        return transformIfNonNull(delegate.getHttpMethodConstraints(), JavaXHttpMethodConstraintElementAdapter::new);
+        return transformIfNonNull(delegate.getHttpMethodConstraints(), JavaXHttpMethodConstraintElementAdapter::from);
     }
 
     @Override

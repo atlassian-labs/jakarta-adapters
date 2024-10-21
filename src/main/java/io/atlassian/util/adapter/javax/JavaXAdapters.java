@@ -47,27 +47,27 @@ public class JavaXAdapters {
     }
 
     public static javax.servlet.Filter asJavaX(jakarta.servlet.Filter delegate) {
-        return applyIfNonNull(delegate, JavaXFilterAdapter::new);
+        return applyIfNonNull(delegate, JavaXFilterAdapter::from);
     }
 
     public static javax.servlet.FilterChain asJavaX(jakarta.servlet.FilterChain delegate) {
-        return applyIfNonNull(delegate, JavaXFilterChainAdapter::new);
+        return applyIfNonNull(delegate, JavaXFilterChainAdapter::from);
     }
 
     public static javax.servlet.FilterConfig asJavaX(jakarta.servlet.FilterConfig delegate) {
-        return applyIfNonNull(delegate, JavaXFilterConfigAdapter::new);
+        return applyIfNonNull(delegate, JavaXFilterConfigAdapter::from);
     }
 
     public static javax.servlet.Servlet asJavaX(jakarta.servlet.Servlet delegate) {
-        return applyIfNonNull(delegate, JavaXServletAdapter::new);
+        return applyIfNonNull(delegate, JavaXServletAdapter::from);
     }
 
     public static javax.servlet.ServletConfig asJavaX(jakarta.servlet.ServletConfig delegate) {
-        return applyIfNonNull(delegate, JavaXServletConfigAdapter::new);
+        return applyIfNonNull(delegate, JavaXServletConfigAdapter::from);
     }
 
     public static javax.servlet.http.HttpServletRequest asJavaX(jakarta.servlet.http.HttpServletRequest delegate) {
-        return applyIfNonNull(delegate, JavaXHttpServletRequestAdapter::new);
+        return applyIfNonNull(delegate, JavaXHttpServletRequestAdapter::from);
     }
 
     public static javax.servlet.ServletRequest asJavaX(jakarta.servlet.ServletRequest delegate) {
@@ -75,7 +75,7 @@ public class JavaXAdapters {
     }
 
     public static javax.servlet.http.HttpServletResponse asJavaX(jakarta.servlet.http.HttpServletResponse delegate) {
-        return applyIfNonNull(delegate, JavaXHttpServletResponseAdapter::new);
+        return applyIfNonNull(delegate, JavaXHttpServletResponseAdapter::from);
     }
 
     public static javax.servlet.ServletResponse asJavaX(jakarta.servlet.ServletResponse delegate) {
@@ -83,10 +83,10 @@ public class JavaXAdapters {
     }
 
     public static javax.servlet.ServletContext asJavaX(jakarta.servlet.ServletContext delegate) {
-        return applyIfNonNull(delegate, JavaXServletContextAdapter::new);
+        return applyIfNonNull(delegate, JavaXServletContextAdapter::from);
     }
 
     public static javax.servlet.ServletContextListener asJavaX(jakarta.servlet.ServletContextListener delegate) {
-        return applyIfNonNull(delegate, JavaXServletContextListenerAdapter::new);
+        return applyIfNonNull(delegate, JavaXServletContextListenerAdapter::from);
     }
 }

@@ -24,7 +24,7 @@ class JakartaServletContextListenerAdapterTest {
 
     @BeforeEach
     void setUp() {
-        biAdapted = new JakartaServletContextListenerAdapter(new JavaXServletContextListenerAdapter(original));
+        biAdapted = new JakartaServletContextListenerAdapter(JavaXServletContextListenerAdapter.from(original));
     }
 
     @Test

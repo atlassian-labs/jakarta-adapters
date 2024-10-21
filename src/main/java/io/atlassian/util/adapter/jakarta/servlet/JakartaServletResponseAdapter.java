@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletResponseAdapter;
+import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.ServletResponse;
 
@@ -17,7 +18,10 @@ public class JakartaServletResponseAdapter implements ServletResponse {
 
     public static ServletResponse from(javax.servlet.ServletResponse delegate) {
         if (delegate instanceof javax.servlet.http.HttpServletResponse castDelegate) {
-            return new JakartaHttpServletResponseAdapter(castDelegate);
+            return JakartaHttpServletResponseAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXServletResponseAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletResponseAdapter::new);
     }
@@ -42,7 +46,7 @@ public class JakartaServletResponseAdapter implements ServletResponse {
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
-        return applyIfNonNull(delegate.getOutputStream(), JakartaServletOutputStreamAdapter::new);
+        return JakartaServletOutputStreamAdapter.from(delegate.getOutputStream());
     }
 
     @Override

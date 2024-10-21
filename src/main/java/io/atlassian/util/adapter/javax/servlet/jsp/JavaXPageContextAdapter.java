@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
+import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaPageContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXVariableResolverAdapter;
@@ -31,8 +32,19 @@ public class JavaXPageContextAdapter extends PageContext {
 
     private final jakarta.servlet.jsp.PageContext delegate;
 
-    public JavaXPageContextAdapter(jakarta.servlet.jsp.PageContext delegate) {
+    public static PageContext from(jakarta.servlet.jsp.PageContext delegate) {
+        if (delegate instanceof JakartaPageContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXPageContextAdapter::new);
+    }
+
+    JavaXPageContextAdapter(jakarta.servlet.jsp.PageContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public jakarta.servlet.jsp.PageContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -53,7 +65,7 @@ public class JavaXPageContextAdapter extends PageContext {
 
     @Override
     public HttpSession getSession() {
-        return applyIfNonNull(delegate.getSession(), JavaXHttpSessionAdapter::new);
+        return JavaXHttpSessionAdapter.from(delegate.getSession());
     }
 
     @Override
@@ -114,11 +126,11 @@ public class JavaXPageContextAdapter extends PageContext {
     }
 
     @Override
-    public void handlePageException(Exception e) throws ServletException, IOException {
+    public void handlePageException(Exception ex) throws ServletException, IOException {
         try {
-            delegate.handlePageException(e);
-        } catch (jakarta.servlet.ServletException ex) {
-            throw new ServletException(ex);
+            delegate.handlePageException(ex);
+        } catch (jakarta.servlet.ServletException e) {
+            throw new ServletException(e);
         }
     }
 
@@ -183,12 +195,12 @@ public class JavaXPageContextAdapter extends PageContext {
 
     @Override
     public ExpressionEvaluator getExpressionEvaluator() {
-        return applyIfNonNull(delegate.getExpressionEvaluator(), JavaXExpressionEvaluatorAdapter::new);
+        return JavaXExpressionEvaluatorAdapter.from(delegate.getExpressionEvaluator());
     }
 
     @Override
     public VariableResolver getVariableResolver() {
-        return applyIfNonNull(delegate.getVariableResolver(), JavaXVariableResolverAdapter::new);
+        return JavaXVariableResolverAdapter.from(delegate.getVariableResolver());
     }
 
     @Override

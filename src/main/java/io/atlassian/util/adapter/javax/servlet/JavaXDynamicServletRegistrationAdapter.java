@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.jakarta.servlet.JakartaDynamicServletRegistrationAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaMultipartConfigElementAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletSecurityElementAdapter;
 
@@ -15,9 +16,21 @@ public class JavaXDynamicServletRegistrationAdapter extends JavaXServletRegistra
 
     private final jakarta.servlet.ServletRegistration.Dynamic delegate;
 
-    public JavaXDynamicServletRegistrationAdapter(jakarta.servlet.ServletRegistration.Dynamic delegate) {
+    public static ServletRegistration.Dynamic from(jakarta.servlet.ServletRegistration.Dynamic delegate) {
+        if (delegate instanceof JakartaDynamicServletRegistrationAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXDynamicServletRegistrationAdapter::new);
+    }
+
+    JavaXDynamicServletRegistrationAdapter(jakarta.servlet.ServletRegistration.Dynamic delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.servlet.ServletRegistration.Dynamic getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -27,12 +40,12 @@ public class JavaXDynamicServletRegistrationAdapter extends JavaXServletRegistra
 
     @Override
     public Set<String> setServletSecurity(ServletSecurityElement constraint) {
-        return delegate.setServletSecurity(applyIfNonNull(constraint, JakartaServletSecurityElementAdapter::new));
+        return delegate.setServletSecurity(JakartaServletSecurityElementAdapter.from(constraint));
     }
 
     @Override
     public void setMultipartConfig(MultipartConfigElement multipartConfig) {
-        delegate.setMultipartConfig(applyIfNonNull(multipartConfig, JakartaMultipartConfigElementAdapter::new));
+        delegate.setMultipartConfig(JakartaMultipartConfigElementAdapter.from(multipartConfig));
     }
 
     @Override

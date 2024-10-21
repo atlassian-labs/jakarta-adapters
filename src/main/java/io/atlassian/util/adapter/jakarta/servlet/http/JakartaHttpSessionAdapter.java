@@ -1,12 +1,13 @@
 package io.atlassian.util.adapter.jakarta.servlet.http;
 
-import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
+import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionContext;
 
 import java.util.Enumeration;
 
+import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -15,8 +16,19 @@ import static java.util.Objects.requireNonNull;
 public class JakartaHttpSessionAdapter implements HttpSession {
     private final javax.servlet.http.HttpSession delegate;
 
-    public JakartaHttpSessionAdapter(javax.servlet.http.HttpSession delegate) {
+    public static HttpSession from(javax.servlet.http.HttpSession delegate) {
+        if (delegate instanceof JavaXHttpSessionAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaHttpSessionAdapter::new);
+    }
+
+    JakartaHttpSessionAdapter(javax.servlet.http.HttpSession delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.http.HttpSession getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -36,7 +48,7 @@ public class JakartaHttpSessionAdapter implements HttpSession {
 
     @Override
     public ServletContext getServletContext() {
-        return applyIfNonNull(delegate.getServletContext(), JakartaServletContextAdapter::new);
+        return asJakarta(delegate.getServletContext());
     }
 
     @Override
@@ -51,7 +63,7 @@ public class JakartaHttpSessionAdapter implements HttpSession {
 
     @Override
     public HttpSessionContext getSessionContext() {
-        return applyIfNonNull(delegate.getSessionContext(), JakartaHttpSessionContextAdapter::new);
+        return JakartaHttpSessionContextAdapter.from(delegate.getSessionContext());
     }
 
     @Override

@@ -1,16 +1,29 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.javax.servlet.JavaXMultipartConfigElementAdapter;
 import jakarta.servlet.MultipartConfigElement;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
 public class JakartaMultipartConfigElementAdapter extends MultipartConfigElement {
 
     private final javax.servlet.MultipartConfigElement delegate;
 
-    public JakartaMultipartConfigElementAdapter(javax.servlet.MultipartConfigElement delegate) {
+    public static MultipartConfigElement from(javax.servlet.MultipartConfigElement delegate) {
+        if (delegate instanceof JavaXMultipartConfigElementAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaMultipartConfigElementAdapter::new);
+    }
+
+    JakartaMultipartConfigElementAdapter(javax.servlet.MultipartConfigElement delegate) {
         super((String) null);
         this.delegate = requireNonNull(delegate);
+    }
+
+    public javax.servlet.MultipartConfigElement getDelegate() {
+        return delegate;
     }
 
     @Override
