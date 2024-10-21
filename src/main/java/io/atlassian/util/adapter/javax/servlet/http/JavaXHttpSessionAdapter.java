@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
-import io.atlassian.util.adapter.javax.servlet.JavaXServletContextAdapter;
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpSessionAdapter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -8,16 +9,29 @@ import javax.servlet.http.HttpSessionContext;
 import java.util.Enumeration;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static io.atlassian.util.adapter.util.WrapperUtil.enumerationToArray;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXHttpSessionAdapter implements HttpSession {
+public class JavaXHttpSessionAdapter implements HttpSession, Adapted<jakarta.servlet.http.HttpSession> {
     private final jakarta.servlet.http.HttpSession delegate;
 
-    public JavaXHttpSessionAdapter(jakarta.servlet.http.HttpSession delegate) {
+    public static HttpSession from(jakarta.servlet.http.HttpSession delegate) {
+        if (delegate instanceof JakartaHttpSessionAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXHttpSessionAdapter::new);
+    }
+
+    JavaXHttpSessionAdapter(jakarta.servlet.http.HttpSession delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.servlet.http.HttpSession getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -37,7 +51,7 @@ public class JavaXHttpSessionAdapter implements HttpSession {
 
     @Override
     public ServletContext getServletContext() {
-        return applyIfNonNull(delegate.getServletContext(), JavaXServletContextAdapter::new);
+        return asJavaX(delegate.getServletContext());
     }
 
     @Override

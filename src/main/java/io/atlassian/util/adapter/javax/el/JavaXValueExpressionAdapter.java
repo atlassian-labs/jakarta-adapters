@@ -1,5 +1,8 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.el.JakartaValueExpressionAdapter;
+
 import javax.el.ELContext;
 import javax.el.ValueExpression;
 import javax.el.ValueReference;
@@ -8,17 +11,29 @@ import static io.atlassian.util.adapter.jakarta.JakartaJspAdapters.asJakartaJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXValueExpressionAdapter extends ValueExpression {
+public class JavaXValueExpressionAdapter extends ValueExpression implements Adapted<jakarta.el.ValueExpression> {
 
     private final jakarta.el.ValueExpression delegate;
 
-    public JavaXValueExpressionAdapter(jakarta.el.ValueExpression delegate) {
+    public static ValueExpression from(jakarta.el.ValueExpression delegate) {
+        if (delegate instanceof JakartaValueExpressionAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXValueExpressionAdapter::new);
+    }
+
+    JavaXValueExpressionAdapter(jakarta.el.ValueExpression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
     @Override
+    public jakarta.el.ValueExpression getDelegate() {
+        return delegate;
+    }
+
+    @Override
     public ValueReference getValueReference(ELContext context) {
-        return applyIfNonNull(delegate.getValueReference(asJakartaJsp(context)), JavaXValueReferenceAdapter::new);
+        return JavaXValueReferenceAdapter.from(delegate.getValueReference(asJakartaJsp(context)));
     }
 
     @Override

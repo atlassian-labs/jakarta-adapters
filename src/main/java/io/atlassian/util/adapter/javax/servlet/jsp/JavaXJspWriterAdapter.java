@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspWriterAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.tagext.JavaXBodyContentAdapter;
 
 import javax.servlet.jsp.JspWriter;
@@ -8,20 +10,28 @@ import java.io.Writer;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
-public class JavaXJspWriterAdapter extends JspWriter {
+public class JavaXJspWriterAdapter extends JspWriter implements Adapted<jakarta.servlet.jsp.JspWriter> {
 
     private final jakarta.servlet.jsp.JspWriter delegate;
 
     public static JspWriter from(jakarta.servlet.jsp.JspWriter delegate) {
         if (delegate instanceof jakarta.servlet.jsp.tagext.BodyContent castDelegate) {
-            return new JavaXBodyContentAdapter(castDelegate);
+            return JavaXBodyContentAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaJspWriterAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXJspWriterAdapter::new);
     }
 
-    private JavaXJspWriterAdapter(jakarta.servlet.jsp.JspWriter delegate) {
+    JavaXJspWriterAdapter(jakarta.servlet.jsp.JspWriter delegate) {
         super(0, false);
         this.delegate = delegate;
+    }
+
+    @Override
+    public jakarta.servlet.jsp.JspWriter getDelegate() {
+        return delegate;
     }
 
     @Override

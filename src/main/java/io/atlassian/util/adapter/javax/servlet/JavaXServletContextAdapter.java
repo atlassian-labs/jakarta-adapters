@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
@@ -33,12 +34,24 @@ import static java.util.Collections.emptyEnumeration;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
 
-public class JavaXServletContextAdapter implements ServletContext {
+public class JavaXServletContextAdapter implements ServletContext, Adapted<jakarta.servlet.ServletContext> {
 
     private final jakarta.servlet.ServletContext delegate;
 
-    public JavaXServletContextAdapter(jakarta.servlet.ServletContext delegate) {
+    public static ServletContext from(jakarta.servlet.ServletContext delegate) {
+        if (delegate instanceof JakartaServletContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXServletContextAdapter::new);
+    }
+
+    JavaXServletContextAdapter(jakarta.servlet.ServletContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.servlet.ServletContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -48,7 +61,7 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public ServletContext getContext(String uripath) {
-        return applyIfNonNull(delegate.getContext(uripath), JavaXServletContextAdapter::new);
+        return JavaXServletContextAdapter.from(delegate.getContext(uripath));
     }
 
     @Override
@@ -93,12 +106,12 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public RequestDispatcher getRequestDispatcher(String path) {
-        return applyIfNonNull(delegate.getRequestDispatcher(path), JavaXRequestDispatcherAdapter::new);
+        return JavaXRequestDispatcherAdapter.from(delegate.getRequestDispatcher(path));
     }
 
     @Override
     public RequestDispatcher getNamedDispatcher(String name) {
-        return applyIfNonNull(delegate.getNamedDispatcher(name), JavaXRequestDispatcherAdapter::new);
+        return JavaXRequestDispatcherAdapter.from(delegate.getNamedDispatcher(name));
     }
 
     @Override
@@ -186,32 +199,30 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public ServletRegistration.Dynamic addServlet(String servletName, String className) {
-        return applyIfNonNull(delegate.addServlet(servletName, className), JavaXDynamicServletRegistrationAdapter::new);
+        return JavaXDynamicServletRegistrationAdapter.from(delegate.addServlet(servletName, className));
     }
 
     @Override
     public ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet) {
-        return applyIfNonNull(
-                delegate.addServlet(servletName, applyIfNonNull(servlet, JakartaServletAdapter::new)),
-                JavaXDynamicServletRegistrationAdapter::new);
+        return JavaXDynamicServletRegistrationAdapter.from(delegate.addServlet(servletName, JakartaServletAdapter.from(servlet)));
     }
 
     @Override
     public ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
         // ClassCastException likely
-        return applyIfNonNull(delegate.addServlet(servletName, (Class) servletClass), JavaXDynamicServletRegistrationAdapter::new);
+        return JavaXDynamicServletRegistrationAdapter.from(delegate.addServlet(servletName, (Class) servletClass));
     }
 
     @Override
     public ServletRegistration.Dynamic addJspFile(String servletName, String jspFile) {
-        return applyIfNonNull(delegate.addJspFile(servletName, jspFile), JavaXDynamicServletRegistrationAdapter::new);
+        return JavaXDynamicServletRegistrationAdapter.from(delegate.addJspFile(servletName, jspFile));
     }
 
     @Override
     public <T extends Servlet> T createServlet(Class<T> clazz) throws ServletException {
         try {
             // ClassCastException likely
-            return (T) applyIfNonNull(delegate.createServlet((Class) clazz), JavaXServletAdapter::new);
+            return (T) JavaXServletAdapter.from(delegate.createServlet((Class) clazz));
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -219,7 +230,7 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public ServletRegistration getServletRegistration(String servletName) {
-        return applyIfNonNull(delegate.getServletRegistration(servletName), JavaXServletRegistrationAdapter::new);
+        return JavaXServletRegistrationAdapter.from(delegate.getServletRegistration(servletName));
     }
 
     @Override
@@ -229,32 +240,30 @@ public class JavaXServletContextAdapter implements ServletContext {
             return null;
         }
         return servletRegistrations.entrySet().stream()
-                .collect(toMap(Entry::getKey, e -> applyIfNonNull(e.getValue(), JavaXServletRegistrationAdapter::new)));
+                .collect(toMap(Entry::getKey, e -> JavaXServletRegistrationAdapter.from(e.getValue())));
     }
 
     @Override
     public FilterRegistration.Dynamic addFilter(String filterName, String className) {
-        return applyIfNonNull(delegate.addFilter(filterName, className), JavaXDynamicFilterRegistrationAdapter::new);
+        return JavaXDynamicFilterRegistrationAdapter.from(delegate.addFilter(filterName, className));
     }
 
     @Override
     public FilterRegistration.Dynamic addFilter(String filterName, Filter filter) {
-        return applyIfNonNull(
-                delegate.addFilter(filterName, applyIfNonNull(filter, JakartaFilterAdapter::new)),
-                JavaXDynamicFilterRegistrationAdapter::new);
+        return JavaXDynamicFilterRegistrationAdapter.from(delegate.addFilter(filterName, JakartaFilterAdapter.from(filter)));
     }
 
     @Override
     public FilterRegistration.Dynamic addFilter(String filterName, Class<? extends Filter> filterClass) {
         // ClassCastException likely
-        return applyIfNonNull(delegate.addFilter(filterName, (Class) filterClass), JavaXDynamicFilterRegistrationAdapter::new);
+        return JavaXDynamicFilterRegistrationAdapter.from(delegate.addFilter(filterName, (Class) filterClass));
     }
 
     @Override
     public <T extends Filter> T createFilter(Class<T> clazz) throws ServletException {
         try {
             // ClassCastException likely
-            return (T) applyIfNonNull(delegate.createFilter((Class) clazz), JavaXFilterAdapter::new);
+            return (T) JavaXFilterAdapter.from(delegate.createFilter((Class) clazz));
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -262,7 +271,7 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public FilterRegistration getFilterRegistration(String filterName) {
-        return applyIfNonNull(delegate.getFilterRegistration(filterName), JavaXFilterRegistrationAdapter::new);
+        return JavaXFilterRegistrationAdapter.from(delegate.getFilterRegistration(filterName));
     }
 
     @Override
@@ -272,27 +281,27 @@ public class JavaXServletContextAdapter implements ServletContext {
             return null;
         }
         return filterRegistrations.entrySet().stream()
-                .collect(toMap(Entry::getKey, e -> applyIfNonNull(e.getValue(), JavaXFilterRegistrationAdapter::new)));
+                .collect(toMap(Entry::getKey, e -> JavaXFilterRegistrationAdapter.from(e.getValue())));
     }
 
     @Override
     public SessionCookieConfig getSessionCookieConfig() {
-        return applyIfNonNull(delegate.getSessionCookieConfig(), JavaXSessionCookieConfigAdapter::new);
+        return JavaXSessionCookieConfigAdapter.from(delegate.getSessionCookieConfig());
     }
 
     @Override
     public void setSessionTrackingModes(Set<SessionTrackingMode> sessionTrackingModes) {
-        delegate.setSessionTrackingModes(applyIfNonNull(sessionTrackingModes, JakartaServletContextAdapter::toJakartaSessionTrackingModeSet));
+        delegate.setSessionTrackingModes(JakartaServletContextAdapter.toJakartaSessionTrackingModeSet(sessionTrackingModes));
     }
 
     @Override
     public Set<SessionTrackingMode> getDefaultSessionTrackingModes() {
-        return applyIfNonNull(delegate.getDefaultSessionTrackingModes(), JavaXServletContextAdapter::toJavaXSessionTrackingModeSet);
+        return JavaXServletContextAdapter.toJavaXSessionTrackingModeSet(delegate.getDefaultSessionTrackingModes());
     }
 
     @Override
     public Set<SessionTrackingMode> getEffectiveSessionTrackingModes() {
-        return applyIfNonNull(delegate.getEffectiveSessionTrackingModes(), JavaXServletContextAdapter::toJavaXSessionTrackingModeSet);
+        return JavaXServletContextAdapter.toJavaXSessionTrackingModeSet(delegate.getEffectiveSessionTrackingModes());
     }
 
     @Override
@@ -321,7 +330,7 @@ public class JavaXServletContextAdapter implements ServletContext {
 
     @Override
     public JspConfigDescriptor getJspConfigDescriptor() {
-        return applyIfNonNull(delegate.getJspConfigDescriptor(), JavaXJspConfigDescriptorAdapter::new);
+        return JavaXJspConfigDescriptorAdapter.from(delegate.getJspConfigDescriptor());
     }
 
     @Override
@@ -370,6 +379,9 @@ public class JavaXServletContextAdapter implements ServletContext {
     }
 
     public static Set<SessionTrackingMode> toJavaXSessionTrackingModeSet(Collection<jakarta.servlet.SessionTrackingMode> sessionTrackingModes) {
+        if (sessionTrackingModes == null) {
+            return null;
+        }
         var result = EnumSet.noneOf(SessionTrackingMode.class);
         for (jakarta.servlet.SessionTrackingMode sessionTrackingMode : sessionTrackingModes) {
             result.add(SessionTrackingMode.valueOf(sessionTrackingMode.name()));

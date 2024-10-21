@@ -40,7 +40,7 @@ class JakartaPageContextAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdapted = new JakartaPageContextAdapter(new JavaXPageContextAdapter(original));
+        biAdapted = new JakartaPageContextAdapter(JavaXPageContextAdapter.from(original));
     }
 
     @Test

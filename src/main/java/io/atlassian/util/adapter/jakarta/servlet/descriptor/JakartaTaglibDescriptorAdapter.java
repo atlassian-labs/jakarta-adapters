@@ -1,15 +1,30 @@
 package io.atlassian.util.adapter.jakarta.servlet.descriptor;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.javax.servlet.descriptor.JavaXTaglibDescriptorAdapter;
 import jakarta.servlet.descriptor.TaglibDescriptor;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaTaglibDescriptorAdapter implements TaglibDescriptor {
+public class JakartaTaglibDescriptorAdapter implements TaglibDescriptor, Adapted<javax.servlet.descriptor.TaglibDescriptor> {
 
     private final javax.servlet.descriptor.TaglibDescriptor delegate;
 
-    public JakartaTaglibDescriptorAdapter(javax.servlet.descriptor.TaglibDescriptor delegate) {
+    public static TaglibDescriptor from(javax.servlet.descriptor.TaglibDescriptor delegate) {
+        if (delegate instanceof JavaXTaglibDescriptorAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaTaglibDescriptorAdapter::new);
+    }
+
+    JakartaTaglibDescriptorAdapter(javax.servlet.descriptor.TaglibDescriptor delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.servlet.descriptor.TaglibDescriptor getDelegate() {
+        return delegate;
     }
 
     @Override

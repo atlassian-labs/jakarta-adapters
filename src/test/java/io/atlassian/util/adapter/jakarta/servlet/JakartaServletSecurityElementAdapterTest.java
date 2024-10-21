@@ -26,7 +26,7 @@ class JakartaServletSecurityElementAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdapted = new JakartaServletSecurityElementAdapter(new JavaXServletSecurityElementAdapter(original));
+        biAdapted = new JakartaServletSecurityElementAdapter(JavaXServletSecurityElementAdapter.from(original));
     }
 
     @Test

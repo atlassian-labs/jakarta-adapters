@@ -1,6 +1,8 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletResponseAdapter;
+import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.ServletResponse;
 
@@ -11,13 +13,16 @@ import java.util.Locale;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaServletResponseAdapter implements ServletResponse {
+public class JakartaServletResponseAdapter implements ServletResponse, Adapted<javax.servlet.ServletResponse> {
 
     private final javax.servlet.ServletResponse delegate;
 
     public static ServletResponse from(javax.servlet.ServletResponse delegate) {
         if (delegate instanceof javax.servlet.http.HttpServletResponse castDelegate) {
-            return new JakartaHttpServletResponseAdapter(castDelegate);
+            return JakartaHttpServletResponseAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXServletResponseAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletResponseAdapter::new);
     }
@@ -26,6 +31,7 @@ public class JakartaServletResponseAdapter implements ServletResponse {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.ServletResponse getDelegate() {
         return delegate;
     }
@@ -42,7 +48,7 @@ public class JakartaServletResponseAdapter implements ServletResponse {
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
-        return applyIfNonNull(delegate.getOutputStream(), JakartaServletOutputStreamAdapter::new);
+        return JakartaServletOutputStreamAdapter.from(delegate.getOutputStream());
     }
 
     @Override

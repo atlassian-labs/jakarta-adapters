@@ -1,17 +1,33 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.el.JakartaEvaluationListenerAdapter;
+
 import javax.el.ELContext;
 import javax.el.EvaluationListener;
 
 import static io.atlassian.util.adapter.jakarta.JakartaJspAdapters.asJakartaJsp;
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXEvaluationListenerAdapter extends EvaluationListener {
+public class JavaXEvaluationListenerAdapter extends EvaluationListener implements Adapted<jakarta.el.EvaluationListener> {
 
     private final jakarta.el.EvaluationListener delegate;
 
-    public JavaXEvaluationListenerAdapter(jakarta.el.EvaluationListener delegate) {
+    public static EvaluationListener from(jakarta.el.EvaluationListener delegate) {
+        if (delegate instanceof JakartaEvaluationListenerAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXEvaluationListenerAdapter::new);
+    }
+
+    JavaXEvaluationListenerAdapter(jakarta.el.EvaluationListener delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.el.EvaluationListener getDelegate() {
+        return delegate;
     }
 
     @Override

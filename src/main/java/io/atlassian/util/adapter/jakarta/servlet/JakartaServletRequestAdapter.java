@@ -1,6 +1,8 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletRequestAdapter;
+import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
@@ -17,19 +19,23 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaServletRequestAdapter implements ServletRequest {
+public class JakartaServletRequestAdapter implements ServletRequest, Adapted<javax.servlet.ServletRequest> {
 
     private final javax.servlet.ServletRequest delegate;
 
     public static ServletRequest from(javax.servlet.ServletRequest delegate) {
         if (delegate instanceof javax.servlet.http.HttpServletRequest castDelegate) {
-            return new JakartaHttpServletRequestAdapter(castDelegate);
+            return JakartaHttpServletRequestAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXServletRequestAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletRequestAdapter::new);
     }
@@ -38,6 +44,7 @@ public class JakartaServletRequestAdapter implements ServletRequest {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.ServletRequest getDelegate() {
         return delegate;
     }
@@ -79,7 +86,7 @@ public class JakartaServletRequestAdapter implements ServletRequest {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        return applyIfNonNull(delegate.getInputStream(), JakartaServletInputStreamAdapter::new);
+        return JakartaServletInputStreamAdapter.from(delegate.getInputStream());
     }
 
     @Override
@@ -164,7 +171,7 @@ public class JakartaServletRequestAdapter implements ServletRequest {
 
     @Override
     public RequestDispatcher getRequestDispatcher(String path) {
-        return applyIfNonNull(delegate.getRequestDispatcher(path), JakartaRequestDispatcherAdapter::new);
+        return JakartaRequestDispatcherAdapter.from(delegate.getRequestDispatcher(path));
     }
 
     // @Override Servlet API 5.0
@@ -194,20 +201,18 @@ public class JakartaServletRequestAdapter implements ServletRequest {
 
     @Override
     public ServletContext getServletContext() {
-        return applyIfNonNull(delegate.getServletContext(), JakartaServletContextAdapter::new);
+        return asJakarta(delegate.getServletContext());
     }
 
     @Override
     public AsyncContext startAsync() throws IllegalStateException {
-        return applyIfNonNull(delegate.startAsync(), JakartaAsyncContextAdapter::new);
+        return JakartaAsyncContextAdapter.from(delegate.startAsync());
     }
 
     @Override
     public AsyncContext startAsync(ServletRequest servletRequest,
                                    ServletResponse servletResponse) throws IllegalStateException {
-        return applyIfNonNull(
-                delegate.startAsync(asJavaX(servletRequest), asJavaX(servletResponse)),
-                JakartaAsyncContextAdapter::new);
+        return JakartaAsyncContextAdapter.from(delegate.startAsync(asJavaX(servletRequest), asJavaX(servletResponse)));
     }
 
     @Override
@@ -222,7 +227,7 @@ public class JakartaServletRequestAdapter implements ServletRequest {
 
     @Override
     public AsyncContext getAsyncContext() {
-        return applyIfNonNull(delegate.getAsyncContext(), JakartaAsyncContextAdapter::new);
+        return JakartaAsyncContextAdapter.from(delegate.getAsyncContext());
     }
 
     @Override

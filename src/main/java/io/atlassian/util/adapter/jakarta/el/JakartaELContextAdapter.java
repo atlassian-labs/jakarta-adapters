@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.javax.el.JavaXELContextAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXEvaluationListenerAdapter;
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
@@ -16,12 +18,24 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static io.atlassian.util.adapter.util.WrapperUtil.transformListIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaELContextAdapter extends ELContext {
+public class JakartaELContextAdapter extends ELContext implements Adapted<javax.el.ELContext> {
 
     private final javax.el.ELContext delegate;
 
-    public JakartaELContextAdapter(javax.el.ELContext delegate) {
+    public static ELContext from(javax.el.ELContext delegate) {
+        if (delegate instanceof JavaXELContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaELContextAdapter::new);
+    }
+
+    JakartaELContextAdapter(javax.el.ELContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.el.ELContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -56,12 +70,12 @@ public class JakartaELContextAdapter extends ELContext {
 
     @Override
     public ImportHandler getImportHandler() {
-        return applyIfNonNull(delegate.getImportHandler(), JakartaImportHandlerAdapter::new);
+        return JakartaImportHandlerAdapter.from(delegate.getImportHandler());
     }
 
     @Override
     public FunctionMapper getFunctionMapper() {
-        return applyIfNonNull(delegate.getFunctionMapper(), JakartaFunctionMapperAdapter::new);
+        return JakartaFunctionMapperAdapter.from(delegate.getFunctionMapper());
     }
 
     @Override
@@ -76,17 +90,17 @@ public class JakartaELContextAdapter extends ELContext {
 
     @Override
     public VariableMapper getVariableMapper() {
-        return applyIfNonNull(delegate.getVariableMapper(), JakartaVariableMapperAdapter::new);
+        return JakartaVariableMapperAdapter.from(delegate.getVariableMapper());
     }
 
     @Override
     public void addEvaluationListener(EvaluationListener listener) {
-        delegate.addEvaluationListener(applyIfNonNull(listener, JavaXEvaluationListenerAdapter::new));
+        delegate.addEvaluationListener(JavaXEvaluationListenerAdapter.from(listener));
     }
 
     @Override
     public List<EvaluationListener> getEvaluationListeners() {
-        return transformListIfNonNull(delegate.getEvaluationListeners(), JakartaEvaluationListenerAdapter::new);
+        return transformListIfNonNull(delegate.getEvaluationListeners(), JakartaEvaluationListenerAdapter::from);
     }
 
     @Override

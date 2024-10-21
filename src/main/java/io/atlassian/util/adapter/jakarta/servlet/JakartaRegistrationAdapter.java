@@ -1,18 +1,39 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.javax.servlet.JavaXRegistrationAdapter;
 import jakarta.servlet.Registration;
 
 import java.util.Map;
 import java.util.Set;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaRegistrationAdapter implements Registration {
+public class JakartaRegistrationAdapter implements Registration, Adapted<javax.servlet.Registration> {
 
     private final javax.servlet.Registration delegate;
 
-    public JakartaRegistrationAdapter(javax.servlet.Registration delegate) {
+    public static Registration from(javax.servlet.Registration delegate) {
+        if (delegate instanceof javax.servlet.ServletRegistration castDelegate) {
+            return JakartaServletRegistrationAdapter.from(castDelegate);
+        }
+        if (delegate instanceof javax.servlet.FilterRegistration castDelegate) {
+            return JakartaFilterRegistrationAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXRegistrationAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaRegistrationAdapter::new);
+    }
+
+    JakartaRegistrationAdapter(javax.servlet.Registration delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.servlet.Registration getDelegate() {
+        return delegate;
     }
 
     @Override

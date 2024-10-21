@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
 
 import javax.servlet.AsyncContext;
@@ -18,17 +20,21 @@ import java.util.Map;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakartaIfJavaX;
+import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletRequestAdapter implements ServletRequest {
+public class JavaXServletRequestAdapter implements ServletRequest, Adapted<jakarta.servlet.ServletRequest> {
 
     private final jakarta.servlet.ServletRequest delegate;
 
     public static ServletRequest from(jakarta.servlet.ServletRequest delegate) {
         if (delegate instanceof jakarta.servlet.http.HttpServletRequest castDelegate) {
-            return new JavaXHttpServletRequestAdapter(castDelegate);
+            return JavaXHttpServletRequestAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaServletRequestAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletRequestAdapter::new);
     }
@@ -37,6 +43,7 @@ public class JavaXServletRequestAdapter implements ServletRequest {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.ServletRequest getDelegate() {
         return delegate;
     }
@@ -78,7 +85,7 @@ public class JavaXServletRequestAdapter implements ServletRequest {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        return applyIfNonNull(delegate.getInputStream(), JavaXServletInputStreamAdapter::new);
+        return JavaXServletInputStreamAdapter.from(delegate.getInputStream());
     }
 
     @Override
@@ -163,7 +170,7 @@ public class JavaXServletRequestAdapter implements ServletRequest {
 
     @Override
     public RequestDispatcher getRequestDispatcher(String path) {
-        return applyIfNonNull(delegate.getRequestDispatcher(path), JavaXRequestDispatcherAdapter::new);
+        return JavaXRequestDispatcherAdapter.from(delegate.getRequestDispatcher(path));
     }
 
     @Override
@@ -193,20 +200,18 @@ public class JavaXServletRequestAdapter implements ServletRequest {
 
     @Override
     public ServletContext getServletContext() {
-        return applyIfNonNull(delegate.getServletContext(), JavaXServletContextAdapter::new);
+        return asJavaX(delegate.getServletContext());
     }
 
     @Override
     public AsyncContext startAsync() throws IllegalStateException {
-        return applyIfNonNull(delegate.startAsync(), JavaXAsyncContextAdapter::new);
+        return JavaXAsyncContextAdapter.from(delegate.startAsync());
     }
 
     @Override
     public AsyncContext startAsync(ServletRequest servletRequest,
                                    ServletResponse servletResponse) throws IllegalStateException {
-        return applyIfNonNull(
-                delegate.startAsync(asJakarta(servletRequest), asJakarta(servletResponse)),
-                JavaXAsyncContextAdapter::new);
+        return JavaXAsyncContextAdapter.from(delegate.startAsync(asJakarta(servletRequest), asJakarta(servletResponse)));
     }
 
     @Override
@@ -221,7 +226,7 @@ public class JavaXServletRequestAdapter implements ServletRequest {
 
     @Override
     public AsyncContext getAsyncContext() {
-        return applyIfNonNull(delegate.getAsyncContext(), JavaXAsyncContextAdapter::new);
+        return JavaXAsyncContextAdapter.from(delegate.getAsyncContext());
     }
 
     @Override

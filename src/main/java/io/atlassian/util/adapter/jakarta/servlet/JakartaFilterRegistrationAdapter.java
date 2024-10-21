@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.javax.servlet.JavaXFilterRegistrationAdapter;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterRegistration;
 
@@ -13,9 +14,24 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
 
     private final javax.servlet.FilterRegistration delegate;
 
-    public JakartaFilterRegistrationAdapter(javax.servlet.FilterRegistration delegate) {
+    public static FilterRegistration from(javax.servlet.FilterRegistration delegate) {
+        if (delegate instanceof javax.servlet.FilterRegistration.Dynamic castDelegate) {
+            return JakartaDynamicFilterRegistrationAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JavaXFilterRegistrationAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaFilterRegistrationAdapter::new);
+    }
+
+    JakartaFilterRegistrationAdapter(javax.servlet.FilterRegistration delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.servlet.FilterRegistration getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -23,7 +39,7 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
                                           boolean isMatchAfter,
                                           String... servletNames) {
         delegate.addMappingForServletNames(
-                applyIfNonNull(dispatcherTypes, JakartaFilterRegistrationAdapter::toJavaXDispatcherTypeSet),
+                JakartaFilterRegistrationAdapter.toJavaXDispatcherTypeSet(dispatcherTypes),
                 isMatchAfter,
                 servletNames);
     }
@@ -38,7 +54,7 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
                                          boolean isMatchAfter,
                                          String... urlPatterns) {
         delegate.addMappingForUrlPatterns(
-                applyIfNonNull(dispatcherTypes, JakartaFilterRegistrationAdapter::toJavaXDispatcherTypeSet),
+                JakartaFilterRegistrationAdapter.toJavaXDispatcherTypeSet(dispatcherTypes),
                 isMatchAfter,
                 urlPatterns);
     }
@@ -49,6 +65,9 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
     }
 
     private static EnumSet<javax.servlet.DispatcherType> toJavaXDispatcherTypeSet(Collection<DispatcherType> dispatcherTypes) {
+        if (dispatcherTypes == null) {
+            return null;
+        }
         var result = EnumSet.noneOf(javax.servlet.DispatcherType.class);
         for (DispatcherType dispatcherType : dispatcherTypes) {
             result.add(javax.servlet.DispatcherType.valueOf(dispatcherType.name()));

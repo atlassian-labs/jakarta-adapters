@@ -1,8 +1,10 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpSessionAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaVariableResolverAdapter;
+import io.atlassian.util.adapter.javax.servlet.jsp.JavaXPageContextAdapter;
 import jakarta.el.ELContext;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
@@ -26,12 +28,24 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaXIfJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
+public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext implements Adapted<javax.servlet.jsp.PageContext> {
 
     private final javax.servlet.jsp.PageContext delegate;
 
-    public JakartaPageContextAdapter(javax.servlet.jsp.PageContext delegate) {
+    public static jakarta.servlet.jsp.PageContext from(javax.servlet.jsp.PageContext delegate) {
+        if (delegate instanceof JavaXPageContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaPageContextAdapter::new);
+    }
+
+    JakartaPageContextAdapter(javax.servlet.jsp.PageContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.servlet.jsp.PageContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -52,7 +66,7 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
 
     @Override
     public HttpSession getSession() {
-        return applyIfNonNull(delegate.getSession(), JakartaHttpSessionAdapter::new);
+        return JakartaHttpSessionAdapter.from(delegate.getSession());
     }
 
     @Override
@@ -113,11 +127,11 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
     }
 
     @Override
-    public void handlePageException(Exception e) throws ServletException, IOException {
+    public void handlePageException(Exception ex) throws ServletException, IOException {
         try {
-            delegate.handlePageException(e);
-        } catch (javax.servlet.ServletException ex) {
-            throw new ServletException(ex);
+            delegate.handlePageException(ex);
+        } catch (javax.servlet.ServletException e) {
+            throw new ServletException(e);
         }
     }
 
@@ -182,12 +196,12 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext {
 
     @Override
     public ExpressionEvaluator getExpressionEvaluator() {
-        return applyIfNonNull(delegate.getExpressionEvaluator(), JakartaExpressionEvaluatorAdapter::new);
+        return JakartaExpressionEvaluatorAdapter.from(delegate.getExpressionEvaluator());
     }
 
     @Override
     public VariableResolver getVariableResolver() {
-        return applyIfNonNull(delegate.getVariableResolver(), JakartaVariableResolverAdapter::new);
+        return JakartaVariableResolverAdapter.from(delegate.getVariableResolver());
     }
 
     @Override

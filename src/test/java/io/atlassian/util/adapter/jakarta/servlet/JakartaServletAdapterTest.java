@@ -27,7 +27,7 @@ class JakartaServletAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdaptedServlet = new JakartaServletAdapter(new JavaXServletAdapter(originalServlet));
+        biAdaptedServlet = new JakartaServletAdapter(JavaXServletAdapter.from(originalServlet));
     }
 
     @Test
@@ -75,10 +75,18 @@ class JakartaServletAdapterTest {
 
     @Test
     void getDelegate() {
-        var adaptedServlet = new JavaXServletAdapter(originalServlet);
-        assertEquals(originalServlet, adaptedServlet.getDelegate());
+        var adaptedServlet = JavaXServletAdapter.from(originalServlet);
+        assertEquals(originalServlet, ((JavaXServletAdapter) adaptedServlet).getDelegate());
 
-        var biAdaptedServlet = new JakartaServletAdapter(adaptedServlet);
-        assertEquals(adaptedServlet, biAdaptedServlet.getDelegate());
+        var javaXOriginal = mock(javax.servlet.Servlet.class);
+        var adaptedServlet2 = JakartaServletAdapter.from(javaXOriginal);
+        assertEquals(javaXOriginal, ((JakartaServletAdapter) adaptedServlet2).getDelegate());
+    }
+
+    @Test
+    void doubleAdaptShortCircuit() {
+        var adaptedServlet = JavaXServletAdapter.from(originalServlet);
+        var biAdaptedServlet = JakartaServletAdapter.from(adaptedServlet);
+        assertEquals(originalServlet, biAdaptedServlet);
     }
 }

@@ -1,6 +1,5 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
-import io.atlassian.util.adapter.jakarta.servlet.descriptor.JakartaJspConfigDescriptorAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextAdapter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
@@ -12,6 +11,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.SessionCookieConfig;
 import jakarta.servlet.SessionTrackingMode;
+import jakarta.servlet.descriptor.JspConfigDescriptor;
 import jakarta.servlet.descriptor.TaglibDescriptor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ class JakartaServletContextAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdaptedContext = new JakartaServletContextAdapter(new JavaXServletContextAdapter(originalContext));
+        biAdaptedContext = new JakartaServletContextAdapter(JavaXServletContextAdapter.from(originalContext));
     }
 
     @Test
@@ -452,7 +452,7 @@ class JakartaServletContextAdapterTest {
 
     @Test
     void getJspConfigDescriptor() {
-        var retValue = mock(JakartaJspConfigDescriptorAdapter.class);
+        var retValue = mock(JspConfigDescriptor.class);
         var nestedRetValue = mock(TaglibDescriptor.class);
         when(nestedRetValue.getTaglibLocation()).thenReturn("location");
         when(retValue.getTaglibs()).thenReturn(List.of(nestedRetValue));

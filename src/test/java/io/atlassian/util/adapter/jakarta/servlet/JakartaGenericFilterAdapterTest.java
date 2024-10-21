@@ -51,8 +51,16 @@ class JakartaGenericFilterAdapterTest {
         var adapted = (JavaXGenericFilterAdapter) JavaXGenericFilterAdapter.from(original);
         assertEquals(original, adapted.getDelegate());
 
-        var biAdaptedRequest = (JakartaGenericFilterAdapter) JakartaGenericFilterAdapter.from(adapted);
-        assertEquals(adapted, biAdaptedRequest.getDelegate());
+        var javaXOriginal = mock(javax.servlet.GenericFilter.class);
+        var adaptedRequest = (JakartaGenericFilterAdapter) JakartaGenericFilterAdapter.from(javaXOriginal);
+        assertEquals(javaXOriginal, adaptedRequest.getDelegate());
+    }
+
+    @Test
+    void doubleAdaptShortCircuit() {
+        var adapted = (JavaXGenericFilterAdapter) JavaXGenericFilterAdapter.from(original);
+        var biAdaptedRequest = JakartaGenericFilterAdapter.from(adapted);
+        assertEquals(original, biAdaptedRequest);
     }
 
     @Test
