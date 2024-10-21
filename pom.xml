@@ -8,14 +8,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.atlassian.util.adapter</groupId>
     <artifactId>jakarta-adapters</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3-SNAPSHOT</version>
     <name>Jakarta Adapters</name>
     <description>An incomplete collection of classes for adapting Servlet API 4.0 objects to Servlet API 5.0 and vice versa.</description>
     <scm>
         <connection>scm:git:git@bitbucket.org:atlassian/jakarta-adapters.git</connection>
         <developerConnection>scm:git:git@bitbucket.org:atlassian/jakarta-adapters.git</developerConnection>
         <url>https://bitbucket.org/atlassian/jakarta-adapters</url>
-        <tag>jakarta-adapters-0.1.2</tag>
+        <tag>HEAD</tag>
     </scm>
     <licenses>
         <license>
