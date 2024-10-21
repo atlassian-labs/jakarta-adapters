@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaFunctionMapperAdapter;
 
 import javax.servlet.jsp.el.FunctionMapper;
@@ -8,7 +9,7 @@ import java.lang.reflect.Method;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXFunctionMapperAdapter implements FunctionMapper {
+public class JavaXFunctionMapperAdapter implements FunctionMapper, Adapted<jakarta.servlet.jsp.el.FunctionMapper> {
 
     private final jakarta.servlet.jsp.el.FunctionMapper delegate;
 
@@ -23,6 +24,7 @@ public class JavaXFunctionMapperAdapter implements FunctionMapper {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.jsp.el.FunctionMapper getDelegate() {
         return delegate;
     }

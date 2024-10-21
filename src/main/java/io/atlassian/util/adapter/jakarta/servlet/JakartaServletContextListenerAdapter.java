@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextEventAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextListenerAdapter;
 import jakarta.servlet.ServletContextEvent;
@@ -8,7 +9,7 @@ import jakarta.servlet.ServletContextListener;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaServletContextListenerAdapter implements ServletContextListener {
+public class JakartaServletContextListenerAdapter implements ServletContextListener, Adapted<javax.servlet.ServletContextListener> {
 
     private final javax.servlet.ServletContextListener delegate;
 
@@ -23,6 +24,7 @@ public class JakartaServletContextListenerAdapter implements ServletContextListe
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.ServletContextListener getDelegate() {
         return delegate;
     }

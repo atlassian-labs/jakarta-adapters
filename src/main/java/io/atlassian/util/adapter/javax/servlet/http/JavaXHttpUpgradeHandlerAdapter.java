@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpUpgradeHandlerAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaWebConnectionAdapter;
 
@@ -9,7 +10,7 @@ import javax.servlet.http.WebConnection;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXHttpUpgradeHandlerAdapter implements HttpUpgradeHandler {
+public class JavaXHttpUpgradeHandlerAdapter implements HttpUpgradeHandler, Adapted<jakarta.servlet.http.HttpUpgradeHandler> {
 
     private final jakarta.servlet.http.HttpUpgradeHandler delegate;
 
@@ -24,6 +25,7 @@ public class JavaXHttpUpgradeHandlerAdapter implements HttpUpgradeHandler {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.http.HttpUpgradeHandler getDelegate() {
         return delegate;
     }

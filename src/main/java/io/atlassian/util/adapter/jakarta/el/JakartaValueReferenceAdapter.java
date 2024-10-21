@@ -1,11 +1,12 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXValueReferenceAdapter;
 import jakarta.el.ValueReference;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
-public class JakartaValueReferenceAdapter extends ValueReference {
+public class JakartaValueReferenceAdapter extends ValueReference implements Adapted<javax.el.ValueReference> {
 
     private final javax.el.ValueReference delegate;
 
@@ -21,6 +22,7 @@ public class JakartaValueReferenceAdapter extends ValueReference {
         this.delegate = delegate;
     }
 
+    @Override
     public javax.el.ValueReference getDelegate() {
         return delegate;
     }

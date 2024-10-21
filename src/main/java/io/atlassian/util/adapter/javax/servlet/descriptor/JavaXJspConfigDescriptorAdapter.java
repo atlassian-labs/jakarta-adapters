@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.descriptor;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.descriptor.JakartaJspConfigDescriptorAdapter;
 
 import javax.servlet.descriptor.JspConfigDescriptor;
@@ -11,7 +12,7 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static io.atlassian.util.adapter.util.WrapperUtil.transformIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor {
+public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor, Adapted<jakarta.servlet.descriptor.JspConfigDescriptor> {
 
     private final jakarta.servlet.descriptor.JspConfigDescriptor delegate;
 
@@ -26,6 +27,7 @@ public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.descriptor.JspConfigDescriptor getDelegate() {
         return delegate;
     }

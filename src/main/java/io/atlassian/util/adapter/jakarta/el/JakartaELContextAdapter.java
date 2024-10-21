@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXELContextAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXEvaluationListenerAdapter;
 import jakarta.el.ELContext;
@@ -17,7 +18,7 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static io.atlassian.util.adapter.util.WrapperUtil.transformListIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaELContextAdapter extends ELContext {
+public class JakartaELContextAdapter extends ELContext implements Adapted<javax.el.ELContext> {
 
     private final javax.el.ELContext delegate;
 
@@ -32,6 +33,7 @@ public class JakartaELContextAdapter extends ELContext {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.el.ELContext getDelegate() {
         return delegate;
     }

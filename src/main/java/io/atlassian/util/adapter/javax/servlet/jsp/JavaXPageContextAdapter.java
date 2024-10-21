@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaPageContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXExpressionEvaluatorAdapter;
@@ -28,7 +29,7 @@ import static io.atlassian.util.adapter.javax.JavaXJspAdapters.asJavaXJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXPageContextAdapter extends PageContext {
+public class JavaXPageContextAdapter extends PageContext implements Adapted<jakarta.servlet.jsp.PageContext> {
 
     private final jakarta.servlet.jsp.PageContext delegate;
 
@@ -43,6 +44,7 @@ public class JavaXPageContextAdapter extends PageContext {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.jsp.PageContext getDelegate() {
         return delegate;
     }

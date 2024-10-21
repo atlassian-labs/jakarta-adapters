@@ -1,12 +1,13 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaMethodInfoAdapter;
 
 import javax.el.MethodInfo;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
-public class JavaXMethodInfoAdapter extends MethodInfo {
+public class JavaXMethodInfoAdapter extends MethodInfo implements Adapted<jakarta.el.MethodInfo> {
 
     private final jakarta.el.MethodInfo delegate;
 
@@ -22,6 +23,7 @@ public class JavaXMethodInfoAdapter extends MethodInfo {
         this.delegate = delegate;
     }
 
+    @Override
     public jakarta.el.MethodInfo getDelegate() {
         return delegate;
     }

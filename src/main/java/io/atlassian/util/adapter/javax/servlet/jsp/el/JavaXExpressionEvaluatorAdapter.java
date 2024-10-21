@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaFunctionMapperAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaVariableResolverAdapter;
@@ -13,7 +14,7 @@ import javax.servlet.jsp.el.VariableResolver;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXExpressionEvaluatorAdapter extends ExpressionEvaluator {
+public class JavaXExpressionEvaluatorAdapter extends ExpressionEvaluator implements Adapted<jakarta.servlet.jsp.el.ExpressionEvaluator> {
 
     private final jakarta.servlet.jsp.el.ExpressionEvaluator delegate;
 
@@ -28,6 +29,7 @@ public class JavaXExpressionEvaluatorAdapter extends ExpressionEvaluator {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.jsp.el.ExpressionEvaluator getDelegate() {
         return delegate;
     }

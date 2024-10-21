@@ -1,12 +1,13 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXSessionCookieConfigAdapter;
 import jakarta.servlet.SessionCookieConfig;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig {
+public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig, Adapted<javax.servlet.SessionCookieConfig> {
 
     private final javax.servlet.SessionCookieConfig delegate;
 

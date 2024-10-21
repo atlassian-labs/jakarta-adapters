@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncListenerAdapter;
 import jakarta.servlet.AsyncContext;
@@ -14,7 +15,7 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaAsyncContextAdapter implements AsyncContext {
+public class JakartaAsyncContextAdapter implements AsyncContext, Adapted<javax.servlet.AsyncContext> {
 
     private final javax.servlet.AsyncContext delegate;
 
@@ -29,6 +30,7 @@ public class JakartaAsyncContextAdapter implements AsyncContext {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.AsyncContext getDelegate() {
         return delegate;
     }

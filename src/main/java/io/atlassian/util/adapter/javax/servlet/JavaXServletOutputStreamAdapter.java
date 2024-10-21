@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletOutputStreamAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaWriteListenerAdapter;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletOutputStreamAdapter extends ServletOutputStream {
+public class JavaXServletOutputStreamAdapter extends ServletOutputStream implements Adapted<jakarta.servlet.ServletOutputStream> {
 
     private final jakarta.servlet.ServletOutputStream delegate;
 

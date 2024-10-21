@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXRequestDispatcherAdapter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,7 +13,7 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaRequestDispatcherAdapter implements RequestDispatcher {
+public class JakartaRequestDispatcherAdapter implements RequestDispatcher, Adapted<javax.servlet.RequestDispatcher> {
     private final javax.servlet.RequestDispatcher delegate;
 
     public static RequestDispatcher from(javax.servlet.RequestDispatcher delegate) {
@@ -26,6 +27,7 @@ public class JakartaRequestDispatcherAdapter implements RequestDispatcher {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.RequestDispatcher getDelegate() {
         return delegate;
     }

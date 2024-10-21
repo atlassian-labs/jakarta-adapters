@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterChainAdapter;
 
 import javax.servlet.FilterChain;
@@ -12,7 +13,7 @@ import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXFilterChainAdapter implements FilterChain {
+public class JavaXFilterChainAdapter implements FilterChain, Adapted<jakarta.servlet.FilterChain> {
 
     private final jakarta.servlet.FilterChain delegate;
 
@@ -27,6 +28,7 @@ public class JavaXFilterChainAdapter implements FilterChain {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.FilterChain getDelegate() {
         return delegate;
     }

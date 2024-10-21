@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXRegistrationAdapter;
 import jakarta.servlet.Registration;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaRegistrationAdapter implements Registration {
+public class JakartaRegistrationAdapter implements Registration, Adapted<javax.servlet.Registration> {
 
     private final javax.servlet.Registration delegate;
 
@@ -30,6 +31,7 @@ public class JakartaRegistrationAdapter implements Registration {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.Registration getDelegate() {
         return delegate;
     }

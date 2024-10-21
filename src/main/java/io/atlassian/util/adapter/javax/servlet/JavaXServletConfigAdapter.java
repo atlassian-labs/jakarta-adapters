@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletConfigAdapter;
 
 import javax.servlet.ServletConfig;
@@ -10,7 +11,7 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletConfigAdapter implements ServletConfig {
+public class JavaXServletConfigAdapter implements ServletConfig, Adapted<jakarta.servlet.ServletConfig> {
 
     private final jakarta.servlet.ServletConfig delegate;
 
@@ -25,6 +26,7 @@ public class JavaXServletConfigAdapter implements ServletConfig {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.ServletConfig getDelegate() {
         return delegate;
     }

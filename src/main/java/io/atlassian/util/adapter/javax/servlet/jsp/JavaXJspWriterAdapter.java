@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspWriterAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.tagext.JavaXBodyContentAdapter;
 
@@ -9,7 +10,7 @@ import java.io.Writer;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
-public class JavaXJspWriterAdapter extends JspWriter {
+public class JavaXJspWriterAdapter extends JspWriter implements Adapted<jakarta.servlet.jsp.JspWriter> {
 
     private final jakarta.servlet.jsp.JspWriter delegate;
 
@@ -28,6 +29,7 @@ public class JavaXJspWriterAdapter extends JspWriter {
         this.delegate = delegate;
     }
 
+    @Override
     public jakarta.servlet.jsp.JspWriter getDelegate() {
         return delegate;
     }

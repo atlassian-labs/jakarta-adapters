@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspEngineInfoAdapter;
 
 import javax.servlet.jsp.JspEngineInfo;
@@ -7,7 +8,7 @@ import javax.servlet.jsp.JspEngineInfo;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXJspEngineInfoAdapter extends JspEngineInfo {
+public class JavaXJspEngineInfoAdapter extends JspEngineInfo implements Adapted<jakarta.servlet.jsp.JspEngineInfo> {
 
     private final jakarta.servlet.jsp.JspEngineInfo delegate;
 
@@ -22,6 +23,7 @@ public class JavaXJspEngineInfoAdapter extends JspEngineInfo {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.jsp.JspEngineInfo getDelegate() {
         return delegate;
     }
