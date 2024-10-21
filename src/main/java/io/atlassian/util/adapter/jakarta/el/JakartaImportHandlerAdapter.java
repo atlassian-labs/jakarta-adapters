@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXImportHandlerAdapter;
 import jakarta.el.ELException;
 import jakarta.el.ImportHandler;
@@ -7,7 +8,7 @@ import jakarta.el.ImportHandler;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaImportHandlerAdapter extends ImportHandler {
+public class JakartaImportHandlerAdapter extends ImportHandler implements Adapted<javax.el.ImportHandler> {
 
     private final javax.el.ImportHandler delegate;
 
@@ -22,6 +23,7 @@ public class JakartaImportHandlerAdapter extends ImportHandler {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.el.ImportHandler getDelegate() {
         return delegate;
     }

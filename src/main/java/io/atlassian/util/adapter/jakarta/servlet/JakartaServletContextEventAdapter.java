@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextEventAdapter;
 import jakarta.servlet.ServletContextEvent;
 
@@ -7,7 +8,7 @@ import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaServletContextEventAdapter extends ServletContextEvent {
+public class JakartaServletContextEventAdapter extends ServletContextEvent implements Adapted<javax.servlet.ServletContextEvent> {
 
     private final javax.servlet.ServletContextEvent delegate;
 
@@ -23,6 +24,7 @@ public class JakartaServletContextEventAdapter extends ServletContextEvent {
         this.delegate = delegate;
     }
 
+    @Override
     public javax.servlet.ServletContextEvent getDelegate() {
         return delegate;
     }

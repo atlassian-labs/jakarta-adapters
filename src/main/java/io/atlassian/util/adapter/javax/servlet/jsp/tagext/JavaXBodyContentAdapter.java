@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp.tagext;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.tagext.JakartaBodyContentAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspWriterAdapter;
 
@@ -12,7 +13,7 @@ import java.io.Writer;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXBodyContentAdapter extends BodyContent {
+public class JavaXBodyContentAdapter extends BodyContent implements Adapted<jakarta.servlet.jsp.tagext.BodyContent> {
 
     private final jakarta.servlet.jsp.tagext.BodyContent delegate;
 
@@ -28,6 +29,7 @@ public class JavaXBodyContentAdapter extends BodyContent {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.jsp.tagext.BodyContent getDelegate() {
         return delegate;
     }

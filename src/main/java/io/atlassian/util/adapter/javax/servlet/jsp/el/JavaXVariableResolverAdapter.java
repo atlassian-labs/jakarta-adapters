@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.jsp.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaVariableResolverAdapter;
 
 import javax.servlet.jsp.el.ELException;
@@ -8,7 +9,7 @@ import javax.servlet.jsp.el.VariableResolver;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXVariableResolverAdapter implements VariableResolver {
+public class JavaXVariableResolverAdapter implements VariableResolver, Adapted<jakarta.servlet.jsp.el.VariableResolver> {
 
     private final jakarta.servlet.jsp.el.VariableResolver delegate;
 
@@ -23,6 +24,7 @@ public class JavaXVariableResolverAdapter implements VariableResolver {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.jsp.el.VariableResolver getDelegate() {
         return delegate;
     }

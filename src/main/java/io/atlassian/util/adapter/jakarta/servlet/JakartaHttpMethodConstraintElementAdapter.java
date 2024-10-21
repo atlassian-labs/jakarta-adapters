@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXHttpMethodConstraintElementAdapter;
 import jakarta.servlet.HttpMethodConstraintElement;
 import jakarta.servlet.annotation.ServletSecurity;
@@ -7,7 +8,7 @@ import jakarta.servlet.annotation.ServletSecurity;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaHttpMethodConstraintElementAdapter extends HttpMethodConstraintElement {
+public class JakartaHttpMethodConstraintElementAdapter extends HttpMethodConstraintElement implements Adapted<javax.servlet.HttpMethodConstraintElement> {
 
     private final javax.servlet.HttpMethodConstraintElement delegate;
 
@@ -23,6 +24,7 @@ public class JakartaHttpMethodConstraintElementAdapter extends HttpMethodConstra
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.HttpMethodConstraintElement getDelegate() {
         return delegate;
     }

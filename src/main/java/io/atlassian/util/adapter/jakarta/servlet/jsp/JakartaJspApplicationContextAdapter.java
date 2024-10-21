@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaExpressionFactoryAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXELContextListenerAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspApplicationContextAdapter;
@@ -11,7 +12,7 @@ import jakarta.servlet.jsp.JspApplicationContext;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaJspApplicationContextAdapter implements JspApplicationContext {
+public class JakartaJspApplicationContextAdapter implements JspApplicationContext, Adapted<javax.servlet.jsp.JspApplicationContext> {
 
     private final javax.servlet.jsp.JspApplicationContext delegate;
 
@@ -26,6 +27,7 @@ public class JakartaJspApplicationContextAdapter implements JspApplicationContex
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.jsp.JspApplicationContext getDelegate() {
         return delegate;
     }

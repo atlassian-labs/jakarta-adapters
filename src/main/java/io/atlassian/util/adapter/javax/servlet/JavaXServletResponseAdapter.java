@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletResponseAdapter;
 
@@ -12,7 +13,7 @@ import java.util.Locale;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletResponseAdapter implements ServletResponse {
+public class JavaXServletResponseAdapter implements ServletResponse, Adapted<jakarta.servlet.ServletResponse> {
 
     private final jakarta.servlet.ServletResponse delegate;
 
@@ -30,6 +31,7 @@ public class JavaXServletResponseAdapter implements ServletResponse {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.ServletResponse getDelegate() {
         return delegate;
     }

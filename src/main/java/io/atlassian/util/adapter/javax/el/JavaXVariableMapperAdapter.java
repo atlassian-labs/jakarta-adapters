@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaValueExpressionAdapter;
 import io.atlassian.util.adapter.jakarta.el.JakartaVariableMapperAdapter;
 
@@ -9,7 +10,7 @@ import javax.el.VariableMapper;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXVariableMapperAdapter extends VariableMapper {
+public class JavaXVariableMapperAdapter extends VariableMapper implements Adapted<jakarta.el.VariableMapper> {
 
     private final jakarta.el.VariableMapper delegate;
 
@@ -24,6 +25,7 @@ public class JavaXVariableMapperAdapter extends VariableMapper {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.el.VariableMapper getDelegate() {
         return delegate;
     }

@@ -1,12 +1,13 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXELContextEventAdapter;
 import jakarta.el.ELContextEvent;
 
 import static io.atlassian.util.adapter.jakarta.JakartaJspAdapters.asJakartaJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
-public class JakartaELContextEventAdapter extends ELContextEvent {
+public class JakartaELContextEventAdapter extends ELContextEvent implements Adapted<javax.el.ELContextEvent> {
 
     private final javax.el.ELContextEvent delegate;
 
@@ -22,6 +23,7 @@ public class JakartaELContextEventAdapter extends ELContextEvent {
         this.delegate = delegate;
     }
 
+    @Override
     public javax.el.ELContextEvent getDelegate() {
         return delegate;
     }

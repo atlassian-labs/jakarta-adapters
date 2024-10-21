@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaReadListenerAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletInputStreamAdapter;
 
@@ -11,7 +12,7 @@ import java.io.OutputStream;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletInputStreamAdapter extends ServletInputStream {
+public class JavaXServletInputStreamAdapter extends ServletInputStream implements Adapted<jakarta.servlet.ServletInputStream> {
 
     private final jakarta.servlet.ServletInputStream delegate;
 

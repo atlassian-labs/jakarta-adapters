@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXValueExpressionAdapter;
 import jakarta.el.ELContext;
 import jakarta.el.ValueExpression;
@@ -9,7 +10,7 @@ import static io.atlassian.util.adapter.javax.JavaXJspAdapters.asJavaXJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaValueExpressionAdapter extends ValueExpression {
+public class JakartaValueExpressionAdapter extends ValueExpression implements Adapted<javax.el.ValueExpression> {
 
     private final javax.el.ValueExpression delegate;
 
@@ -24,6 +25,7 @@ public class JakartaValueExpressionAdapter extends ValueExpression {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.el.ValueExpression getDelegate() {
         return delegate;
     }

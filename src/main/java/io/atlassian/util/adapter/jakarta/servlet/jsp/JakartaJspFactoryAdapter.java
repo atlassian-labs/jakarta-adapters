@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspFactoryAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXPageContextAdapter;
 import jakarta.servlet.Servlet;
@@ -15,7 +16,7 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaJspFactoryAdapter extends JspFactory {
+public class JakartaJspFactoryAdapter extends JspFactory implements Adapted<javax.servlet.jsp.JspFactory> {
     private final javax.servlet.jsp.JspFactory delegate;
 
     public static JspFactory from(javax.servlet.jsp.JspFactory delegate) {
@@ -29,6 +30,7 @@ public class JakartaJspFactoryAdapter extends JspFactory {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.jsp.JspFactory getDelegate() {
         return delegate;
     }

@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncEventAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncListenerAdapter;
 
@@ -10,7 +11,7 @@ import java.io.IOException;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXAsyncListenerAdapter implements AsyncListener {
+public class JavaXAsyncListenerAdapter implements AsyncListener, Adapted<jakarta.servlet.AsyncListener> {
     private final jakarta.servlet.AsyncListener delegate;
 
     public static AsyncListener from(jakarta.servlet.AsyncListener delegate) {
@@ -24,6 +25,7 @@ public class JavaXAsyncListenerAdapter implements AsyncListener {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.AsyncListener getDelegate() {
         return delegate;
     }

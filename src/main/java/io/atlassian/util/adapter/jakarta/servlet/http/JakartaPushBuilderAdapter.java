@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXPushBuilderAdapter;
 import jakarta.servlet.http.PushBuilder;
 
@@ -8,7 +9,7 @@ import java.util.Set;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaPushBuilderAdapter implements PushBuilder {
+public class JakartaPushBuilderAdapter implements PushBuilder, Adapted<javax.servlet.http.PushBuilder> {
 
     private final javax.servlet.http.PushBuilder delegate;
 
@@ -23,6 +24,7 @@ public class JakartaPushBuilderAdapter implements PushBuilder {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.http.PushBuilder getDelegate() {
         return delegate;
     }

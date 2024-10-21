@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletMappingAdapter;
 
 import javax.servlet.http.HttpServletMapping;
@@ -8,7 +9,7 @@ import javax.servlet.http.MappingMatch;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXHttpServletMappingAdapter implements HttpServletMapping {
+public class JavaXHttpServletMappingAdapter implements HttpServletMapping, Adapted<jakarta.servlet.http.HttpServletMapping> {
 
     private final jakarta.servlet.http.HttpServletMapping delegate;
 
@@ -23,6 +24,7 @@ public class JavaXHttpServletMappingAdapter implements HttpServletMapping {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.http.HttpServletMapping getDelegate() {
         return delegate;
     }

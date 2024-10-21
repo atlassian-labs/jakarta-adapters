@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterConfigAdapter;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletContext;
@@ -10,7 +11,7 @@ import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaFilterConfigAdapter implements FilterConfig {
+public class JakartaFilterConfigAdapter implements FilterConfig, Adapted<javax.servlet.FilterConfig> {
 
     private final javax.servlet.FilterConfig delegate;
 
@@ -25,6 +26,7 @@ public class JakartaFilterConfigAdapter implements FilterConfig {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.FilterConfig getDelegate() {
         return delegate;
     }

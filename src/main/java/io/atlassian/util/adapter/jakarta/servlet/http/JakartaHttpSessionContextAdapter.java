@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionContextAdapter;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionContext;
@@ -9,7 +10,7 @@ import java.util.Enumeration;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaHttpSessionContextAdapter implements HttpSessionContext {
+public class JakartaHttpSessionContextAdapter implements HttpSessionContext, Adapted<javax.servlet.http.HttpSessionContext> {
     private final javax.servlet.http.HttpSessionContext delegate;
 
     public static HttpSessionContext from(javax.servlet.http.HttpSessionContext delegate) {
@@ -23,6 +24,7 @@ public class JakartaHttpSessionContextAdapter implements HttpSessionContext {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.http.HttpSessionContext getDelegate() {
         return delegate;
     }

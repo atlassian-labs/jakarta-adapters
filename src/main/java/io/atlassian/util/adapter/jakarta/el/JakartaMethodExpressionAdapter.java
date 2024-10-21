@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXMethodExpressionAdapter;
 import jakarta.el.ELContext;
 import jakarta.el.MethodExpression;
@@ -9,7 +10,7 @@ import static io.atlassian.util.adapter.javax.JavaXJspAdapters.asJavaXJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaMethodExpressionAdapter extends MethodExpression {
+public class JakartaMethodExpressionAdapter extends MethodExpression implements Adapted<javax.el.MethodExpression> {
 
     private final javax.el.MethodExpression delegate;
 
@@ -24,6 +25,7 @@ public class JakartaMethodExpressionAdapter extends MethodExpression {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.el.MethodExpression getDelegate() {
         return delegate;
     }

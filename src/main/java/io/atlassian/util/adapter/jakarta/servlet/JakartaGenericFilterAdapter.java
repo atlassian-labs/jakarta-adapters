@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpFilterAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXGenericFilterAdapter;
 import jakarta.servlet.FilterChain;
@@ -18,7 +19,7 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaGenericFilterAdapter extends GenericFilter {
+public class JakartaGenericFilterAdapter extends GenericFilter implements Adapted<javax.servlet.GenericFilter> {
 
     private final javax.servlet.GenericFilter delegate;
 
@@ -36,6 +37,7 @@ public class JakartaGenericFilterAdapter extends GenericFilter {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.GenericFilter getDelegate() {
         return delegate;
     }

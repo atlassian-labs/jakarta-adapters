@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaWebConnectionAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletInputStreamAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletOutputStreamAdapter;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXWebConnectionAdapter implements WebConnection {
+public class JavaXWebConnectionAdapter implements WebConnection, Adapted<jakarta.servlet.http.WebConnection> {
     private final jakarta.servlet.http.WebConnection delegate;
 
     public static WebConnection from(jakarta.servlet.http.WebConnection delegate) {
@@ -26,6 +27,7 @@ public class JavaXWebConnectionAdapter implements WebConnection {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.http.WebConnection getDelegate() {
         return delegate;
     }

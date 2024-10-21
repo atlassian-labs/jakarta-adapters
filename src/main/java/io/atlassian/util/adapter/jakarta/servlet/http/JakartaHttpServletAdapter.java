@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletAdapter;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -16,7 +17,7 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JakartaHttpServletAdapter extends HttpServlet {
+public class JakartaHttpServletAdapter extends HttpServlet implements Adapted<javax.servlet.http.HttpServlet> {
 
     private final javax.servlet.http.HttpServlet delegate;
 
@@ -31,6 +32,7 @@ public class JakartaHttpServletAdapter extends HttpServlet {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.http.HttpServlet getDelegate() {
         return delegate;
     }

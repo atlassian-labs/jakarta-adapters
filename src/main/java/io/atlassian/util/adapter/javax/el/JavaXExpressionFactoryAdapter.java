@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.el;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaExpressionFactoryAdapter;
 
 import javax.el.ELContext;
@@ -14,7 +15,7 @@ import static io.atlassian.util.adapter.jakarta.JakartaJspAdapters.asJakartaJsp;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXExpressionFactoryAdapter extends ExpressionFactory {
+public class JavaXExpressionFactoryAdapter extends ExpressionFactory implements Adapted<jakarta.el.ExpressionFactory> {
 
     private final jakarta.el.ExpressionFactory delegate;
 
@@ -29,6 +30,7 @@ public class JavaXExpressionFactoryAdapter extends ExpressionFactory {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.el.ExpressionFactory getDelegate() {
         return delegate;
     }

@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaWriteListenerAdapter;
 
 import javax.servlet.WriteListener;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXWriteListenerAdapter implements WriteListener {
+public class JavaXWriteListenerAdapter implements WriteListener, Adapted<jakarta.servlet.WriteListener> {
     private final jakarta.servlet.WriteListener delegate;
 
     public static WriteListener from(jakarta.servlet.WriteListener delegate) {
@@ -22,6 +23,7 @@ public class JavaXWriteListenerAdapter implements WriteListener {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.WriteListener getDelegate() {
         return delegate;
     }

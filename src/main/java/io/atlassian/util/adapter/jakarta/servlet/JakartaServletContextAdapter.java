@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.descriptor.JakartaJspConfigDescriptorAdapter;
 import io.atlassian.util.adapter.java.util.EnumerationAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterAdapter;
@@ -33,7 +34,7 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
 
-public class JakartaServletContextAdapter implements ServletContext {
+public class JakartaServletContextAdapter implements ServletContext, Adapted<javax.servlet.ServletContext> {
 
     private final javax.servlet.ServletContext delegate;
 
@@ -48,6 +49,7 @@ public class JakartaServletContextAdapter implements ServletContext {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public javax.servlet.ServletContext getDelegate() {
         return delegate;
     }

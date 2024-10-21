@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletSecurityElementAdapter;
 
 import javax.servlet.HttpMethodConstraintElement;
@@ -11,7 +12,7 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static io.atlassian.util.adapter.util.WrapperUtil.transformIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletSecurityElementAdapter extends ServletSecurityElement {
+public class JavaXServletSecurityElementAdapter extends ServletSecurityElement implements Adapted<jakarta.servlet.ServletSecurityElement> {
 
     private final jakarta.servlet.ServletSecurityElement delegate;
 
@@ -26,6 +27,7 @@ public class JavaXServletSecurityElementAdapter extends ServletSecurityElement {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.ServletSecurityElement getDelegate() {
         return delegate;
     }
