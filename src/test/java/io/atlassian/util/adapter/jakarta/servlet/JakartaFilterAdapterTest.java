@@ -29,7 +29,7 @@ class JakartaFilterAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdaptedFilter = new JakartaFilterAdapter(new JavaXFilterAdapter(originalFilter));
+        biAdaptedFilter = new JakartaFilterAdapter(JavaXFilterAdapter.from(originalFilter));
     }
 
     @Test
@@ -61,10 +61,18 @@ class JakartaFilterAdapterTest {
 
     @Test
     void getDelegate() {
-        var adaptedFilter = new JavaXFilterAdapter(originalFilter);
-        assertEquals(originalFilter, adaptedFilter.getDelegate());
+        var adaptedFilter = JavaXFilterAdapter.from(originalFilter);
+        assertEquals(originalFilter, ((JavaXFilterAdapter) adaptedFilter).getDelegate());
 
-        var biAdaptedFilter = new JakartaFilterAdapter(adaptedFilter);
-        assertEquals(adaptedFilter, biAdaptedFilter.getDelegate());
+        var javaXOriginal = mock(javax.servlet.Filter.class);
+        var adaptedFilter2 = JakartaFilterAdapter.from(javaXOriginal);
+        assertEquals(javaXOriginal, ((JakartaFilterAdapter) adaptedFilter2).getDelegate());
+    }
+
+    @Test
+    void doubleAdaptShortCircuit() {
+        var adaptedFilter = JavaXFilterAdapter.from(originalFilter);
+        var biAdaptedFilter = JakartaFilterAdapter.from(adaptedFilter);
+        assertEquals(originalFilter, biAdaptedFilter);
     }
 }

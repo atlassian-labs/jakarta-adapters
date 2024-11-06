@@ -1,7 +1,10 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterChainAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterConfigAdapter;
+import jakarta.servlet.GenericFilter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,14 +18,25 @@ import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXFilterAdapter implements Filter {
+public class JavaXFilterAdapter implements Filter, Adapted<jakarta.servlet.Filter> {
 
     private final jakarta.servlet.Filter delegate;
 
-    public JavaXFilterAdapter(jakarta.servlet.Filter delegate) {
+    public static Filter from(jakarta.servlet.Filter delegate) {
+        if (delegate instanceof GenericFilter castDelegate) {
+            return JavaXGenericFilterAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaFilterAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXFilterAdapter::new);
+    }
+
+    JavaXFilterAdapter(jakarta.servlet.Filter delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.Filter getDelegate() {
         return delegate;
     }
@@ -30,7 +44,7 @@ public class JavaXFilterAdapter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         try {
-            delegate.init(applyIfNonNull(filterConfig, JakartaFilterConfigAdapter::new));
+            delegate.init(JakartaFilterConfigAdapter.from(filterConfig));
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -41,7 +55,7 @@ public class JavaXFilterAdapter implements Filter {
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         try {
-            delegate.doFilter(asJakarta(servletRequest), asJakarta(servletResponse), applyIfNonNull(filterChain, JakartaFilterChainAdapter::new));
+            delegate.doFilter(asJakarta(servletRequest), asJakarta(servletResponse), JakartaFilterChainAdapter.from(filterChain));
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }

@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
+import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletResponseAdapter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -27,7 +28,14 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
 
     private final javax.servlet.http.HttpServletRequest delegate;
 
-    public JakartaHttpServletRequestAdapter(javax.servlet.http.HttpServletRequest delegate) {
+    public static HttpServletRequest from(javax.servlet.http.HttpServletRequest delegate) {
+        if (delegate instanceof JavaXHttpServletRequestAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaHttpServletRequestAdapter::new);
+    }
+
+    JakartaHttpServletRequestAdapter(javax.servlet.http.HttpServletRequest delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }
@@ -48,7 +56,7 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
         if (cookies == null) {
             return null;
         }
-        return Arrays.stream(cookies).map(JakartaCookieAdapter::new).toArray(Cookie[]::new);
+        return Arrays.stream(cookies).map(JakartaCookieAdapter::from).toArray(Cookie[]::new);
     }
 
     @Override
@@ -78,7 +86,7 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
 
     @Override
     public HttpServletMapping getHttpServletMapping() {
-        return applyIfNonNull(delegate.getHttpServletMapping(), JakartaHttpServletMappingAdapter::new);
+        return JakartaHttpServletMappingAdapter.from(delegate.getHttpServletMapping());
     }
 
     @Override
@@ -98,7 +106,7 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
 
     @Override
     public PushBuilder newPushBuilder() {
-        return applyIfNonNull(delegate.newPushBuilder(), JakartaPushBuilderAdapter::new);
+        return JakartaPushBuilderAdapter.from(delegate.newPushBuilder());
     }
 
     @Override
@@ -148,12 +156,12 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
 
     @Override
     public HttpSession getSession(boolean create) {
-        return applyIfNonNull(delegate.getSession(create), JakartaHttpSessionAdapter::new);
+        return JakartaHttpSessionAdapter.from(delegate.getSession(create));
     }
 
     @Override
     public HttpSession getSession() {
-        return applyIfNonNull(delegate.getSession(), JakartaHttpSessionAdapter::new);
+        return JakartaHttpSessionAdapter.from(delegate.getSession());
     }
 
     @Override
@@ -184,7 +192,7 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
     @Override
     public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
         try {
-            return delegate.authenticate(applyIfNonNull(response, JavaXHttpServletResponseAdapter::new));
+            return delegate.authenticate(JavaXHttpServletResponseAdapter.from(response));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -216,13 +224,13 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }
-        return transformIfNonNull(parts, JakartaPartAdapter::new);
+        return transformIfNonNull(parts, JakartaPartAdapter::from);
     }
 
     @Override
     public Part getPart(String name) throws IOException, ServletException {
         try {
-            return applyIfNonNull(delegate.getPart(name), JakartaPartAdapter::new);
+            return JakartaPartAdapter.from(delegate.getPart(name));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }
@@ -232,7 +240,7 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
     public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
         try {
             // ClassCastException likely
-            return (T) applyIfNonNull(delegate.upgrade((Class) handlerClass), JakartaHttpUpgradeHandlerAdapter::new);
+            return (T) JakartaHttpUpgradeHandlerAdapter.from(delegate.upgrade((Class) handlerClass));
         } catch (javax.servlet.ServletException e) {
             throw new ServletException(e);
         }

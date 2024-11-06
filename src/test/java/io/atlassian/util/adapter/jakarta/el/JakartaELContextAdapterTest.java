@@ -33,7 +33,7 @@ class JakartaELContextAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdapted = new JakartaELContextAdapter(new JavaXELContextAdapter(original));
+        biAdapted = new JakartaELContextAdapter(JavaXELContextAdapter.from(original));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
+import io.atlassian.util.adapter.javax.servlet.JavaXDynamicServletRegistrationAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXMultipartConfigElementAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletSecurityElementAdapter;
 import jakarta.servlet.MultipartConfigElement;
@@ -15,9 +16,21 @@ public class JakartaDynamicServletRegistrationAdapter extends JakartaServletRegi
 
     private final javax.servlet.ServletRegistration.Dynamic delegate;
 
-    public JakartaDynamicServletRegistrationAdapter(javax.servlet.ServletRegistration.Dynamic delegate) {
+    public static ServletRegistration.Dynamic from(javax.servlet.ServletRegistration.Dynamic delegate) {
+        if (delegate instanceof JavaXDynamicServletRegistrationAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JakartaDynamicServletRegistrationAdapter::new);
+    }
+
+    JakartaDynamicServletRegistrationAdapter(javax.servlet.ServletRegistration.Dynamic delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public javax.servlet.ServletRegistration.Dynamic getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -27,12 +40,12 @@ public class JakartaDynamicServletRegistrationAdapter extends JakartaServletRegi
 
     @Override
     public Set<String> setServletSecurity(ServletSecurityElement constraint) {
-        return delegate.setServletSecurity(applyIfNonNull(constraint, JavaXServletSecurityElementAdapter::new));
+        return delegate.setServletSecurity(JavaXServletSecurityElementAdapter.from(constraint));
     }
 
     @Override
     public void setMultipartConfig(MultipartConfigElement multipartConfig) {
-        delegate.setMultipartConfig(applyIfNonNull(multipartConfig, JavaXMultipartConfigElementAdapter::new));
+        delegate.setMultipartConfig(JavaXMultipartConfigElementAdapter.from(multipartConfig));
     }
 
     @Override

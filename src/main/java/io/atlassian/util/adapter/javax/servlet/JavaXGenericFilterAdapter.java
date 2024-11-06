@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaGenericFilterAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpFilterAdapter;
 
 import javax.servlet.FilterChain;
@@ -17,21 +19,25 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXGenericFilterAdapter extends GenericFilter {
+public class JavaXGenericFilterAdapter extends GenericFilter implements Adapted<jakarta.servlet.GenericFilter> {
 
     private final jakarta.servlet.GenericFilter delegate;
 
     public static javax.servlet.GenericFilter from(jakarta.servlet.GenericFilter delegate) {
         if (delegate instanceof jakarta.servlet.http.HttpFilter castDelegate) {
-            return new JavaXHttpFilterAdapter(castDelegate);
+            return JavaXHttpFilterAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaGenericFilterAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXGenericFilterAdapter::new);
     }
 
-    private JavaXGenericFilterAdapter(jakarta.servlet.GenericFilter delegate) {
+    JavaXGenericFilterAdapter(jakarta.servlet.GenericFilter delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.GenericFilter getDelegate() {
         return delegate;
     }

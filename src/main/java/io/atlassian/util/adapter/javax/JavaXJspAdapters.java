@@ -10,10 +10,10 @@ public class JavaXJspAdapters {
     }
 
     public static javax.servlet.jsp.JspFactory asJavaXJsp(jakarta.servlet.jsp.JspFactory delegate) {
-        return applyIfNonNull(delegate, JavaXJspFactoryAdapter::new);
+        return applyIfNonNull(delegate, JavaXJspFactoryAdapter::from);
     }
 
     public static javax.el.ELContext asJavaXJsp(jakarta.el.ELContext delegate) {
-        return applyIfNonNull(delegate, JavaXELContextAdapter::new);
+        return applyIfNonNull(delegate, JavaXELContextAdapter::from);
     }
 }

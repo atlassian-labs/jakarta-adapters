@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaGenericServletAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletAdapter;
 
 import javax.servlet.GenericServlet;
@@ -16,21 +18,25 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXGenericServletAdapter extends GenericServlet {
+public class JavaXGenericServletAdapter extends GenericServlet implements Adapted<jakarta.servlet.GenericServlet> {
 
     private final jakarta.servlet.GenericServlet delegate;
 
     public static javax.servlet.GenericServlet from(jakarta.servlet.GenericServlet delegate) {
         if (delegate instanceof jakarta.servlet.http.HttpServlet castDelegate) {
-            return new JavaXHttpServletAdapter(castDelegate);
+            return JavaXHttpServletAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaGenericServletAdapter castDelegate) {
+            return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXGenericServletAdapter::new);
     }
 
-    private JavaXGenericServletAdapter(jakarta.servlet.GenericServlet delegate) {
+    JavaXGenericServletAdapter(jakarta.servlet.GenericServlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.GenericServlet getDelegate() {
         return delegate;
     }

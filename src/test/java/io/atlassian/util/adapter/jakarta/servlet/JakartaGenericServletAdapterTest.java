@@ -50,8 +50,16 @@ class JakartaGenericServletAdapterTest {
         var adapted = (JavaXGenericServletAdapter) JavaXGenericServletAdapter.from(original);
         assertEquals(original, adapted.getDelegate());
 
-        var biAdaptedRequest = (JakartaGenericServletAdapter) JakartaGenericServletAdapter.from(adapted);
-        assertEquals(adapted, biAdaptedRequest.getDelegate());
+        var javaXOriginal = mock(javax.servlet.GenericServlet.class);
+        var adaptedRequest = (JakartaGenericServletAdapter) JakartaGenericServletAdapter.from(javaXOriginal);
+        assertEquals(javaXOriginal, adaptedRequest.getDelegate());
+    }
+
+    @Test
+    void doubleAdaptShortCircuit() {
+        var adapted = (JavaXGenericServletAdapter) JavaXGenericServletAdapter.from(original);
+        var biAdaptedRequest = JakartaGenericServletAdapter.from(adapted);
+        assertEquals(original, biAdaptedRequest);
     }
 
     @Test

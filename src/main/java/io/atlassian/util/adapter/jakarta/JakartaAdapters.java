@@ -47,27 +47,27 @@ public final class JakartaAdapters {
     }
 
     public static jakarta.servlet.Filter asJakarta(javax.servlet.Filter delegate) {
-        return applyIfNonNull(delegate, JakartaFilterAdapter::new);
+        return applyIfNonNull(delegate, JakartaFilterAdapter::from);
     }
 
     public static jakarta.servlet.FilterChain asJakarta(javax.servlet.FilterChain delegate) {
-        return applyIfNonNull(delegate, JakartaFilterChainAdapter::new);
+        return applyIfNonNull(delegate, JakartaFilterChainAdapter::from);
     }
 
     public static jakarta.servlet.FilterConfig asJakarta(javax.servlet.FilterConfig delegate) {
-        return applyIfNonNull(delegate, JakartaFilterConfigAdapter::new);
+        return applyIfNonNull(delegate, JakartaFilterConfigAdapter::from);
     }
 
     public static jakarta.servlet.Servlet asJakarta(javax.servlet.Servlet delegate) {
-        return applyIfNonNull(delegate, JakartaServletAdapter::new);
+        return applyIfNonNull(delegate, JakartaServletAdapter::from);
     }
 
     public static jakarta.servlet.ServletConfig asJakarta(javax.servlet.ServletConfig delegate) {
-        return applyIfNonNull(delegate, JakartaServletConfigAdapter::new);
+        return applyIfNonNull(delegate, JakartaServletConfigAdapter::from);
     }
 
     public static jakarta.servlet.http.HttpServletRequest asJakarta(javax.servlet.http.HttpServletRequest delegate) {
-        return applyIfNonNull(delegate, JakartaHttpServletRequestAdapter::new);
+        return applyIfNonNull(delegate, JakartaHttpServletRequestAdapter::from);
     }
 
     public static jakarta.servlet.ServletRequest asJakarta(javax.servlet.ServletRequest delegate) {
@@ -75,7 +75,7 @@ public final class JakartaAdapters {
     }
 
     public static jakarta.servlet.http.HttpServletResponse asJakarta(javax.servlet.http.HttpServletResponse delegate) {
-        return applyIfNonNull(delegate, JakartaHttpServletResponseAdapter::new);
+        return applyIfNonNull(delegate, JakartaHttpServletResponseAdapter::from);
     }
 
     public static jakarta.servlet.ServletResponse asJakarta(javax.servlet.ServletResponse delegate) {
@@ -83,10 +83,10 @@ public final class JakartaAdapters {
     }
 
     public static jakarta.servlet.ServletContext asJakarta(javax.servlet.ServletContext delegate) {
-        return applyIfNonNull(delegate, JakartaServletContextAdapter::new);
+        return applyIfNonNull(delegate, JakartaServletContextAdapter::from);
     }
 
     public static jakarta.servlet.ServletContextListener asJakarta(javax.servlet.ServletContextListener delegate) {
-        return applyIfNonNull(delegate, JakartaServletContextListenerAdapter::new);
+        return applyIfNonNull(delegate, JakartaServletContextListenerAdapter::from);
     }
 }

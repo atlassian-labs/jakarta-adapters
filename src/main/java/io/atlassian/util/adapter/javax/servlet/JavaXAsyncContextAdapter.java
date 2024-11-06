@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncContextAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncListenerAdapter;
 
 import javax.servlet.AsyncContext;
@@ -14,12 +16,24 @@ import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXAsyncContextAdapter implements AsyncContext {
+public class JavaXAsyncContextAdapter implements AsyncContext, Adapted<jakarta.servlet.AsyncContext> {
 
     private final jakarta.servlet.AsyncContext delegate;
 
-    public JavaXAsyncContextAdapter(jakarta.servlet.AsyncContext delegate) {
+    public static AsyncContext from(jakarta.servlet.AsyncContext delegate) {
+        if (delegate instanceof JakartaAsyncContextAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXAsyncContextAdapter::new);
+    }
+
+    JavaXAsyncContextAdapter(jakarta.servlet.AsyncContext delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.servlet.AsyncContext getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -64,12 +78,12 @@ public class JavaXAsyncContextAdapter implements AsyncContext {
 
     @Override
     public void addListener(AsyncListener listener) {
-        delegate.addListener(applyIfNonNull(listener, JakartaAsyncListenerAdapter::new));
+        delegate.addListener(JakartaAsyncListenerAdapter.from(listener));
     }
 
     @Override
     public void addListener(AsyncListener listener, ServletRequest servletRequest, ServletResponse servletResponse) {
-        delegate.addListener(applyIfNonNull(listener, JakartaAsyncListenerAdapter::new), asJakarta(servletRequest), asJakarta(servletResponse));
+        delegate.addListener(JakartaAsyncListenerAdapter.from(listener), asJakarta(servletRequest), asJakarta(servletResponse));
     }
 
     @Override

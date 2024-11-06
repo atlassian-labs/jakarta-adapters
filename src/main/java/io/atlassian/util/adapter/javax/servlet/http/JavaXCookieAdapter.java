@@ -1,19 +1,35 @@
 package io.atlassian.util.adapter.javax.servlet.http;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.http.JakartaCookieAdapter;
+
 import javax.servlet.http.Cookie;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXCookieAdapter extends Cookie {
+public class JavaXCookieAdapter extends Cookie implements Adapted<jakarta.servlet.http.Cookie> {
 
     /**
      * This is non-final only to ensure correct behaviour of {@link #clone()}. Do not modify this field anywhere else.
      */
     private jakarta.servlet.http.Cookie delegate;
 
-    public JavaXCookieAdapter(jakarta.servlet.http.Cookie delegate) {
+    public static Cookie from(jakarta.servlet.http.Cookie delegate) {
+        if (delegate instanceof JakartaCookieAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXCookieAdapter::new);
+    }
+
+    JavaXCookieAdapter(jakarta.servlet.http.Cookie delegate) {
         super("null", null);
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.servlet.http.Cookie getDelegate() {
+        return delegate;
     }
 
     @Override

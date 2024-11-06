@@ -1,5 +1,8 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,16 +12,28 @@ import java.io.IOException;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
 import static io.atlassian.util.adapter.javax.JavaXAdapters.asJavaX;
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXServletAdapter implements Servlet {
+public class JavaXServletAdapter implements Servlet, Adapted<jakarta.servlet.Servlet> {
 
     private final jakarta.servlet.Servlet delegate;
 
-    public JavaXServletAdapter(jakarta.servlet.Servlet delegate) {
+    public static Servlet from(jakarta.servlet.Servlet delegate) {
+        if (delegate instanceof jakarta.servlet.GenericServlet castDelegate) {
+            return JavaXGenericServletAdapter.from(castDelegate);
+        }
+        if (delegate instanceof JakartaServletAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXServletAdapter::new);
+    }
+
+    JavaXServletAdapter(jakarta.servlet.Servlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
+    @Override
     public jakarta.servlet.Servlet getDelegate() {
         return delegate;
     }

@@ -29,6 +29,9 @@ public class WrapperUtil {
     }
 
     public static <T> T[] enumerationToArray(Enumeration<T> enumeration, Class<T> clazz) {
+        if (enumeration == null) {
+            return null;
+        }
         List<T> list = Collections.list(enumeration);
         return list.toArray((T[]) Array.newInstance(clazz, list.size()));
     }

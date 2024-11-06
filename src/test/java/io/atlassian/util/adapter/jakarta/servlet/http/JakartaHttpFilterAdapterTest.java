@@ -33,16 +33,24 @@ class JakartaHttpFilterAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdapted = new JakartaHttpFilterAdapter(new JavaXHttpFilterAdapter(original));
+        biAdapted = new JakartaHttpFilterAdapter(JavaXHttpFilterAdapter.from(original));
     }
 
     @Test
     void getDelegate() {
-        var adapted = new JavaXHttpFilterAdapter(original);
-        assertEquals(original, adapted.getDelegate());
+        var adapted = JavaXHttpFilterAdapter.from(original);
+        assertEquals(original, ((JavaXHttpFilterAdapter) adapted).getDelegate());
 
-        var biAdaptedRequest = new JakartaHttpFilterAdapter(adapted);
-        assertEquals(adapted, biAdaptedRequest.getDelegate());
+        var javaXOriginal = mock(javax.servlet.http.HttpFilter.class);
+        var adapted2 = JakartaHttpFilterAdapter.from(javaXOriginal);
+        assertEquals(javaXOriginal, ((JakartaHttpFilterAdapter) adapted2).getDelegate());
+    }
+
+    @Test
+    void doubleAdaptShortCircuit() {
+        var adapted = JavaXHttpFilterAdapter.from(original);
+        var biAdapted = JakartaHttpFilterAdapter.from(adapted);
+        assertEquals(original, biAdapted);
     }
 
     @Test

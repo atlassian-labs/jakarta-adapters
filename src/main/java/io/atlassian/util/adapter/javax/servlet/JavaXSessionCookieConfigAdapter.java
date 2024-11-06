@@ -1,15 +1,31 @@
 package io.atlassian.util.adapter.javax.servlet;
 
+import io.atlassian.util.adapter.Adapted;
+import io.atlassian.util.adapter.jakarta.servlet.JakartaSessionCookieConfigAdapter;
+
 import javax.servlet.SessionCookieConfig;
 
+import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
 
-public class JavaXSessionCookieConfigAdapter implements SessionCookieConfig {
+public class JavaXSessionCookieConfigAdapter implements SessionCookieConfig, Adapted<jakarta.servlet.SessionCookieConfig> {
 
     private final jakarta.servlet.SessionCookieConfig delegate;
 
-    public JavaXSessionCookieConfigAdapter(jakarta.servlet.SessionCookieConfig delegate) {
+    public static SessionCookieConfig from(jakarta.servlet.SessionCookieConfig delegate) {
+        if (delegate instanceof JakartaSessionCookieConfigAdapter castDelegate) {
+            return castDelegate.getDelegate();
+        }
+        return applyIfNonNull(delegate, JavaXSessionCookieConfigAdapter::new);
+    }
+
+    JavaXSessionCookieConfigAdapter(jakarta.servlet.SessionCookieConfig delegate) {
         this.delegate = requireNonNull(delegate);
+    }
+
+    @Override
+    public jakarta.servlet.SessionCookieConfig getDelegate() {
+        return delegate;
     }
 
     @Override

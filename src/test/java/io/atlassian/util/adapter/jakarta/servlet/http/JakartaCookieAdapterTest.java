@@ -23,7 +23,7 @@ class JakartaCookieAdapterTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        biAdaptedCookie = new JakartaCookieAdapter(new JavaXCookieAdapter(originalCookie));
+        biAdaptedCookie = new JakartaCookieAdapter(JavaXCookieAdapter.from(originalCookie));
     }
 
     @Test
@@ -139,7 +139,7 @@ class JakartaCookieAdapterTest {
     @Test
     void testClone() {
         var cookie = new Cookie("name", "value1");
-        biAdaptedCookie = new JakartaCookieAdapter(new JavaXCookieAdapter(cookie));
+        biAdaptedCookie = new JakartaCookieAdapter(JavaXCookieAdapter.from(cookie));
 
         Cookie clonedBiAdaptedCookie = (Cookie) biAdaptedCookie.clone();
 
