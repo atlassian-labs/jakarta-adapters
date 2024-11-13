@@ -17,7 +17,7 @@ public class JakartaValueReferenceAdapter extends ValueReference implements Adap
         return applyIfNonNull(delegate, JakartaValueReferenceAdapter::new);
     }
 
-    JakartaValueReferenceAdapter(javax.el.ValueReference delegate) {
+    protected JakartaValueReferenceAdapter(javax.el.ValueReference delegate) {
         super(delegate.getBase(), delegate.getProperty());
         this.delegate = delegate;
     }

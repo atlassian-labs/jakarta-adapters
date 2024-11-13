@@ -45,7 +45,7 @@ public class JakartaServletContextAdapter implements ServletContext, Adapted<jav
         return applyIfNonNull(delegate, JakartaServletContextAdapter::new);
     }
 
-    JakartaServletContextAdapter(javax.servlet.ServletContext delegate) {
+    protected JakartaServletContextAdapter(javax.servlet.ServletContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

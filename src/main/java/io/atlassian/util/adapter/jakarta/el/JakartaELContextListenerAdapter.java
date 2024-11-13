@@ -20,7 +20,7 @@ public class JakartaELContextListenerAdapter implements ELContextListener, Adapt
         return applyIfNonNull(delegate, JakartaELContextListenerAdapter::new);
     }
 
-    JakartaELContextListenerAdapter(javax.el.ELContextListener delegate) {
+    protected JakartaELContextListenerAdapter(javax.el.ELContextListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

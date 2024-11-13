@@ -20,7 +20,7 @@ public class JakartaServletContextListenerAdapter implements ServletContextListe
         return applyIfNonNull(delegate, JakartaServletContextListenerAdapter::new);
     }
 
-    JakartaServletContextListenerAdapter(javax.servlet.ServletContextListener delegate) {
+    protected JakartaServletContextListenerAdapter(javax.servlet.ServletContextListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -40,7 +40,7 @@ public class JavaXPageContextAdapter extends PageContext implements Adapted<jaka
         return applyIfNonNull(delegate, JavaXPageContextAdapter::new);
     }
 
-    JavaXPageContextAdapter(jakarta.servlet.jsp.PageContext delegate) {
+    protected JavaXPageContextAdapter(jakarta.servlet.jsp.PageContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

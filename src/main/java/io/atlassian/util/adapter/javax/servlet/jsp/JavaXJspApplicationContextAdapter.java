@@ -24,7 +24,7 @@ public class JavaXJspApplicationContextAdapter implements JspApplicationContext,
         return applyIfNonNull(delegate, JavaXJspApplicationContextAdapter::new);
     }
 
-    JavaXJspApplicationContextAdapter(jakarta.servlet.jsp.JspApplicationContext delegate) {
+    protected JavaXJspApplicationContextAdapter(jakarta.servlet.jsp.JspApplicationContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

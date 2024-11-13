@@ -21,7 +21,7 @@ public class JakartaExpressionAdapter extends Expression implements Adapted<java
         return applyIfNonNull(delegate, JakartaExpressionAdapter::new);
     }
 
-    JakartaExpressionAdapter(javax.servlet.jsp.el.Expression delegate) {
+    protected JakartaExpressionAdapter(javax.servlet.jsp.el.Expression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

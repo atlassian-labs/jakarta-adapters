@@ -23,7 +23,7 @@ public class JavaXServletSecurityElementAdapter extends ServletSecurityElement i
         return applyIfNonNull(delegate, JavaXServletSecurityElementAdapter::new);
     }
 
-    JavaXServletSecurityElementAdapter(jakarta.servlet.ServletSecurityElement delegate) {
+    protected JavaXServletSecurityElementAdapter(jakarta.servlet.ServletSecurityElement delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

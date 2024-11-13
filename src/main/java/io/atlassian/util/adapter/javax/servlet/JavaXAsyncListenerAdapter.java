@@ -21,7 +21,7 @@ public class JavaXAsyncListenerAdapter implements AsyncListener, Adapted<jakarta
         return applyIfNonNull(delegate, JavaXAsyncListenerAdapter::new);
     }
 
-    JavaXAsyncListenerAdapter(jakarta.servlet.AsyncListener delegate) {
+    protected JavaXAsyncListenerAdapter(jakarta.servlet.AsyncListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -20,7 +20,7 @@ public class JavaXServletContextEventAdapter extends ServletContextEvent impleme
         return applyIfNonNull(delegate, JavaXServletContextEventAdapter::new);
     }
 
-    JavaXServletContextEventAdapter(jakarta.servlet.ServletContextEvent delegate) {
+    protected JavaXServletContextEventAdapter(jakarta.servlet.ServletContextEvent delegate) {
         super(asJavaX(requireNonNull(delegate).getServletContext()));
         this.delegate = delegate;
     }

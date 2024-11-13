@@ -23,7 +23,7 @@ public class JakartaJspApplicationContextAdapter implements JspApplicationContex
         return applyIfNonNull(delegate, JakartaJspApplicationContextAdapter::new);
     }
 
-    JakartaJspApplicationContextAdapter(javax.servlet.jsp.JspApplicationContext delegate) {
+    protected JakartaJspApplicationContextAdapter(javax.servlet.jsp.JspApplicationContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

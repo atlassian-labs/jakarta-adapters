@@ -21,7 +21,7 @@ public class JavaXELContextListenerAdapter implements ELContextListener, Adapted
         return applyIfNonNull(delegate, JavaXELContextListenerAdapter::new);
     }
 
-    JavaXELContextListenerAdapter(jakarta.el.ELContextListener delegate) {
+    protected JavaXELContextListenerAdapter(jakarta.el.ELContextListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

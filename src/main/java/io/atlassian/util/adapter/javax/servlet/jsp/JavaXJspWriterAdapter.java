@@ -24,7 +24,7 @@ public class JavaXJspWriterAdapter extends JspWriter implements Adapted<jakarta.
         return applyIfNonNull(delegate, JavaXJspWriterAdapter::new);
     }
 
-    JavaXJspWriterAdapter(jakarta.servlet.jsp.JspWriter delegate) {
+    protected JavaXJspWriterAdapter(jakarta.servlet.jsp.JspWriter delegate) {
         super(0, false);
         this.delegate = delegate;
     }

@@ -19,7 +19,7 @@ public class JakartaServletContextEventAdapter extends ServletContextEvent imple
         return applyIfNonNull(delegate, JakartaServletContextEventAdapter::new);
     }
 
-    JakartaServletContextEventAdapter(javax.servlet.ServletContextEvent delegate) {
+    protected JakartaServletContextEventAdapter(javax.servlet.ServletContextEvent delegate) {
         super(asJakarta(requireNonNull(delegate).getServletContext()));
         this.delegate = delegate;
     }

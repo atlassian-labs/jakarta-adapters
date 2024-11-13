@@ -35,7 +35,7 @@ public class JavaXHttpServletRequestAdapter extends JavaXServletRequestAdapter i
         return applyIfNonNull(delegate, JavaXHttpServletRequestAdapter::new);
     }
 
-    JavaXHttpServletRequestAdapter(jakarta.servlet.http.HttpServletRequest delegate) {
+    protected JavaXHttpServletRequestAdapter(jakarta.servlet.http.HttpServletRequest delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

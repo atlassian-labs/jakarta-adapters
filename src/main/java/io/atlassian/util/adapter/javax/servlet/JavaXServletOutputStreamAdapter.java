@@ -22,7 +22,7 @@ public class JavaXServletOutputStreamAdapter extends ServletOutputStream impleme
         return applyIfNonNull(delegate, JavaXServletOutputStreamAdapter::new);
     }
 
-    JavaXServletOutputStreamAdapter(jakarta.servlet.ServletOutputStream delegate) {
+    protected JavaXServletOutputStreamAdapter(jakarta.servlet.ServletOutputStream delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

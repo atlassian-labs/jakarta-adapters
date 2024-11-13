@@ -23,7 +23,7 @@ public class JavaXAsyncEventAdapter extends AsyncEvent implements Adapted<jakart
         return applyIfNonNull(delegate, JavaXAsyncEventAdapter::new);
     }
 
-    JavaXAsyncEventAdapter(jakarta.servlet.AsyncEvent delegate) {
+    protected JavaXAsyncEventAdapter(jakarta.servlet.AsyncEvent delegate) {
         super(null, null, null);
         this.delegate = requireNonNull(delegate);
     }

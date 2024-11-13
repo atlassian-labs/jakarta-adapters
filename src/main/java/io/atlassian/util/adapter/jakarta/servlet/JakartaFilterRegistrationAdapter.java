@@ -24,7 +24,7 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
         return applyIfNonNull(delegate, JakartaFilterRegistrationAdapter::new);
     }
 
-    JakartaFilterRegistrationAdapter(javax.servlet.FilterRegistration delegate) {
+    protected JakartaFilterRegistrationAdapter(javax.servlet.FilterRegistration delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

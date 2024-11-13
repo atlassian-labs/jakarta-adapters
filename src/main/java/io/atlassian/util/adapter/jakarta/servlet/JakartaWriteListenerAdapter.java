@@ -19,7 +19,7 @@ public class JakartaWriteListenerAdapter implements WriteListener, Adapted<javax
         return applyIfNonNull(delegate, JakartaWriteListenerAdapter::new);
     }
 
-    JakartaWriteListenerAdapter(javax.servlet.WriteListener delegate) {
+    protected JakartaWriteListenerAdapter(javax.servlet.WriteListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

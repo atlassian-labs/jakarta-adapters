@@ -19,7 +19,7 @@ public class JavaXJspEngineInfoAdapter extends JspEngineInfo implements Adapted<
         return applyIfNonNull(delegate, JavaXJspEngineInfoAdapter::new);
     }
 
-    JavaXJspEngineInfoAdapter(jakarta.servlet.jsp.JspEngineInfo delegate) {
+    protected JavaXJspEngineInfoAdapter(jakarta.servlet.jsp.JspEngineInfo delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

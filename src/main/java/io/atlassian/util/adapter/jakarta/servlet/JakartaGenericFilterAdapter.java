@@ -33,7 +33,7 @@ public class JakartaGenericFilterAdapter extends GenericFilter implements Adapte
         return applyIfNonNull(delegate, JakartaGenericFilterAdapter::new);
     }
 
-    JakartaGenericFilterAdapter(javax.servlet.GenericFilter delegate) {
+    protected JakartaGenericFilterAdapter(javax.servlet.GenericFilter delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

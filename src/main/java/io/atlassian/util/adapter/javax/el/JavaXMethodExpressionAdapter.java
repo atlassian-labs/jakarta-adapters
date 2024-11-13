@@ -22,7 +22,7 @@ public class JavaXMethodExpressionAdapter extends MethodExpression implements Ad
         return applyIfNonNull(delegate, JavaXMethodExpressionAdapter::new);
     }
 
-    JavaXMethodExpressionAdapter(jakarta.el.MethodExpression delegate) {
+    protected JavaXMethodExpressionAdapter(jakarta.el.MethodExpression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -28,7 +28,7 @@ public class JakartaHttpServletAdapter extends HttpServlet implements Adapted<ja
         return applyIfNonNull(delegate, JakartaHttpServletAdapter::new);
     }
 
-    JakartaHttpServletAdapter(javax.servlet.http.HttpServlet delegate) {
+    protected JakartaHttpServletAdapter(javax.servlet.http.HttpServlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

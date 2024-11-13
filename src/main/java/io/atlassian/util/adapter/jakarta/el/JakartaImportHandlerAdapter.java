@@ -19,7 +19,7 @@ public class JakartaImportHandlerAdapter extends ImportHandler implements Adapte
         return applyIfNonNull(delegate, JakartaImportHandlerAdapter::new);
     }
 
-    JakartaImportHandlerAdapter(javax.el.ImportHandler delegate) {
+    protected JakartaImportHandlerAdapter(javax.el.ImportHandler delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

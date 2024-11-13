@@ -19,7 +19,7 @@ public class JakartaVariableResolverAdapter implements VariableResolver, Adapted
         return applyIfNonNull(delegate, JakartaVariableResolverAdapter::new);
     }
 
-    JakartaVariableResolverAdapter(javax.servlet.jsp.el.VariableResolver delegate) {
+    protected JakartaVariableResolverAdapter(javax.servlet.jsp.el.VariableResolver delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

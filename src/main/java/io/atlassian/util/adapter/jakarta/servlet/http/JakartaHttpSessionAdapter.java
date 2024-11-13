@@ -23,7 +23,7 @@ public class JakartaHttpSessionAdapter implements HttpSession, Adapted<javax.ser
         return applyIfNonNull(delegate, JakartaHttpSessionAdapter::new);
     }
 
-    JakartaHttpSessionAdapter(javax.servlet.http.HttpSession delegate) {
+    protected JakartaHttpSessionAdapter(javax.servlet.http.HttpSession delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

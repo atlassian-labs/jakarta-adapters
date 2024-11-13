@@ -25,7 +25,7 @@ public class JavaXExpressionEvaluatorAdapter extends ExpressionEvaluator impleme
         return applyIfNonNull(delegate, JavaXExpressionEvaluatorAdapter::new);
     }
 
-    JavaXExpressionEvaluatorAdapter(jakarta.servlet.jsp.el.ExpressionEvaluator delegate) {
+    protected JavaXExpressionEvaluatorAdapter(jakarta.servlet.jsp.el.ExpressionEvaluator delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

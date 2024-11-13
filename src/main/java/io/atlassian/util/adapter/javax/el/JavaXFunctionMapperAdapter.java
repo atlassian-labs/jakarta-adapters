@@ -20,7 +20,7 @@ public class JavaXFunctionMapperAdapter extends FunctionMapper implements Adapte
         return applyIfNonNull(delegate, JavaXFunctionMapperAdapter::new);
     }
 
-    JavaXFunctionMapperAdapter(jakarta.el.FunctionMapper delegate) {
+    protected JavaXFunctionMapperAdapter(jakarta.el.FunctionMapper delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

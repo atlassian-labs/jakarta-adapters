@@ -22,7 +22,7 @@ public class JavaXPartAdapter implements Part, Adapted<jakarta.servlet.http.Part
         return applyIfNonNull(delegate, JavaXPartAdapter::new);
     }
 
-    JavaXPartAdapter(jakarta.servlet.http.Part delegate) {
+    protected JavaXPartAdapter(jakarta.servlet.http.Part delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

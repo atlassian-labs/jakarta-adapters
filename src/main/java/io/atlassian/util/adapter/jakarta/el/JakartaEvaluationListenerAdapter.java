@@ -20,7 +20,7 @@ public class JakartaEvaluationListenerAdapter extends EvaluationListener impleme
         return applyIfNonNull(delegate, JakartaEvaluationListenerAdapter::new);
     }
 
-    JakartaEvaluationListenerAdapter(javax.el.EvaluationListener delegate) {
+    protected JakartaEvaluationListenerAdapter(javax.el.EvaluationListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

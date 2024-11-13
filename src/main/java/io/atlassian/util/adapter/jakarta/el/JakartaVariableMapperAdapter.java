@@ -20,7 +20,7 @@ public class JakartaVariableMapperAdapter extends VariableMapper implements Adap
         return applyIfNonNull(delegate, JakartaVariableMapperAdapter::new);
     }
 
-    JakartaVariableMapperAdapter(javax.el.VariableMapper delegate) {
+    protected JakartaVariableMapperAdapter(javax.el.VariableMapper delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

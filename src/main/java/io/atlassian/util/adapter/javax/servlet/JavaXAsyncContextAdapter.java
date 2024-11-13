@@ -27,7 +27,7 @@ public class JavaXAsyncContextAdapter implements AsyncContext, Adapted<jakarta.s
         return applyIfNonNull(delegate, JavaXAsyncContextAdapter::new);
     }
 
-    JavaXAsyncContextAdapter(jakarta.servlet.AsyncContext delegate) {
+    protected JavaXAsyncContextAdapter(jakarta.servlet.AsyncContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

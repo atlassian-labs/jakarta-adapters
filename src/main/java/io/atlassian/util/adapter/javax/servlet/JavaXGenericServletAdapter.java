@@ -32,7 +32,7 @@ public class JavaXGenericServletAdapter extends GenericServlet implements Adapte
         return applyIfNonNull(delegate, JavaXGenericServletAdapter::new);
     }
 
-    JavaXGenericServletAdapter(jakarta.servlet.GenericServlet delegate) {
+    protected JavaXGenericServletAdapter(jakarta.servlet.GenericServlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

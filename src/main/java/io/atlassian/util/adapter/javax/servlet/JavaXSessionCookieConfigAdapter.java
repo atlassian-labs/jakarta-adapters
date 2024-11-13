@@ -19,7 +19,7 @@ public class JavaXSessionCookieConfigAdapter implements SessionCookieConfig, Ada
         return applyIfNonNull(delegate, JavaXSessionCookieConfigAdapter::new);
     }
 
-    JavaXSessionCookieConfigAdapter(jakarta.servlet.SessionCookieConfig delegate) {
+    protected JavaXSessionCookieConfigAdapter(jakarta.servlet.SessionCookieConfig delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

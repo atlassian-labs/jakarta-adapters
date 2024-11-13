@@ -24,7 +24,7 @@ public class JakartaBodyContentAdapter extends BodyContent implements Adapted<ja
         return applyIfNonNull(delegate, JakartaBodyContentAdapter::new);
     }
 
-    JakartaBodyContentAdapter(javax.servlet.jsp.tagext.BodyContent delegate) {
+    protected JakartaBodyContentAdapter(javax.servlet.jsp.tagext.BodyContent delegate) {
         super(null);
         this.delegate = requireNonNull(delegate);
     }

@@ -25,7 +25,7 @@ public class JakartaHttpServletResponseAdapter extends JakartaServletResponseAda
         return applyIfNonNull(delegate, JakartaHttpServletResponseAdapter::new);
     }
 
-    JakartaHttpServletResponseAdapter(javax.servlet.http.HttpServletResponse delegate) {
+    protected JakartaHttpServletResponseAdapter(javax.servlet.http.HttpServletResponse delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

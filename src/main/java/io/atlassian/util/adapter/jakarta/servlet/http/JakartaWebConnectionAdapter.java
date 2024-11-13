@@ -23,7 +23,7 @@ public class JakartaWebConnectionAdapter implements WebConnection, Adapted<javax
         return applyIfNonNull(delegate, JakartaWebConnectionAdapter::new);
     }
 
-    JakartaWebConnectionAdapter(javax.servlet.http.WebConnection delegate) {
+    protected JakartaWebConnectionAdapter(javax.servlet.http.WebConnection delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

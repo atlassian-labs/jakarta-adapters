@@ -21,7 +21,7 @@ public class JavaXHttpUpgradeHandlerAdapter implements HttpUpgradeHandler, Adapt
         return applyIfNonNull(delegate, JavaXHttpUpgradeHandlerAdapter::new);
     }
 
-    JavaXHttpUpgradeHandlerAdapter(jakarta.servlet.http.HttpUpgradeHandler delegate) {
+    protected JavaXHttpUpgradeHandlerAdapter(jakarta.servlet.http.HttpUpgradeHandler delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

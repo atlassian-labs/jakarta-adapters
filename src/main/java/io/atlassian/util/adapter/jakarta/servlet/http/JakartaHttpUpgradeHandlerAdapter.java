@@ -20,7 +20,7 @@ public class JakartaHttpUpgradeHandlerAdapter implements HttpUpgradeHandler, Ada
         return applyIfNonNull(delegate, JakartaHttpUpgradeHandlerAdapter::new);
     }
 
-    JakartaHttpUpgradeHandlerAdapter(javax.servlet.http.HttpUpgradeHandler delegate) {
+    protected JakartaHttpUpgradeHandlerAdapter(javax.servlet.http.HttpUpgradeHandler delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

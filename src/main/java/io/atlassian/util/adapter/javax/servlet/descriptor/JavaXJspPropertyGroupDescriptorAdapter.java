@@ -20,7 +20,7 @@ public class JavaXJspPropertyGroupDescriptorAdapter implements JspPropertyGroupD
         return applyIfNonNull(delegate, JavaXJspPropertyGroupDescriptorAdapter::new);
     }
 
-    JavaXJspPropertyGroupDescriptorAdapter(jakarta.servlet.descriptor.JspPropertyGroupDescriptor delegate) {
+    protected JavaXJspPropertyGroupDescriptorAdapter(jakarta.servlet.descriptor.JspPropertyGroupDescriptor delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

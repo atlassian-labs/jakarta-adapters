@@ -21,7 +21,7 @@ public class JavaXEvaluationListenerAdapter extends EvaluationListener implement
         return applyIfNonNull(delegate, JavaXEvaluationListenerAdapter::new);
     }
 
-    JavaXEvaluationListenerAdapter(jakarta.el.EvaluationListener delegate) {
+    protected JavaXEvaluationListenerAdapter(jakarta.el.EvaluationListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -20,7 +20,7 @@ public class JavaXHttpMethodConstraintElementAdapter extends HttpMethodConstrain
         return applyIfNonNull(delegate, JavaXHttpMethodConstraintElementAdapter::new);
     }
 
-    JavaXHttpMethodConstraintElementAdapter(jakarta.servlet.HttpMethodConstraintElement delegate) {
+    protected JavaXHttpMethodConstraintElementAdapter(jakarta.servlet.HttpMethodConstraintElement delegate) {
         super("null");
         this.delegate = requireNonNull(delegate);
     }

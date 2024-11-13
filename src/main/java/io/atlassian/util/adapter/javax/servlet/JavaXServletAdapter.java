@@ -29,7 +29,7 @@ public class JavaXServletAdapter implements Servlet, Adapted<jakarta.servlet.Ser
         return applyIfNonNull(delegate, JavaXServletAdapter::new);
     }
 
-    JavaXServletAdapter(jakarta.servlet.Servlet delegate) {
+    protected JavaXServletAdapter(jakarta.servlet.Servlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
