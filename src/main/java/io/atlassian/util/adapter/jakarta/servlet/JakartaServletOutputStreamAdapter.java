@@ -22,7 +22,7 @@ public class JakartaServletOutputStreamAdapter extends ServletOutputStream imple
         return applyIfNonNull(delegate, JakartaServletOutputStreamAdapter::new);
     }
 
-    JakartaServletOutputStreamAdapter(javax.servlet.ServletOutputStream delegate) {
+    protected JakartaServletOutputStreamAdapter(javax.servlet.ServletOutputStream delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

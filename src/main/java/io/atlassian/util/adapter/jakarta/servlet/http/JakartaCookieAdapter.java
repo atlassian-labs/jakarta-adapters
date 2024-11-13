@@ -23,7 +23,7 @@ public class JakartaCookieAdapter extends Cookie implements Adapted<javax.servle
         return applyIfNonNull(delegate, JakartaCookieAdapter::new);
     }
 
-    JakartaCookieAdapter(javax.servlet.http.Cookie delegate) {
+    protected JakartaCookieAdapter(javax.servlet.http.Cookie delegate) {
         super("null", null);
         this.delegate = requireNonNull(delegate);
     }

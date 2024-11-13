@@ -29,7 +29,7 @@ public class JavaXELContextAdapter extends ELContext implements Adapted<jakarta.
         return applyIfNonNull(delegate, JavaXELContextAdapter::new);
     }
 
-    JavaXELContextAdapter(jakarta.el.ELContext delegate) {
+    protected JavaXELContextAdapter(jakarta.el.ELContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

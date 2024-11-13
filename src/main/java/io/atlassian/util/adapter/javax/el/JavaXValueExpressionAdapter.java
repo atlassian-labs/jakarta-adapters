@@ -22,7 +22,7 @@ public class JavaXValueExpressionAdapter extends ValueExpression implements Adap
         return applyIfNonNull(delegate, JavaXValueExpressionAdapter::new);
     }
 
-    JavaXValueExpressionAdapter(jakarta.el.ValueExpression delegate) {
+    protected JavaXValueExpressionAdapter(jakarta.el.ValueExpression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

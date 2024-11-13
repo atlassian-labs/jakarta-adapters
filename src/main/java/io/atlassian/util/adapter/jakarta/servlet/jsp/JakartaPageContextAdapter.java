@@ -39,7 +39,7 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext i
         return applyIfNonNull(delegate, JakartaPageContextAdapter::new);
     }
 
-    JakartaPageContextAdapter(javax.servlet.jsp.PageContext delegate) {
+    protected JakartaPageContextAdapter(javax.servlet.jsp.PageContext delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

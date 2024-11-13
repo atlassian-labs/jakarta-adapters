@@ -23,7 +23,7 @@ public class JakartaJspConfigDescriptorAdapter implements JspConfigDescriptor, A
         return applyIfNonNull(delegate, JakartaJspConfigDescriptorAdapter::new);
     }
 
-    JakartaJspConfigDescriptorAdapter(javax.servlet.descriptor.JspConfigDescriptor delegate) {
+    protected JakartaJspConfigDescriptorAdapter(javax.servlet.descriptor.JspConfigDescriptor delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

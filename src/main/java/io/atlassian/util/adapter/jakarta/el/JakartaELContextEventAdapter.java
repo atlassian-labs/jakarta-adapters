@@ -18,7 +18,7 @@ public class JakartaELContextEventAdapter extends ELContextEvent implements Adap
         return applyIfNonNull(delegate, JakartaELContextEventAdapter::new);
     }
 
-    JakartaELContextEventAdapter(javax.el.ELContextEvent delegate) {
+    protected JakartaELContextEventAdapter(javax.el.ELContextEvent delegate) {
         super(asJakartaJsp(delegate.getELContext()));
         this.delegate = delegate;
     }

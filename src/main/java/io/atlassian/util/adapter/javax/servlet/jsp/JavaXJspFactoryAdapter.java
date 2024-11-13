@@ -27,7 +27,7 @@ public class JavaXJspFactoryAdapter extends JspFactory implements Adapted<jakart
         return applyIfNonNull(delegate, JavaXJspFactoryAdapter::new);
     }
 
-    JavaXJspFactoryAdapter(jakarta.servlet.jsp.JspFactory delegate) {
+    protected JavaXJspFactoryAdapter(jakarta.servlet.jsp.JspFactory delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

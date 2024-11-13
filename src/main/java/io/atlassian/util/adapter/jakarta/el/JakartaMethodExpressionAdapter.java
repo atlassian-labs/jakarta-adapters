@@ -21,7 +21,7 @@ public class JakartaMethodExpressionAdapter extends MethodExpression implements 
         return applyIfNonNull(delegate, JakartaMethodExpressionAdapter::new);
     }
 
-    JakartaMethodExpressionAdapter(javax.el.MethodExpression delegate) {
+    protected JakartaMethodExpressionAdapter(javax.el.MethodExpression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

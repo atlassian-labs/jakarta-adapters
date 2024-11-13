@@ -20,7 +20,7 @@ public class JavaXReadListenerAdapter implements ReadListener, Adapted<jakarta.s
         return applyIfNonNull(delegate, JavaXReadListenerAdapter::new);
     }
 
-    JavaXReadListenerAdapter(jakarta.servlet.ReadListener delegate) {
+    protected JavaXReadListenerAdapter(jakarta.servlet.ReadListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

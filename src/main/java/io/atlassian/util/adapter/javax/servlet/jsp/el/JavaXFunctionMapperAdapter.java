@@ -20,7 +20,7 @@ public class JavaXFunctionMapperAdapter implements FunctionMapper, Adapted<jakar
         return applyIfNonNull(delegate, JavaXFunctionMapperAdapter::new);
     }
 
-    JavaXFunctionMapperAdapter(jakarta.servlet.jsp.el.FunctionMapper delegate) {
+    protected JavaXFunctionMapperAdapter(jakarta.servlet.jsp.el.FunctionMapper delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

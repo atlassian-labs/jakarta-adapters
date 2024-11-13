@@ -19,7 +19,7 @@ public class JakartaReadListenerAdapter implements ReadListener, Adapted<javax.s
         return applyIfNonNull(delegate, JakartaReadListenerAdapter::new);
     }
 
-    JakartaReadListenerAdapter(javax.servlet.ReadListener delegate) {
+    protected JakartaReadListenerAdapter(javax.servlet.ReadListener delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

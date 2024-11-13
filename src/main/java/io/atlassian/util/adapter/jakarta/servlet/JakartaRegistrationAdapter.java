@@ -27,7 +27,7 @@ public class JakartaRegistrationAdapter implements Registration, Adapted<javax.s
         return applyIfNonNull(delegate, JakartaRegistrationAdapter::new);
     }
 
-    JakartaRegistrationAdapter(javax.servlet.Registration delegate) {
+    protected JakartaRegistrationAdapter(javax.servlet.Registration delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

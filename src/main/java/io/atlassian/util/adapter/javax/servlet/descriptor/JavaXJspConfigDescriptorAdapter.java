@@ -23,7 +23,7 @@ public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor, Ada
         return applyIfNonNull(delegate, JavaXJspConfigDescriptorAdapter::new);
     }
 
-    JavaXJspConfigDescriptorAdapter(jakarta.servlet.descriptor.JspConfigDescriptor delegate) {
+    protected JavaXJspConfigDescriptorAdapter(jakarta.servlet.descriptor.JspConfigDescriptor delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

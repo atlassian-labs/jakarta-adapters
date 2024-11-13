@@ -26,7 +26,7 @@ public class JakartaExpressionFactoryAdapter extends ExpressionFactory implement
         return applyIfNonNull(delegate, JakartaExpressionFactoryAdapter::new);
     }
 
-    JakartaExpressionFactoryAdapter(javax.el.ExpressionFactory delegate) {
+    protected JakartaExpressionFactoryAdapter(javax.el.ExpressionFactory delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

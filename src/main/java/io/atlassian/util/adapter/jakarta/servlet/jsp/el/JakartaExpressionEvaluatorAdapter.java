@@ -24,7 +24,7 @@ public class JakartaExpressionEvaluatorAdapter extends ExpressionEvaluator imple
         return applyIfNonNull(delegate, JakartaExpressionEvaluatorAdapter::new);
     }
 
-    JakartaExpressionEvaluatorAdapter(javax.servlet.jsp.el.ExpressionEvaluator delegate) {
+    protected JakartaExpressionEvaluatorAdapter(javax.servlet.jsp.el.ExpressionEvaluator delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

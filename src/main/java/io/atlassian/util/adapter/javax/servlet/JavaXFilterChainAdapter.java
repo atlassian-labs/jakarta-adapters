@@ -24,7 +24,7 @@ public class JavaXFilterChainAdapter implements FilterChain, Adapted<jakarta.ser
         return applyIfNonNull(delegate, JavaXFilterChainAdapter::new);
     }
 
-    JavaXFilterChainAdapter(jakarta.servlet.FilterChain delegate) {
+    protected JavaXFilterChainAdapter(jakarta.servlet.FilterChain delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

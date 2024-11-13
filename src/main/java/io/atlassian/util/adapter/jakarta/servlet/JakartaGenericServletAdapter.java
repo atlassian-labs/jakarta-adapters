@@ -32,7 +32,7 @@ public class JakartaGenericServletAdapter extends GenericServlet implements Adap
         return applyIfNonNull(delegate, JakartaGenericServletAdapter::new);
     }
 
-    JakartaGenericServletAdapter(javax.servlet.GenericServlet delegate) {
+    protected JakartaGenericServletAdapter(javax.servlet.GenericServlet delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

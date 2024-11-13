@@ -23,7 +23,7 @@ public class JavaXServletInputStreamAdapter extends ServletInputStream implement
         return applyIfNonNull(delegate, JavaXServletInputStreamAdapter::new);
     }
 
-    JavaXServletInputStreamAdapter(jakarta.servlet.ServletInputStream delegate) {
+    protected JavaXServletInputStreamAdapter(jakarta.servlet.ServletInputStream delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

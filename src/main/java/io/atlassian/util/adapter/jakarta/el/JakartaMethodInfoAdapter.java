@@ -17,7 +17,7 @@ public class JakartaMethodInfoAdapter extends MethodInfo implements Adapted<java
         return applyIfNonNull(delegate, JakartaMethodInfoAdapter::new);
     }
 
-    JakartaMethodInfoAdapter(javax.el.MethodInfo delegate) {
+    protected JakartaMethodInfoAdapter(javax.el.MethodInfo delegate) {
         super(delegate.getName(), delegate.getReturnType(), delegate.getParamTypes());
         this.delegate = delegate;
     }

@@ -22,7 +22,7 @@ public class JakartaServletConfigAdapter implements ServletConfig, Adapted<javax
         return applyIfNonNull(delegate, JakartaServletConfigAdapter::new);
     }
 
-    JakartaServletConfigAdapter(javax.servlet.ServletConfig delegate) {
+    protected JakartaServletConfigAdapter(javax.servlet.ServletConfig delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

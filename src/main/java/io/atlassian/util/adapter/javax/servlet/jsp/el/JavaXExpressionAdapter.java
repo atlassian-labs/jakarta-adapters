@@ -22,7 +22,7 @@ public class JavaXExpressionAdapter extends Expression implements Adapted<jakart
         return applyIfNonNull(delegate, JavaXExpressionAdapter::new);
     }
 
-    JavaXExpressionAdapter(jakarta.servlet.jsp.el.Expression delegate) {
+    protected JavaXExpressionAdapter(jakarta.servlet.jsp.el.Expression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

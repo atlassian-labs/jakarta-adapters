@@ -23,7 +23,7 @@ public class JakartaRequestDispatcherAdapter implements RequestDispatcher, Adapt
         return applyIfNonNull(delegate, JakartaRequestDispatcherAdapter::new);
     }
 
-    JakartaRequestDispatcherAdapter(javax.servlet.RequestDispatcher delegate) {
+    protected JakartaRequestDispatcherAdapter(javax.servlet.RequestDispatcher delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

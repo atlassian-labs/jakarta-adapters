@@ -29,7 +29,7 @@ public class JavaXHttpFilterAdapter extends HttpFilter implements Adapted<jakart
         return applyIfNonNull(delegate, JavaXHttpFilterAdapter::new);
     }
 
-    JavaXHttpFilterAdapter(jakarta.servlet.http.HttpFilter delegate) {
+    protected JavaXHttpFilterAdapter(jakarta.servlet.http.HttpFilter delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

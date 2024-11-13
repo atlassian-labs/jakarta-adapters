@@ -23,7 +23,7 @@ public class JavaXServletRegistrationAdapter extends JavaXRegistrationAdapter im
         return applyIfNonNull(delegate, JavaXServletRegistrationAdapter::new);
     }
 
-    JavaXServletRegistrationAdapter(jakarta.servlet.ServletRegistration delegate) {
+    protected JavaXServletRegistrationAdapter(jakarta.servlet.ServletRegistration delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

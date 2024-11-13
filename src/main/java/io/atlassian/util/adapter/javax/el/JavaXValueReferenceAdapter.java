@@ -18,7 +18,7 @@ public class JavaXValueReferenceAdapter extends ValueReference implements Adapte
         return applyIfNonNull(delegate, JavaXValueReferenceAdapter::new);
     }
 
-    JavaXValueReferenceAdapter(jakarta.el.ValueReference delegate) {
+    protected JavaXValueReferenceAdapter(jakarta.el.ValueReference delegate) {
         super(delegate.getBase(), delegate.getProperty());
         this.delegate = delegate;
     }

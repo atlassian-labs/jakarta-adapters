@@ -23,7 +23,7 @@ public class JavaXDynamicServletRegistrationAdapter extends JavaXServletRegistra
         return applyIfNonNull(delegate, JavaXDynamicServletRegistrationAdapter::new);
     }
 
-    JavaXDynamicServletRegistrationAdapter(jakarta.servlet.ServletRegistration.Dynamic delegate) {
+    protected JavaXDynamicServletRegistrationAdapter(jakarta.servlet.ServletRegistration.Dynamic delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

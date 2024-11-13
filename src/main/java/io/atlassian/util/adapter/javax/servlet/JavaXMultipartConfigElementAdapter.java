@@ -19,7 +19,7 @@ public class JavaXMultipartConfigElementAdapter extends MultipartConfigElement i
         return applyIfNonNull(delegate, JavaXMultipartConfigElementAdapter::new);
     }
 
-    JavaXMultipartConfigElementAdapter(jakarta.servlet.MultipartConfigElement delegate) {
+    protected JavaXMultipartConfigElementAdapter(jakarta.servlet.MultipartConfigElement delegate) {
         super((String) null);
         this.delegate = requireNonNull(delegate);
     }

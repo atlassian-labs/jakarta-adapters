@@ -22,7 +22,7 @@ public class JavaXFilterConfigAdapter implements FilterConfig, Adapted<jakarta.s
         return applyIfNonNull(delegate, JavaXFilterConfigAdapter::new);
     }
 
-    JavaXFilterConfigAdapter(jakarta.servlet.FilterConfig delegate) {
+    protected JavaXFilterConfigAdapter(jakarta.servlet.FilterConfig delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

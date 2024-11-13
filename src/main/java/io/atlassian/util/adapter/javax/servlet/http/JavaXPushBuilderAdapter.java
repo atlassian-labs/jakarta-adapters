@@ -20,7 +20,7 @@ public class JavaXPushBuilderAdapter implements PushBuilder, Adapted<jakarta.ser
         return applyIfNonNull(delegate, JavaXPushBuilderAdapter::new);
     }
 
-    JavaXPushBuilderAdapter(jakarta.servlet.http.PushBuilder delegate) {
+    protected JavaXPushBuilderAdapter(jakarta.servlet.http.PushBuilder delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

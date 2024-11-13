@@ -23,7 +23,7 @@ public class JakartaServletRegistrationAdapter extends JakartaRegistrationAdapte
         return applyIfNonNull(delegate, JakartaServletRegistrationAdapter::new);
     }
 
-    JakartaServletRegistrationAdapter(javax.servlet.ServletRegistration delegate) {
+    protected JakartaServletRegistrationAdapter(javax.servlet.ServletRegistration delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

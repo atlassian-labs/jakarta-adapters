@@ -20,7 +20,7 @@ public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig, A
         return applyIfNonNull(delegate, JakartaSessionCookieConfigAdapter::new);
     }
 
-    JakartaSessionCookieConfigAdapter(javax.servlet.SessionCookieConfig delegate) {
+    protected JakartaSessionCookieConfigAdapter(javax.servlet.SessionCookieConfig delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

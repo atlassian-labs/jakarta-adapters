@@ -19,7 +19,7 @@ public class JavaXELContextEventAdapter extends ELContextEvent implements Adapte
         return applyIfNonNull(delegate, JavaXELContextEventAdapter::new);
     }
 
-    JavaXELContextEventAdapter(jakarta.el.ELContextEvent delegate) {
+    protected JavaXELContextEventAdapter(jakarta.el.ELContextEvent delegate) {
         super(asJavaXJsp(delegate.getELContext()));
         this.delegate = delegate;
     }

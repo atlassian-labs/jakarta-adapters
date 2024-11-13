@@ -19,7 +19,7 @@ public class JavaXTaglibDescriptorAdapter implements TaglibDescriptor, Adapted<j
         return applyIfNonNull(delegate, JavaXTaglibDescriptorAdapter::new);
     }
 
-    JavaXTaglibDescriptorAdapter(jakarta.servlet.descriptor.TaglibDescriptor delegate) {
+    protected JavaXTaglibDescriptorAdapter(jakarta.servlet.descriptor.TaglibDescriptor delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -22,7 +22,7 @@ public class JakartaAsyncEventAdapter extends AsyncEvent implements Adapted<java
         return applyIfNonNull(delegate, JakartaAsyncEventAdapter::new);
     }
 
-    JakartaAsyncEventAdapter(javax.servlet.AsyncEvent delegate) {
+    protected JakartaAsyncEventAdapter(javax.servlet.AsyncEvent delegate) {
         super(null, null, null);
         this.delegate = requireNonNull(delegate);
     }

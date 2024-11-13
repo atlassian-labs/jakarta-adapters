@@ -20,7 +20,7 @@ public class JavaXHttpServletMappingAdapter implements HttpServletMapping, Adapt
         return applyIfNonNull(delegate, JavaXHttpServletMappingAdapter::new);
     }
 
-    JavaXHttpServletMappingAdapter(jakarta.servlet.http.HttpServletMapping delegate) {
+    protected JavaXHttpServletMappingAdapter(jakarta.servlet.http.HttpServletMapping delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

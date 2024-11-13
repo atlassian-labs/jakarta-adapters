@@ -18,7 +18,7 @@ public class JakartaJspEngineInfoAdapter extends JspEngineInfo implements Adapte
         return applyIfNonNull(delegate, JakartaJspEngineInfoAdapter::new);
     }
 
-    JakartaJspEngineInfoAdapter(javax.servlet.jsp.JspEngineInfo delegate) {
+    protected JakartaJspEngineInfoAdapter(javax.servlet.jsp.JspEngineInfo delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -19,7 +19,7 @@ public class JakartaHttpServletMappingAdapter implements HttpServletMapping, Ada
         return applyIfNonNull(delegate, JakartaHttpServletMappingAdapter::new);
     }
 
-    JakartaHttpServletMappingAdapter(javax.servlet.http.HttpServletMapping delegate) {
+    protected JakartaHttpServletMappingAdapter(javax.servlet.http.HttpServletMapping delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

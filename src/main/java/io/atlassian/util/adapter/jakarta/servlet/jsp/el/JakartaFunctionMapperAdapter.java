@@ -20,7 +20,7 @@ public class JakartaFunctionMapperAdapter implements FunctionMapper, Adapted<jav
         return applyIfNonNull(delegate, JakartaFunctionMapperAdapter::new);
     }
 
-    JakartaFunctionMapperAdapter(javax.servlet.jsp.el.FunctionMapper delegate) {
+    protected JakartaFunctionMapperAdapter(javax.servlet.jsp.el.FunctionMapper delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

@@ -20,7 +20,7 @@ public class JavaXImportHandlerAdapter extends ImportHandler implements Adapted<
         return applyIfNonNull(delegate, JavaXImportHandlerAdapter::new);
     }
 
-    JavaXImportHandlerAdapter(jakarta.el.ImportHandler delegate) {
+    protected JavaXImportHandlerAdapter(jakarta.el.ImportHandler delegate) {
         this.delegate = requireNonNull(delegate);
     }
 

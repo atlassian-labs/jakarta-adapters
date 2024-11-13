@@ -18,7 +18,7 @@ public class JavaXDynamicFilterRegistrationAdapter extends JavaXFilterRegistrati
         return applyIfNonNull(delegate, JavaXDynamicFilterRegistrationAdapter::new);
     }
 
-    JavaXDynamicFilterRegistrationAdapter(jakarta.servlet.FilterRegistration.Dynamic delegate) {
+    protected JavaXDynamicFilterRegistrationAdapter(jakarta.servlet.FilterRegistration.Dynamic delegate) {
         super(delegate);
         this.delegate = requireNonNull(delegate);
     }

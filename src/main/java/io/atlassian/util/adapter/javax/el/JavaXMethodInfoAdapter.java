@@ -18,7 +18,7 @@ public class JavaXMethodInfoAdapter extends MethodInfo implements Adapted<jakart
         return applyIfNonNull(delegate, JavaXMethodInfoAdapter::new);
     }
 
-    JavaXMethodInfoAdapter(jakarta.el.MethodInfo delegate) {
+    protected JavaXMethodInfoAdapter(jakarta.el.MethodInfo delegate) {
         super(delegate.getName(), delegate.getReturnType(), delegate.getParamTypes());
         this.delegate = delegate;
     }

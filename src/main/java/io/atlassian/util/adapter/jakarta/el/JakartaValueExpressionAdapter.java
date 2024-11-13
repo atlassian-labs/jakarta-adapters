@@ -21,7 +21,7 @@ public class JakartaValueExpressionAdapter extends ValueExpression implements Ad
         return applyIfNonNull(delegate, JakartaValueExpressionAdapter::new);
     }
 
-    JakartaValueExpressionAdapter(javax.el.ValueExpression delegate) {
+    protected JakartaValueExpressionAdapter(javax.el.ValueExpression delegate) {
         this.delegate = requireNonNull(delegate);
     }
 
