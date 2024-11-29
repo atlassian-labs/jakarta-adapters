@@ -29,6 +29,9 @@ public class JakartaHttpServletRequestAdapter extends JakartaServletRequestAdapt
     private final javax.servlet.http.HttpServletRequest delegate;
 
     public static HttpServletRequest from(javax.servlet.http.HttpServletRequest delegate) {
+        if (delegate instanceof javax.servlet.http.HttpServletRequestWrapper castDelegate) {
+            return JakartaHttpServletRequestWrapperAdapter.from(castDelegate);
+        }
         if (delegate instanceof JavaXHttpServletRequestAdapter castDelegate) {
             return castDelegate.getDelegate();
         }
