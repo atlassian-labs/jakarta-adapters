@@ -1,6 +1,5 @@
 package io.atlassian.util.adapter.jakarta;
 
-import jakarta.servlet.ServletContextEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -14,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -138,13 +138,24 @@ class JakartaAdaptersTest {
     @Test
     void servletContextListener() {
         var delegate = mock(ServletContextListener.class);
-        var servletContextEvent = mock(ServletContextEvent.class);
+        var servletContextEvent = mock(jakarta.servlet.ServletContextEvent.class);
         when(servletContextEvent.getServletContext()).thenReturn(mock(jakarta.servlet.ServletContext.class));
 
         var proxy = JakartaAdapters.asJakarta(delegate);
         proxy.contextInitialized(servletContextEvent);
 
         verify(delegate).contextInitialized(any());
+    }
+
+    @Test
+    void httpSession() {
+        var delegate = mock(HttpSession.class);
+        when(delegate.getId()).thenReturn("foo");
+
+        var proxy = JakartaAdapters.asJakarta(delegate);
+
+        assertThat(proxy.getId()).isEqualTo("foo");
+        verify(delegate).getId();
     }
 
     @Test
@@ -156,5 +167,6 @@ class JakartaAdaptersTest {
         assertThat(JakartaAdapters.asJakartaIfJavaX(mock(HttpServletResponse.class))).isInstanceOf(jakarta.servlet.http.HttpServletResponse.class);
         assertThat(JakartaAdapters.asJakartaIfJavaX(mock(ServletContext.class))).isInstanceOf(jakarta.servlet.ServletContext.class);
         assertThat(JakartaAdapters.asJakartaIfJavaX(mock(Filter.class))).isInstanceOf(jakarta.servlet.Filter.class);
+        assertThat(JakartaAdapters.asJakartaIfJavaX(mock(HttpSession.class))).isInstanceOf(jakarta.servlet.http.HttpSession.class);
     }
 }

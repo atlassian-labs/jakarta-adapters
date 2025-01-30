@@ -11,6 +11,7 @@ import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletRequestAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletResponseAdapter;
+import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpSessionAdapter;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
@@ -42,6 +43,8 @@ public final class JakartaAdapters {
             return asJakarta(cast);
         } else if (delegate instanceof javax.servlet.Filter cast) {
             return asJakarta(cast);
+        } else if (delegate instanceof javax.servlet.http.HttpSession cast) {
+            return asJakarta(cast);
         }
         return delegate;
     }
@@ -64,6 +67,10 @@ public final class JakartaAdapters {
 
     public static jakarta.servlet.ServletConfig asJakarta(javax.servlet.ServletConfig delegate) {
         return applyIfNonNull(delegate, JakartaServletConfigAdapter::from);
+    }
+
+    public static jakarta.servlet.http.HttpSession asJakarta(javax.servlet.http.HttpSession delegate) {
+        return applyIfNonNull(delegate, JakartaHttpSessionAdapter::from);
     }
 
     public static jakarta.servlet.http.HttpServletRequest asJakarta(javax.servlet.http.HttpServletRequest delegate) {

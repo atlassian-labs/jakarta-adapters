@@ -11,6 +11,7 @@ import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletResponseAdapter;
+import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 
@@ -42,6 +43,8 @@ public class JavaXAdapters {
             return asJavaX(cast);
         } else if (delegate instanceof jakarta.servlet.Filter cast) {
             return asJavaX(cast);
+        } else if (delegate instanceof jakarta.servlet.http.HttpSession cast) {
+            return asJavaX(cast);
         }
         return delegate;
     }
@@ -64,6 +67,10 @@ public class JavaXAdapters {
 
     public static javax.servlet.ServletConfig asJavaX(jakarta.servlet.ServletConfig delegate) {
         return applyIfNonNull(delegate, JavaXServletConfigAdapter::from);
+    }
+
+    public static javax.servlet.http.HttpSession asJavaX(jakarta.servlet.http.HttpSession delegate) {
+        return applyIfNonNull(delegate, JavaXHttpSessionAdapter::from);
     }
 
     public static javax.servlet.http.HttpServletRequest asJavaX(jakarta.servlet.http.HttpServletRequest delegate) {

@@ -1,5 +1,9 @@
 package io.atlassian.util.adapter.javax;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
@@ -9,11 +13,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.servlet.ServletContextEvent;
+import jakarta.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -138,13 +138,24 @@ class JavaXAdaptersTest {
     @Test
     void servletContextListener() {
         var delegate = mock(ServletContextListener.class);
-        var servletContextEvent = mock(ServletContextEvent.class);
+        var servletContextEvent = mock(javax.servlet.ServletContextEvent.class);
         when(servletContextEvent.getServletContext()).thenReturn(mock(javax.servlet.ServletContext.class));
 
         var proxy = JavaXAdapters.asJavaX(delegate);
         proxy.contextInitialized(servletContextEvent);
 
         verify(delegate).contextInitialized(any());
+    }
+
+    @Test
+    void httpSession() {
+        var delegate = mock(HttpSession.class);
+        when(delegate.getId()).thenReturn("foo");
+
+        var proxy = JavaXAdapters.asJavaX(delegate);
+
+        assertThat(proxy.getId()).isEqualTo("foo");
+        verify(delegate).getId();
     }
 
     @Test
@@ -156,5 +167,6 @@ class JavaXAdaptersTest {
         assertThat(JavaXAdapters.asJavaXIfJakarta(mock(HttpServletResponse.class))).isInstanceOf(javax.servlet.http.HttpServletResponse.class);
         assertThat(JavaXAdapters.asJavaXIfJakarta(mock(ServletContext.class))).isInstanceOf(javax.servlet.ServletContext.class);
         assertThat(JavaXAdapters.asJavaXIfJakarta(mock(Filter.class))).isInstanceOf(javax.servlet.Filter.class);
+        assertThat(JavaXAdapters.asJavaXIfJakarta(mock(HttpSession.class))).isInstanceOf(javax.servlet.http.HttpSession.class);
     }
 }
