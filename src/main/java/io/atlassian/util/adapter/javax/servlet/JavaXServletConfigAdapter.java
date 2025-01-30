@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletConfigAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -49,5 +50,15 @@ public class JavaXServletConfigAdapter implements ServletConfig, Adapted<jakarta
     @Override
     public Enumeration<String> getInitParameterNames() {
         return delegate.getInitParameterNames();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -1,6 +1,7 @@
 package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterRegistrationAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -73,5 +74,15 @@ public class JavaXFilterRegistrationAdapter extends JavaXRegistrationAdapter imp
             result.add(jakarta.servlet.DispatcherType.valueOf(dispatcherType.name()));
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

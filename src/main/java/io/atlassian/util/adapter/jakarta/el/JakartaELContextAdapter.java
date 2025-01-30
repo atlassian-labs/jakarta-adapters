@@ -3,13 +3,14 @@ package io.atlassian.util.adapter.jakarta.el;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXELContextAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXEvaluationListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import jakarta.el.EvaluationListener;
 import jakarta.el.FunctionMapper;
 import jakarta.el.ImportHandler;
 import jakarta.el.VariableMapper;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -141,5 +142,15 @@ public class JakartaELContextAdapter extends ELContext implements Adapted<javax.
     @Override
     public <T> T convertToType(Object obj, Class<T> targetType) {
         return (T) delegate.convertToType(obj, targetType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

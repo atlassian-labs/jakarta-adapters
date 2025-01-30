@@ -3,6 +3,8 @@ package io.atlassian.util.adapter.jakarta.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.AsyncListener;
 import jakarta.servlet.ServletContext;
@@ -103,5 +105,15 @@ public class JakartaAsyncContextAdapter implements AsyncContext, Adapted<javax.s
     @Override
     public long getTimeout() {
         return delegate.getTimeout();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doReturn;
@@ -72,6 +73,13 @@ class JavaXAdaptersTest {
 
         assertThat(proxy.getAuthType()).isEqualTo("foo");
         verify(delegate).getAuthType();
+    }
+
+    @Test
+    void httpServletRequest_equals() {
+        var delegate = mock(HttpServletRequest.class);
+
+        assertEquals(JavaXAdapters.asJavaX(delegate), JavaXAdapters.asJavaX(delegate));
     }
 
     /**

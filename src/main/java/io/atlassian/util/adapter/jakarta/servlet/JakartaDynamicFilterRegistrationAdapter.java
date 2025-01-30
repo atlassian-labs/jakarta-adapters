@@ -1,6 +1,8 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.javax.servlet.JavaXDynamicFilterRegistrationAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.FilterRegistration;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -30,5 +32,15 @@ public class JakartaDynamicFilterRegistrationAdapter extends JakartaFilterRegist
     @Override
     public void setAsyncSupported(boolean isAsyncSupported) {
         delegate.setAsyncSupported(isAsyncSupported);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

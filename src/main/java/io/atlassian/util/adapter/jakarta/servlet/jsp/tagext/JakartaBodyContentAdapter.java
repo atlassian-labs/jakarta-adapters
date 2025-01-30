@@ -3,9 +3,10 @@ package io.atlassian.util.adapter.jakarta.servlet.jsp.tagext;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspWriterAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.tagext.JavaXBodyContentAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.BodyContent;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -232,5 +233,15 @@ public class JakartaBodyContentAdapter extends BodyContent implements Adapted<ja
     @Override
     public void write(char[] cbuf, int off, int len) throws IOException {
         delegate.write(cbuf, off, len);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -4,6 +4,8 @@ import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXFunctionMapperAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXVariableResolverAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.jsp.el.ELException;
 import jakarta.servlet.jsp.el.Expression;
 import jakarta.servlet.jsp.el.ExpressionEvaluator;
@@ -52,5 +54,15 @@ public class JakartaExpressionEvaluatorAdapter extends ExpressionEvaluator imple
         } catch (javax.servlet.jsp.el.ELException e) {
             throw new ELException(e);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

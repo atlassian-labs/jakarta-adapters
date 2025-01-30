@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletMappingAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.http.HttpServletMapping;
 import jakarta.servlet.http.MappingMatch;
 
@@ -46,5 +48,15 @@ public class JakartaHttpServletMappingAdapter implements HttpServletMapping, Ada
     @Override
     public MappingMatch getMappingMatch() {
         return MappingMatch.valueOf(delegate.getMappingMatch().name());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

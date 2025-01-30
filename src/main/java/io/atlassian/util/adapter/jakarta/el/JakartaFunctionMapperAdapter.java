@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXFunctionMapperAdapter;
-import jakarta.el.FunctionMapper;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.el.FunctionMapper;
 import java.lang.reflect.Method;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -37,5 +38,15 @@ public class JakartaFunctionMapperAdapter extends FunctionMapper implements Adap
     @Override
     public Method resolveFunction(String s, String s1) {
         return delegate.resolveFunction(s, s1);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

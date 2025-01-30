@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet.descriptor;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.descriptor.JakartaJspConfigDescriptorAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.descriptor.JspPropertyGroupDescriptor;
@@ -40,5 +41,15 @@ public class JavaXJspConfigDescriptorAdapter implements JspConfigDescriptor, Ada
     @Override
     public Collection<TaglibDescriptor> getTaglibs() {
         return transformIfNonNull(delegate.getTaglibs(), JavaXTaglibDescriptorAdapter::from);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

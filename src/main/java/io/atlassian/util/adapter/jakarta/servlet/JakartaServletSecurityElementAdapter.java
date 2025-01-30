@@ -2,10 +2,11 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletSecurityElementAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.HttpMethodConstraintElement;
 import jakarta.servlet.ServletSecurityElement;
 import jakarta.servlet.annotation.ServletSecurity;
-
 import java.util.Collection;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -55,5 +56,15 @@ public class JakartaServletSecurityElementAdapter extends ServletSecurityElement
     @Override
     public String[] getRolesAllowed() {
         return delegate.getRolesAllowed();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

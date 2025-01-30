@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet.jsp.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaFunctionMapperAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.jsp.el.FunctionMapper;
 import java.lang.reflect.Method;
@@ -32,5 +33,15 @@ public class JavaXFunctionMapperAdapter implements FunctionMapper, Adapted<jakar
     @Override
     public Method resolveFunction(String s, String s1) {
         return delegate.resolveFunction(s, s1);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

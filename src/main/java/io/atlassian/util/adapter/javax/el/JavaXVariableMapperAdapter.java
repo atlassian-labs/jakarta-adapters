@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.el;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaValueExpressionAdapter;
 import io.atlassian.util.adapter.jakarta.el.JakartaVariableMapperAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.el.ValueExpression;
 import javax.el.VariableMapper;
@@ -38,5 +39,15 @@ public class JavaXVariableMapperAdapter extends VariableMapper implements Adapte
     @Override
     public ValueExpression setVariable(String s, ValueExpression valueExpression) {
         return JavaXValueExpressionAdapter.from(delegate.setVariable(s, JakartaValueExpressionAdapter.from(valueExpression)));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXPartAdapter;
-import jakarta.servlet.http.Part;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -79,5 +80,15 @@ public class JakartaPartAdapter implements Part, Adapted<javax.servlet.http.Part
     @Override
     public Collection<String> getHeaderNames() {
         return delegate.getHeaderNames();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

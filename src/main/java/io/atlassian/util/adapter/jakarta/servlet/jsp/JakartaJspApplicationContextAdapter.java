@@ -4,6 +4,8 @@ import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaExpressionFactoryAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXELContextListenerAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspApplicationContextAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContextListener;
 import jakarta.el.ELResolver;
 import jakarta.el.ExpressionFactory;
@@ -45,5 +47,15 @@ public class JakartaJspApplicationContextAdapter implements JspApplicationContex
     @Override
     public void addELContextListener(ELContextListener listener) {
         delegate.addELContextListener(JavaXELContextListenerAdapter.from(listener));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

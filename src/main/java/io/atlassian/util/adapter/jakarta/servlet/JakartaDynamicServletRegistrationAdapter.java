@@ -3,10 +3,11 @@ package io.atlassian.util.adapter.jakarta.servlet;
 import io.atlassian.util.adapter.javax.servlet.JavaXDynamicServletRegistrationAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXMultipartConfigElementAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletSecurityElementAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletRegistration;
 import jakarta.servlet.ServletSecurityElement;
-
 import java.util.Set;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -56,5 +57,15 @@ public class JakartaDynamicServletRegistrationAdapter extends JakartaServletRegi
     @Override
     public void setAsyncSupported(boolean isAsyncSupported) {
         delegate.setAsyncSupported(isAsyncSupported);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

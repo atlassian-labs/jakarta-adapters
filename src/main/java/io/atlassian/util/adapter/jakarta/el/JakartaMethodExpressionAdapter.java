@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXMethodExpressionAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContext;
 import jakarta.el.MethodExpression;
 import jakarta.el.MethodInfo;
@@ -51,17 +53,17 @@ public class JakartaMethodExpressionAdapter extends MethodExpression implements 
     }
 
     @Override
+    public boolean isLiteralText() {
+        return delegate.isLiteralText();
+    }
+
+    @Override
     public boolean equals(Object obj) {
-        return delegate.equals(obj);
+        return WrapperUtil.equals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        return delegate.hashCode();
-    }
-
-    @Override
-    public boolean isLiteralText() {
-        return delegate.isLiteralText();
+        return WrapperUtil.hashCode(this);
     }
 }

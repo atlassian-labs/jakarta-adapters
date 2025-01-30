@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncEventAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaAsyncListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -48,5 +49,15 @@ public class JavaXAsyncListenerAdapter implements AsyncListener, Adapted<jakarta
     @Override
     public void onStartAsync(AsyncEvent event) throws IOException {
         delegate.onStartAsync(JakartaAsyncEventAdapter.from(event));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

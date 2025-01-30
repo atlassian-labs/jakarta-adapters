@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet.descriptor;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.descriptor.JakartaTaglibDescriptorAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.descriptor.TaglibDescriptor;
 
@@ -36,5 +37,15 @@ public class JavaXTaglibDescriptorAdapter implements TaglibDescriptor, Adapted<j
     @Override
     public String getTaglibLocation() {
         return delegate.getTaglibLocation();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

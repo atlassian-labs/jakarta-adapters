@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaGenericServletAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletConfig;
@@ -111,5 +112,15 @@ public class JavaXGenericServletAdapter extends GenericServlet implements Adapte
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

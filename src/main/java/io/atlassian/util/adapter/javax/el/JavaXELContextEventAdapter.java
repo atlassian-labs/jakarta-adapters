@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaELContextEventAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.el.ELContextEvent;
 
@@ -27,5 +28,15 @@ public class JavaXELContextEventAdapter extends ELContextEvent implements Adapte
     @Override
     public jakarta.el.ELContextEvent getDelegate() {
         return delegate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

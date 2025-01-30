@@ -4,6 +4,8 @@ import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestWrapperAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletRequestWrapper;
 import jakarta.servlet.http.HttpServletRequestWrapper;
@@ -52,5 +54,15 @@ public class JakartaHttpServletRequestWrapperAdapter extends HttpServletRequestW
     @Override
     public void setRequest(ServletRequest request) {
         getDelegate().setRequest(JavaXServletRequestAdapter.from(request));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

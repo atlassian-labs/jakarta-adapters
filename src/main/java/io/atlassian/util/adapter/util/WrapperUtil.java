@@ -1,5 +1,7 @@
 package io.atlassian.util.adapter.util;
 
+import io.atlassian.util.adapter.Adapted;
+
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,5 +36,20 @@ public class WrapperUtil {
         }
         List<T> list = Collections.list(enumeration);
         return list.toArray((T[]) Array.newInstance(clazz, list.size()));
+    }
+
+    public static boolean equals(Adapted<?> adapted, Object obj) {
+        if (adapted == obj) {
+            return true;
+        }
+        if (obj == null || adapted.getClass() != obj.getClass()) {
+            return false;
+        }
+        Adapted<?> that = (Adapted<?>) obj;
+        return adapted.getDelegate().equals(that.getDelegate());
+    }
+
+    public static int hashCode(Adapted<?> adapted) {
+        return adapted.getDelegate().hashCode();
     }
 }

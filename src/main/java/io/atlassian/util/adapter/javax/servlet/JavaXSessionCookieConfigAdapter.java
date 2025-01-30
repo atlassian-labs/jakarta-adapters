@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaSessionCookieConfigAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.SessionCookieConfig;
 
@@ -96,5 +97,15 @@ public class JavaXSessionCookieConfigAdapter implements SessionCookieConfig, Ada
     @Override
     public int getMaxAge() {
         return delegate.getMaxAge();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

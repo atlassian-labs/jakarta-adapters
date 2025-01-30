@@ -2,9 +2,10 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
-
 import java.util.Enumeration;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
@@ -115,5 +116,15 @@ public class JakartaHttpSessionAdapter implements HttpSession, Adapted<javax.ser
     @Override
     public boolean isNew() {
         return delegate.isNew();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

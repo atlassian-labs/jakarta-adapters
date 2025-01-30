@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXEvaluationListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContext;
 import jakarta.el.EvaluationListener;
 
@@ -42,5 +44,15 @@ public class JakartaEvaluationListenerAdapter extends EvaluationListener impleme
     @Override
     public void propertyResolved(ELContext context, Object base, Object property) {
         delegate.propertyResolved(asJavaXJsp(context), base, property);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaReadListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.ReadListener;
 import java.io.IOException;
@@ -42,5 +43,15 @@ public class JavaXReadListenerAdapter implements ReadListener, Adapted<jakarta.s
     @Override
     public void onError(Throwable t) {
         delegate.onError(t);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

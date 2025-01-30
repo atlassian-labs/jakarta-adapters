@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaMethodInfoAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.el.MethodInfo;
 
@@ -26,5 +27,15 @@ public class JavaXMethodInfoAdapter extends MethodInfo implements Adapted<jakart
     @Override
     public jakarta.el.MethodInfo getDelegate() {
         return delegate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

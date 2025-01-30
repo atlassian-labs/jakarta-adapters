@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletResponseAdapter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletMapping;
@@ -12,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpUpgradeHandler;
 import jakarta.servlet.http.Part;
 import jakarta.servlet.http.PushBuilder;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;

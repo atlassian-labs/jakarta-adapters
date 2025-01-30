@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextEventAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -38,5 +39,15 @@ public class JavaXServletContextListenerAdapter implements ServletContextListene
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         delegate.contextDestroyed(JakartaServletContextEventAdapter.from(sce));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

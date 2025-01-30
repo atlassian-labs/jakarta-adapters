@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterChainAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -40,5 +41,15 @@ public class JavaXFilterChainAdapter implements FilterChain, Adapted<jakarta.ser
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -4,13 +4,14 @@ import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterChainAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterConfigAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-
 import javax.servlet.GenericFilter;
 import java.io.IOException;
 
@@ -64,5 +65,15 @@ public class JakartaFilterAdapter implements Filter, Adapted<javax.servlet.Filte
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

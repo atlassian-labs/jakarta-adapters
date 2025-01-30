@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletRequestAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
@@ -235,5 +236,15 @@ public class JavaXServletRequestAdapter implements ServletRequest, Adapted<jakar
     @Override
     public DispatcherType getDispatcherType() {
         return DispatcherType.valueOf(delegate.getDispatcherType().name());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

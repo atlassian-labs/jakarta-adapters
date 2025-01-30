@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaGenericFilterAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpFilterAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -99,5 +100,15 @@ public class JavaXGenericFilterAdapter extends GenericFilter implements Adapted<
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -4,6 +4,7 @@ import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaWebConnectionAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletInputStreamAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletOutputStreamAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
@@ -45,5 +46,15 @@ public class JavaXWebConnectionAdapter implements WebConnection, Adapted<jakarta
     @Override
     public void close() throws Exception {
         delegate.close();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

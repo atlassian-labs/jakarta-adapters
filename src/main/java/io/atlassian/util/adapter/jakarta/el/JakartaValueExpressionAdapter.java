@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXValueExpressionAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContext;
 import jakarta.el.ValueExpression;
 import jakarta.el.ValueReference;
@@ -66,17 +68,17 @@ public class JakartaValueExpressionAdapter extends ValueExpression implements Ad
     }
 
     @Override
-    public boolean equals(Object o) {
-        return delegate.equals(o);
+    public boolean isLiteralText() {
+        return delegate.isLiteralText();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        return delegate.hashCode();
-    }
-
-    @Override
-    public boolean isLiteralText() {
-        return delegate.isLiteralText();
+        return WrapperUtil.hashCode(this);
     }
 }
