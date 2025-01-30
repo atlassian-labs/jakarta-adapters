@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaMultipartConfigElementAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.MultipartConfigElement;
 
@@ -47,5 +48,15 @@ public class JavaXMultipartConfigElementAdapter extends MultipartConfigElement i
     @Override
     public int getFileSizeThreshold() {
         return delegate.getFileSizeThreshold();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

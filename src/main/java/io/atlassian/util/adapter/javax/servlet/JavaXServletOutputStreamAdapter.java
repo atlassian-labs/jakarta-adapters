@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletOutputStreamAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaWriteListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -138,5 +139,15 @@ public class JavaXServletOutputStreamAdapter extends ServletOutputStream impleme
     @Override
     public void write(int b) throws IOException {
         delegate.write(b);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

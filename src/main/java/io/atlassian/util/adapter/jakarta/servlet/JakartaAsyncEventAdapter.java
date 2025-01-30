@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXAsyncEventAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.AsyncEvent;
 import jakarta.servlet.ServletRequest;
@@ -50,5 +52,15 @@ public class JakartaAsyncEventAdapter extends AsyncEvent implements Adapted<java
     @Override
     public Throwable getThrowable() {
         return delegate.getThrowable();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -5,6 +5,7 @@ import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaPageContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpSessionAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.el.JavaXVariableResolverAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.el.ELContext;
 import javax.servlet.Servlet;
@@ -208,5 +209,15 @@ public class JavaXPageContextAdapter extends PageContext implements Adapted<jaka
     @Override
     public ELContext getELContext() {
         return asJavaXJsp(delegate.getELContext());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

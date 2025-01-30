@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXCookieAdapter;
-import jakarta.servlet.http.Cookie;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.http.Cookie;
 import java.util.Map;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -140,5 +141,15 @@ public class JakartaCookieAdapter extends Cookie implements Adapted<javax.servle
     @Override
     public boolean isHttpOnly() {
         return delegate.isHttpOnly();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

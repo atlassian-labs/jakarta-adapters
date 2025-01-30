@@ -5,6 +5,8 @@ import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpSessionAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaExpressionEvaluatorAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaVariableResolverAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXPageContextAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContext;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
@@ -16,7 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.el.ExpressionEvaluator;
 import jakarta.servlet.jsp.el.VariableResolver;
-
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -207,5 +208,15 @@ public class JakartaPageContextAdapter extends jakarta.servlet.jsp.PageContext i
     @Override
     public ELContext getELContext() {
         return asJakartaJsp(delegate.getELContext());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

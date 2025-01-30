@@ -3,6 +3,8 @@ package io.atlassian.util.adapter.jakarta.el;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXELContextEventAdapter;
 import io.atlassian.util.adapter.javax.el.JavaXELContextListenerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContextEvent;
 import jakarta.el.ELContextListener;
 
@@ -32,5 +34,15 @@ public class JakartaELContextListenerAdapter implements ELContextListener, Adapt
     @Override
     public void contextCreated(ELContextEvent elContextEvent) {
         delegate.contextCreated(JavaXELContextEventAdapter.from(elContextEvent));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

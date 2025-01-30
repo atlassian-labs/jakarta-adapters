@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -70,5 +71,15 @@ public class JavaXServletAdapter implements Servlet, Adapted<jakarta.servlet.Ser
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

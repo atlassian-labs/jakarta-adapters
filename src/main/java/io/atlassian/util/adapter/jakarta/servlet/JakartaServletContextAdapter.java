@@ -6,6 +6,8 @@ import io.atlassian.util.adapter.java.util.EnumerationAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.RequestDispatcher;
@@ -16,7 +18,6 @@ import jakarta.servlet.ServletRegistration;
 import jakarta.servlet.SessionCookieConfig;
 import jakarta.servlet.SessionTrackingMode;
 import jakarta.servlet.descriptor.JspConfigDescriptor;
-
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -392,5 +393,15 @@ public class JakartaServletContextAdapter implements ServletContext, Adapted<jav
             result.add(SessionTrackingMode.valueOf(sessionTrackingMode.name()));
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

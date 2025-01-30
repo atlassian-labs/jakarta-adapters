@@ -3,9 +3,10 @@ package io.atlassian.util.adapter.jakarta.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXReadListenerAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletInputStreamAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -120,5 +121,15 @@ public class JakartaServletInputStreamAdapter extends ServletInputStream impleme
     @Override
     public int read() throws IOException {
         return delegate.read();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet.jsp;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspFactoryAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaPageContextAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -61,5 +62,15 @@ public class JavaXJspFactoryAdapter extends JspFactory implements Adapted<jakart
     @Override
     public JspApplicationContext getJspApplicationContext(ServletContext servletContext) {
         return JavaXJspApplicationContextAdapter.from(delegate.getJspApplicationContext(asJakarta(servletContext)));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

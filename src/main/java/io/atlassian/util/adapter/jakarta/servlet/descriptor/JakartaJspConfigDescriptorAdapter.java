@@ -2,10 +2,11 @@ package io.atlassian.util.adapter.jakarta.servlet.descriptor;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.descriptor.JavaXJspConfigDescriptorAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.descriptor.JspConfigDescriptor;
 import jakarta.servlet.descriptor.JspPropertyGroupDescriptor;
 import jakarta.servlet.descriptor.TaglibDescriptor;
-
 import java.util.Collection;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -40,5 +41,15 @@ public class JakartaJspConfigDescriptorAdapter implements JspConfigDescriptor, A
     @Override
     public Collection<TaglibDescriptor> getTaglibs() {
         return transformIfNonNull(delegate.getTaglibs(), JakartaTaglibDescriptorAdapter::from);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

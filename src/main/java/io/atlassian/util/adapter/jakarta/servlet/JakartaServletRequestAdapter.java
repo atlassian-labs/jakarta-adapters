@@ -3,6 +3,8 @@ package io.atlassian.util.adapter.jakarta.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletRequestAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletRequestAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.RequestDispatcher;
@@ -11,7 +13,6 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -254,5 +255,15 @@ public class JakartaServletRequestAdapter implements ServletRequest, Adapted<jav
     public ServletConnection getServletConnection() {
         // Unadaptable
         return null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

@@ -3,9 +3,9 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXCookieAdapter;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletResponseAdapter;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;

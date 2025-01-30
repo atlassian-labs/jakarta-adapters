@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXSessionCookieConfigAdapter;
-import jakarta.servlet.SessionCookieConfig;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.SessionCookieConfig;
 import java.util.Map;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -113,5 +114,15 @@ public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig, A
     public Map<String, String> getAttributes() {
         // Unadaptable
         return Map.of();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

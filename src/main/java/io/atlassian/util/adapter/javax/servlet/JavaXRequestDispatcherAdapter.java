@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaRequestDispatcherAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,5 +49,15 @@ public class JavaXRequestDispatcherAdapter implements RequestDispatcher, Adapted
         } catch (jakarta.servlet.ServletException e) {
             throw new ServletException(e);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

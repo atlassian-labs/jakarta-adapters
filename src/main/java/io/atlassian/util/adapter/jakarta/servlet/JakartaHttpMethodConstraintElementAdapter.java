@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXHttpMethodConstraintElementAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.HttpMethodConstraintElement;
 import jakarta.servlet.annotation.ServletSecurity;
 
@@ -47,5 +49,15 @@ public class JakartaHttpMethodConstraintElementAdapter extends HttpMethodConstra
     @Override
     public String[] getRolesAllowed() {
         return delegate.getRolesAllowed();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

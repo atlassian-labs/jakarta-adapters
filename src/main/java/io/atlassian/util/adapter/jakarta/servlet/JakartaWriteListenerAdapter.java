@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXWriteListenerAdapter;
-import jakarta.servlet.WriteListener;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.WriteListener;
 import java.io.IOException;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -35,5 +36,15 @@ public class JakartaWriteListenerAdapter implements WriteListener, Adapted<javax
     @Override
     public void onError(Throwable t) {
         delegate.onError(t);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

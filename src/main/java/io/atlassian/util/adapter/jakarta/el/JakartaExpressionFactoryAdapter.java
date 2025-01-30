@@ -2,12 +2,13 @@ package io.atlassian.util.adapter.jakarta.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.el.JavaXExpressionFactoryAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import jakarta.el.ExpressionFactory;
 import jakarta.el.MethodExpression;
 import jakarta.el.ValueExpression;
-
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -66,5 +67,15 @@ public class JakartaExpressionFactoryAdapter extends ExpressionFactory implement
     @Override
     public <T> T coerceToType(Object obj, Class<T> targetType) {
         return (T) delegate.coerceToType(obj, targetType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

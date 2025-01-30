@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet.descriptor;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.descriptor.JavaXJspPropertyGroupDescriptorAdapter;
-import jakarta.servlet.descriptor.JspPropertyGroupDescriptor;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.descriptor.JspPropertyGroupDescriptor;
 import java.util.Collection;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -93,5 +94,15 @@ public class JakartaJspPropertyGroupDescriptorAdapter implements JspPropertyGrou
     @Override
     public String getErrorOnUndeclaredNamespace() {
         return delegate.getErrorOnUndeclaredNamespace();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

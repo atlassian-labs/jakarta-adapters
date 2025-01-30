@@ -5,6 +5,7 @@ import io.atlassian.util.adapter.jakarta.servlet.JakartaFilterAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletContextAdapter;
 import io.atlassian.util.adapter.javax.servlet.descriptor.JavaXJspConfigDescriptorAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
@@ -387,5 +388,15 @@ public class JavaXServletContextAdapter implements ServletContext, Adapted<jakar
             result.add(SessionTrackingMode.valueOf(sessionTrackingMode.name()));
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

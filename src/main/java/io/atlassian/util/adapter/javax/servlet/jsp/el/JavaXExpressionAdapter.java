@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet.jsp.el;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaExpressionAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.el.JakartaVariableResolverAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.jsp.el.ELException;
 import javax.servlet.jsp.el.Expression;
@@ -38,5 +39,15 @@ public class JavaXExpressionAdapter extends Expression implements Adapted<jakart
         } catch (jakarta.servlet.jsp.el.ELException e) {
             throw new ELException(e);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

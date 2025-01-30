@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletContextEventAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.ServletContextEvent;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
@@ -27,5 +29,15 @@ public class JakartaServletContextEventAdapter extends ServletContextEvent imple
     @Override
     public javax.servlet.ServletContextEvent getDelegate() {
         return delegate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

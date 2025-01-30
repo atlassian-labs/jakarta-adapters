@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet.http;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpUpgradeHandlerAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaWebConnectionAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.WebConnection;
@@ -38,5 +39,15 @@ public class JavaXHttpUpgradeHandlerAdapter implements HttpUpgradeHandler, Adapt
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

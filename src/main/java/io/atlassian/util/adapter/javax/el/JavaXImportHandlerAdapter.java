@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.el;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.el.JakartaImportHandlerAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.el.ELException;
 import javax.el.ImportHandler;
@@ -55,5 +56,15 @@ public class JavaXImportHandlerAdapter extends ImportHandler implements Adapted<
     @Override
     public Class<?> resolveStatic(String name) {
         return delegate.resolveStatic(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

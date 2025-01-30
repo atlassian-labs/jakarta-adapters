@@ -2,9 +2,10 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterConfigAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletContext;
-
 import java.util.Enumeration;
 
 import static io.atlassian.util.adapter.jakarta.JakartaAdapters.asJakarta;
@@ -49,5 +50,15 @@ public class JakartaFilterConfigAdapter implements FilterConfig, Adapted<javax.s
     @Override
     public Enumeration<String> getInitParameterNames() {
         return delegate.getInitParameterNames();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

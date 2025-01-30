@@ -2,13 +2,14 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXHttpServletAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServlet;
-
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -107,5 +108,15 @@ public class JakartaHttpServletAdapter extends HttpServlet implements Adapted<ja
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

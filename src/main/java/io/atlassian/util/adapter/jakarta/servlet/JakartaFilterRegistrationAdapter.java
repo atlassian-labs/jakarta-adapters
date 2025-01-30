@@ -1,9 +1,10 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.javax.servlet.JavaXFilterRegistrationAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterRegistration;
-
 import java.util.Collection;
 import java.util.EnumSet;
 
@@ -73,5 +74,15 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
             result.add(javax.servlet.DispatcherType.valueOf(dispatcherType.name()));
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

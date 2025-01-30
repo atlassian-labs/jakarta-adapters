@@ -1,8 +1,9 @@
 package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.javax.servlet.JavaXServletRegistrationAdapter;
-import jakarta.servlet.ServletRegistration;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.ServletRegistration;
 import java.util.Collection;
 import java.util.Set;
 
@@ -46,5 +47,15 @@ public class JakartaServletRegistrationAdapter extends JakartaRegistrationAdapte
     @Override
     public String getRunAsRole() {
         return delegate.getRunAsRole();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

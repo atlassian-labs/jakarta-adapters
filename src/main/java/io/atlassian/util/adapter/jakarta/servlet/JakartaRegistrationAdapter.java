@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.JavaXRegistrationAdapter;
-import jakarta.servlet.Registration;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.Registration;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,5 +65,15 @@ public class JakartaRegistrationAdapter implements Registration, Adapted<javax.s
     @Override
     public Map<String, String> getInitParameters() {
         return delegate.getInitParameters();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

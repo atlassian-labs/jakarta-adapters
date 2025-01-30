@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet.jsp;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.jsp.JakartaJspWriterAdapter;
 import io.atlassian.util.adapter.javax.servlet.jsp.tagext.JavaXBodyContentAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.jsp.JspWriter;
 import java.io.IOException;
@@ -207,5 +208,15 @@ public class JavaXJspWriterAdapter extends JspWriter implements Adapted<jakarta.
     @Override
     public void write(char[] cbuf, int off, int len) throws IOException {
         delegate.write(cbuf, off, len);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

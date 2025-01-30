@@ -2,6 +2,7 @@ package io.atlassian.util.adapter.javax.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpFilterAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -95,5 +96,15 @@ public class JavaXHttpFilterAdapter extends HttpFilter implements Adapted<jakart
     @Override
     public void destroy() {
         delegate.destroy();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

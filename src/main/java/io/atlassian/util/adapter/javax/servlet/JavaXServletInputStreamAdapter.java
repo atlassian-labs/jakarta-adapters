@@ -3,6 +3,7 @@ package io.atlassian.util.adapter.javax.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaReadListenerAdapter;
 import io.atlassian.util.adapter.jakarta.servlet.JakartaServletInputStreamAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -119,5 +120,15 @@ public class JavaXServletInputStreamAdapter extends ServletInputStream implement
     @Override
     public int read() throws IOException {
         return delegate.read();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

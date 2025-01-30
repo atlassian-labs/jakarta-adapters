@@ -2,8 +2,9 @@ package io.atlassian.util.adapter.jakarta.servlet.http;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.http.JavaXPushBuilderAdapter;
-import jakarta.servlet.http.PushBuilder;
+import io.atlassian.util.adapter.util.WrapperUtil;
 
+import jakarta.servlet.http.PushBuilder;
 import java.util.Set;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -97,5 +98,15 @@ public class JakartaPushBuilderAdapter implements PushBuilder, Adapted<javax.ser
     @Override
     public String getPath() {
         return delegate.getPath();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

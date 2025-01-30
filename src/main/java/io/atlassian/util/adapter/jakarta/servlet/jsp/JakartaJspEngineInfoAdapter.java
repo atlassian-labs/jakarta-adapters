@@ -2,6 +2,8 @@ package io.atlassian.util.adapter.jakarta.servlet.jsp;
 
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.javax.servlet.jsp.JavaXJspEngineInfoAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.jsp.JspEngineInfo;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
@@ -30,5 +32,15 @@ public class JakartaJspEngineInfoAdapter extends JspEngineInfo implements Adapte
     @Override
     public String getSpecificationVersion() {
         return delegate.getSpecificationVersion();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }

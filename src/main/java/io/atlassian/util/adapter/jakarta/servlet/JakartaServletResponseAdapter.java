@@ -3,9 +3,10 @@ package io.atlassian.util.adapter.jakarta.servlet;
 import io.atlassian.util.adapter.Adapted;
 import io.atlassian.util.adapter.jakarta.servlet.http.JakartaHttpServletResponseAdapter;
 import io.atlassian.util.adapter.javax.servlet.JavaXServletResponseAdapter;
+import io.atlassian.util.adapter.util.WrapperUtil;
+
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.ServletResponse;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
@@ -114,5 +115,15 @@ public class JakartaServletResponseAdapter implements ServletResponse, Adapted<j
     @Override
     public Locale getLocale() {
         return delegate.getLocale();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return WrapperUtil.equals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return WrapperUtil.hashCode(this);
     }
 }
