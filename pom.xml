@@ -25,6 +25,10 @@
         </license>
     </licenses>
     <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+
         <servlet.tc90.version>4.0.1</servlet.tc90.version>
         <servlet.jsp.tc90.version>2.3.3</servlet.jsp.tc90.version>
         <servlet.el.tc90.version>3.0.0</servlet.el.tc90.version>
