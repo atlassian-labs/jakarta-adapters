@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
 
 public class WrapperUtil {
 
@@ -27,7 +29,7 @@ public class WrapperUtil {
         if (delegates == null) {
             return null;
         }
-        return delegates.stream().map(delegate -> applyIfNonNull(delegate, wrapper)).toList();
+        return delegates.stream().map(delegate -> applyIfNonNull(delegate, wrapper)).collect(Collectors.toList());
     }
 
     public static <T> T[] enumerationToArray(Enumeration<T> enumeration, Class<T> clazz) {
