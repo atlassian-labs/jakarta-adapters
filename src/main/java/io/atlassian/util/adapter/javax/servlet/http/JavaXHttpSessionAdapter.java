@@ -20,7 +20,8 @@ public class JavaXHttpSessionAdapter implements HttpSession, Adapted<jakarta.ser
     private final jakarta.servlet.http.HttpSession delegate;
 
     public static HttpSession from(jakarta.servlet.http.HttpSession delegate) {
-        if (delegate instanceof JakartaHttpSessionAdapter castDelegate) {
+        if (delegate instanceof JakartaHttpSessionAdapter) {
+            JakartaHttpSessionAdapter castDelegate = (JakartaHttpSessionAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXHttpSessionAdapter::new);

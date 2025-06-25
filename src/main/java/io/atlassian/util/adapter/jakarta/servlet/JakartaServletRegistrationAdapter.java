@@ -15,10 +15,12 @@ public class JakartaServletRegistrationAdapter extends JakartaRegistrationAdapte
     private final javax.servlet.ServletRegistration delegate;
 
     public static ServletRegistration from(javax.servlet.ServletRegistration delegate) {
-        if (delegate instanceof javax.servlet.ServletRegistration.Dynamic castDelegate) {
+        if (delegate instanceof javax.servlet.ServletRegistration.Dynamic) {
+            javax.servlet.ServletRegistration.Dynamic castDelegate = (javax.servlet.ServletRegistration.Dynamic) delegate;
             return JakartaDynamicServletRegistrationAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXServletRegistrationAdapter castDelegate) {
+        if (delegate instanceof JavaXServletRegistrationAdapter) {
+            JavaXServletRegistrationAdapter castDelegate = (JavaXServletRegistrationAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletRegistrationAdapter::new);

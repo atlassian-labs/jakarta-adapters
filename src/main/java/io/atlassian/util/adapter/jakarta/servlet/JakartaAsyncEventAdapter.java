@@ -18,7 +18,8 @@ public class JakartaAsyncEventAdapter extends AsyncEvent implements Adapted<java
     private final javax.servlet.AsyncEvent delegate;
 
     public static AsyncEvent from(javax.servlet.AsyncEvent delegate) {
-        if (delegate instanceof JavaXAsyncEventAdapter castDelegate) {
+        if (delegate instanceof JavaXAsyncEventAdapter) {
+            JavaXAsyncEventAdapter castDelegate = (JavaXAsyncEventAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaAsyncEventAdapter::new);

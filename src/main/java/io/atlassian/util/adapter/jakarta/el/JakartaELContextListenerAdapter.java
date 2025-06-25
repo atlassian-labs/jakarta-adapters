@@ -16,7 +16,8 @@ public class JakartaELContextListenerAdapter implements ELContextListener, Adapt
     private final javax.el.ELContextListener delegate;
 
     public static ELContextListener from(javax.el.ELContextListener delegate) {
-        if (delegate instanceof JavaXELContextListenerAdapter castDelegate) {
+        if (delegate instanceof JavaXELContextListenerAdapter) {
+            JavaXELContextListenerAdapter castDelegate = (JavaXELContextListenerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaELContextListenerAdapter::new);

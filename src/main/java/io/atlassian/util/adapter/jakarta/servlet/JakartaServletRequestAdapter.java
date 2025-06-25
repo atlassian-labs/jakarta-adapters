@@ -32,13 +32,16 @@ public class JakartaServletRequestAdapter implements ServletRequest, Adapted<jav
     private final javax.servlet.ServletRequest delegate;
 
     public static ServletRequest from(javax.servlet.ServletRequest delegate) {
-        if (delegate instanceof javax.servlet.http.HttpServletRequest castDelegate) {
+        if (delegate instanceof javax.servlet.http.HttpServletRequest) {
+            javax.servlet.http.HttpServletRequest castDelegate = (javax.servlet.http.HttpServletRequest) delegate;
             return JakartaHttpServletRequestAdapter.from(castDelegate);
         }
-        if (delegate instanceof javax.servlet.ServletRequestWrapper castDelegate) {
+        if (delegate instanceof javax.servlet.ServletRequestWrapper) {
+            javax.servlet.ServletRequestWrapper castDelegate = (javax.servlet.ServletRequestWrapper) delegate;
             return JakartaServletRequestWrapperAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXServletRequestAdapter castDelegate) {
+        if (delegate instanceof JavaXServletRequestAdapter) {
+            JavaXServletRequestAdapter castDelegate = (JavaXServletRequestAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletRequestAdapter::new);

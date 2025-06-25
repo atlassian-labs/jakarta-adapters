@@ -16,7 +16,8 @@ public class JavaXHttpUpgradeHandlerAdapter implements HttpUpgradeHandler, Adapt
     private final jakarta.servlet.http.HttpUpgradeHandler delegate;
 
     public static HttpUpgradeHandler from(jakarta.servlet.http.HttpUpgradeHandler delegate) {
-        if (delegate instanceof JakartaHttpUpgradeHandlerAdapter castDelegate) {
+        if (delegate instanceof JakartaHttpUpgradeHandlerAdapter) {
+            JakartaHttpUpgradeHandlerAdapter castDelegate = (JakartaHttpUpgradeHandlerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXHttpUpgradeHandlerAdapter::new);

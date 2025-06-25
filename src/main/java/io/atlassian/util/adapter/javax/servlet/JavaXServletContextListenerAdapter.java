@@ -16,7 +16,8 @@ public class JavaXServletContextListenerAdapter implements ServletContextListene
     private final jakarta.servlet.ServletContextListener delegate;
 
     public static ServletContextListener from(jakarta.servlet.ServletContextListener delegate) {
-        if (delegate instanceof JakartaServletContextListenerAdapter castDelegate) {
+        if (delegate instanceof JakartaServletContextListenerAdapter) {
+            JakartaServletContextListenerAdapter castDelegate = (JakartaServletContextListenerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletContextListenerAdapter::new);

@@ -17,7 +17,8 @@ public class JakartaServletConfigAdapter implements ServletConfig, Adapted<javax
     private final javax.servlet.ServletConfig delegate;
 
     public static ServletConfig from(javax.servlet.ServletConfig delegate) {
-        if (delegate instanceof JavaXServletConfigAdapter castDelegate) {
+        if (delegate instanceof JavaXServletConfigAdapter) {
+            JavaXServletConfigAdapter castDelegate = (JavaXServletConfigAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletConfigAdapter::new);

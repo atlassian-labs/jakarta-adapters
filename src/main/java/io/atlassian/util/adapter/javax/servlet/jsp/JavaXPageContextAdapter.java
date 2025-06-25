@@ -35,7 +35,8 @@ public class JavaXPageContextAdapter extends PageContext implements Adapted<jaka
     private final jakarta.servlet.jsp.PageContext delegate;
 
     public static PageContext from(jakarta.servlet.jsp.PageContext delegate) {
-        if (delegate instanceof JakartaPageContextAdapter castDelegate) {
+        if (delegate instanceof JakartaPageContextAdapter) {
+            JakartaPageContextAdapter castDelegate = (JakartaPageContextAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXPageContextAdapter::new);

@@ -24,10 +24,12 @@ public class JavaXFilterAdapter implements Filter, Adapted<jakarta.servlet.Filte
     private final jakarta.servlet.Filter delegate;
 
     public static Filter from(jakarta.servlet.Filter delegate) {
-        if (delegate instanceof GenericFilter castDelegate) {
+        if (delegate instanceof GenericFilter) {
+            GenericFilter castDelegate = (GenericFilter) delegate;
             return JavaXGenericFilterAdapter.from(castDelegate);
         }
-        if (delegate instanceof JakartaFilterAdapter castDelegate) {
+        if (delegate instanceof JakartaFilterAdapter) {
+            JakartaFilterAdapter castDelegate = (JakartaFilterAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXFilterAdapter::new);

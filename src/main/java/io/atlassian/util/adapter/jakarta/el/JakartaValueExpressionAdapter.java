@@ -17,7 +17,8 @@ public class JakartaValueExpressionAdapter extends ValueExpression implements Ad
     private final javax.el.ValueExpression delegate;
 
     public static ValueExpression from(javax.el.ValueExpression delegate) {
-        if (delegate instanceof JavaXValueExpressionAdapter castDelegate) {
+        if (delegate instanceof JavaXValueExpressionAdapter) {
+            JavaXValueExpressionAdapter castDelegate = (JavaXValueExpressionAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaValueExpressionAdapter::new);

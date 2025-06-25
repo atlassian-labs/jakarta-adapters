@@ -14,7 +14,8 @@ public class JavaXTaglibDescriptorAdapter implements TaglibDescriptor, Adapted<j
     private final jakarta.servlet.descriptor.TaglibDescriptor delegate;
 
     public static TaglibDescriptor from(jakarta.servlet.descriptor.TaglibDescriptor delegate) {
-        if (delegate instanceof JakartaTaglibDescriptorAdapter castDelegate) {
+        if (delegate instanceof JakartaTaglibDescriptorAdapter) {
+            JakartaTaglibDescriptorAdapter castDelegate = (JakartaTaglibDescriptorAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXTaglibDescriptorAdapter::new);

@@ -18,7 +18,8 @@ public class JavaXServletInputStreamAdapter extends ServletInputStream implement
     private final jakarta.servlet.ServletInputStream delegate;
 
     public static ServletInputStream from(jakarta.servlet.ServletInputStream delegate) {
-        if (delegate instanceof JakartaServletInputStreamAdapter castDelegate) {
+        if (delegate instanceof JakartaServletInputStreamAdapter) {
+            JakartaServletInputStreamAdapter castDelegate = (JakartaServletInputStreamAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletInputStreamAdapter::new);

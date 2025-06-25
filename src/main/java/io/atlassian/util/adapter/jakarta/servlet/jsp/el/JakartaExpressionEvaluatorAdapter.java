@@ -20,7 +20,8 @@ public class JakartaExpressionEvaluatorAdapter extends ExpressionEvaluator imple
     private final javax.servlet.jsp.el.ExpressionEvaluator delegate;
 
     public static ExpressionEvaluator from(javax.servlet.jsp.el.ExpressionEvaluator delegate) {
-        if (delegate instanceof JavaXExpressionEvaluatorAdapter castDelegate) {
+        if (delegate instanceof JavaXExpressionEvaluatorAdapter) {
+            JavaXExpressionEvaluatorAdapter castDelegate = (JavaXExpressionEvaluatorAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaExpressionEvaluatorAdapter::new);

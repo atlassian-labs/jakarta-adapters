@@ -18,7 +18,8 @@ public class JakartaJspConfigDescriptorAdapter implements JspConfigDescriptor, A
     private final javax.servlet.descriptor.JspConfigDescriptor delegate;
 
     public static JspConfigDescriptor from(javax.servlet.descriptor.JspConfigDescriptor delegate) {
-        if (delegate instanceof JavaXJspConfigDescriptorAdapter castDelegate) {
+        if (delegate instanceof JavaXJspConfigDescriptorAdapter) {
+            JavaXJspConfigDescriptorAdapter castDelegate = (JavaXJspConfigDescriptorAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaJspConfigDescriptorAdapter::new);

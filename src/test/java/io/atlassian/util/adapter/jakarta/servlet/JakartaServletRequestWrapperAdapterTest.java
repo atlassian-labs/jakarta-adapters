@@ -102,10 +102,12 @@ class JakartaServletRequestWrapperAdapterTest {
      * Mimic unwrapping logic used in certain utility methods in a Jakarta environment.
      */
     static CustomJakartaServletRequestWrapper unwrapCustomRequest(ServletRequest request) {
-        if (request instanceof CustomJakartaServletRequestWrapper custom) {
+        if (request instanceof CustomJakartaServletRequestWrapper) {
+            CustomJakartaServletRequestWrapper custom = (CustomJakartaServletRequestWrapper) request;
             return custom;
         }
-        if (request instanceof ServletRequestWrapper wrapped) {
+        if (request instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapped = (ServletRequestWrapper) request;
             return unwrapCustomRequest(wrapped.getRequest());
         }
         return null;
@@ -115,10 +117,12 @@ class JakartaServletRequestWrapperAdapterTest {
      * Mimic unwrapping logic used in certain utility methods in a JavaX environment.
      */
     static CustomJavaXServletRequestWrapper unwrapCustomRequest(javax.servlet.ServletRequest request) {
-        if (request instanceof CustomJavaXServletRequestWrapper custom) {
+        if (request instanceof CustomJavaXServletRequestWrapper) {
+            CustomJavaXServletRequestWrapper custom = (CustomJavaXServletRequestWrapper) request;
             return custom;
         }
-        if (request instanceof javax.servlet.ServletRequestWrapper wrapped) {
+        if (request instanceof javax.servlet.ServletRequestWrapper) {
+            javax.servlet.ServletRequestWrapper wrapped = (javax.servlet.ServletRequestWrapper) request;
             return unwrapCustomRequest(wrapped.getRequest());
         }
         return null;

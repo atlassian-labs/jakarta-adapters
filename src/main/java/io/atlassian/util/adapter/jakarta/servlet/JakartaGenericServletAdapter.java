@@ -24,10 +24,12 @@ public class JakartaGenericServletAdapter extends GenericServlet implements Adap
     private final javax.servlet.GenericServlet delegate;
 
     public static GenericServlet from(javax.servlet.GenericServlet delegate) {
-        if (delegate instanceof javax.servlet.http.HttpServlet castDelegate) {
+        if (delegate instanceof javax.servlet.http.HttpServlet) {
+            javax.servlet.http.HttpServlet castDelegate = (javax.servlet.http.HttpServlet) delegate;
             return JakartaHttpServletAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXGenericServletAdapter castDelegate) {
+        if (delegate instanceof JavaXGenericServletAdapter) {
+            JavaXGenericServletAdapter castDelegate = (JavaXGenericServletAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaGenericServletAdapter::new);

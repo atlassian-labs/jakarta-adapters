@@ -15,7 +15,8 @@ public class JavaXVariableResolverAdapter implements VariableResolver, Adapted<j
     private final jakarta.servlet.jsp.el.VariableResolver delegate;
 
     public static VariableResolver from(jakarta.servlet.jsp.el.VariableResolver delegate) {
-        if (delegate instanceof JakartaVariableResolverAdapter castDelegate) {
+        if (delegate instanceof JakartaVariableResolverAdapter) {
+            JakartaVariableResolverAdapter castDelegate = (JakartaVariableResolverAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXVariableResolverAdapter::new);

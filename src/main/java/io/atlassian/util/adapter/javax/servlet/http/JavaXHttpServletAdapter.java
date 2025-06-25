@@ -23,7 +23,8 @@ public class JavaXHttpServletAdapter extends HttpServlet implements Adapted<jaka
     private final jakarta.servlet.http.HttpServlet delegate;
 
     public static HttpServlet from(jakarta.servlet.http.HttpServlet delegate) {
-        if (delegate instanceof JakartaHttpServletAdapter castDelegate) {
+        if (delegate instanceof JakartaHttpServletAdapter) {
+            JakartaHttpServletAdapter castDelegate = (JakartaHttpServletAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXHttpServletAdapter::new);

@@ -19,7 +19,8 @@ public class JavaXHttpServletResponseAdapter extends JavaXServletResponseAdapter
     private final jakarta.servlet.http.HttpServletResponse delegate;
 
     public static HttpServletResponse from(jakarta.servlet.http.HttpServletResponse delegate) {
-        if (delegate instanceof JakartaHttpServletResponseAdapter castDelegate) {
+        if (delegate instanceof JakartaHttpServletResponseAdapter) {
+            JakartaHttpServletResponseAdapter castDelegate = (JakartaHttpServletResponseAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXHttpServletResponseAdapter::new);

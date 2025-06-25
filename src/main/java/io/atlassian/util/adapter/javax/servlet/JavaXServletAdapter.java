@@ -21,10 +21,12 @@ public class JavaXServletAdapter implements Servlet, Adapted<jakarta.servlet.Ser
     private final jakarta.servlet.Servlet delegate;
 
     public static Servlet from(jakarta.servlet.Servlet delegate) {
-        if (delegate instanceof jakarta.servlet.GenericServlet castDelegate) {
+        if (delegate instanceof jakarta.servlet.GenericServlet) {
+            jakarta.servlet.GenericServlet castDelegate = (jakarta.servlet.GenericServlet) delegate;
             return JavaXGenericServletAdapter.from(castDelegate);
         }
-        if (delegate instanceof JakartaServletAdapter castDelegate) {
+        if (delegate instanceof JakartaServletAdapter) {
+            JakartaServletAdapter castDelegate = (JakartaServletAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletAdapter::new);

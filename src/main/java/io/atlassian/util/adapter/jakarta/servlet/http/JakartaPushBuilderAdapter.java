@@ -15,7 +15,8 @@ public class JakartaPushBuilderAdapter implements PushBuilder, Adapted<javax.ser
     private final javax.servlet.http.PushBuilder delegate;
 
     public static PushBuilder from(javax.servlet.http.PushBuilder delegate) {
-        if (delegate instanceof JavaXPushBuilderAdapter castDelegate) {
+        if (delegate instanceof JavaXPushBuilderAdapter) {
+            JavaXPushBuilderAdapter castDelegate = (JavaXPushBuilderAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaPushBuilderAdapter::new);

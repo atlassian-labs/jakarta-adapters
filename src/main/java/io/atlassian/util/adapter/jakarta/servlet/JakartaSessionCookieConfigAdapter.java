@@ -15,7 +15,8 @@ public class JakartaSessionCookieConfigAdapter implements SessionCookieConfig, A
     private final javax.servlet.SessionCookieConfig delegate;
 
     public static SessionCookieConfig from(javax.servlet.SessionCookieConfig delegate) {
-        if (delegate instanceof JavaXSessionCookieConfigAdapter castDelegate) {
+        if (delegate instanceof JavaXSessionCookieConfigAdapter) {
+            JavaXSessionCookieConfigAdapter castDelegate = (JavaXSessionCookieConfigAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaSessionCookieConfigAdapter::new);

@@ -18,7 +18,8 @@ public class JakartaCookieAdapter extends Cookie implements Adapted<javax.servle
     private javax.servlet.http.Cookie delegate;
 
     public static Cookie from(javax.servlet.http.Cookie delegate) {
-        if (delegate instanceof JavaXCookieAdapter castDelegate) {
+        if (delegate instanceof JavaXCookieAdapter) {
+            JavaXCookieAdapter castDelegate = (JavaXCookieAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaCookieAdapter::new);

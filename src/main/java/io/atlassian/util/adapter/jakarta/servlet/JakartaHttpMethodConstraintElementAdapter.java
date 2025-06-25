@@ -15,7 +15,8 @@ public class JakartaHttpMethodConstraintElementAdapter extends HttpMethodConstra
     private final javax.servlet.HttpMethodConstraintElement delegate;
 
     public static HttpMethodConstraintElement from(javax.servlet.HttpMethodConstraintElement delegate) {
-        if (delegate instanceof JavaXHttpMethodConstraintElementAdapter castDelegate) {
+        if (delegate instanceof JavaXHttpMethodConstraintElementAdapter) {
+            JavaXHttpMethodConstraintElementAdapter castDelegate = (JavaXHttpMethodConstraintElementAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaHttpMethodConstraintElementAdapter::new);

@@ -18,7 +18,8 @@ public class JavaXServletSecurityElementAdapter extends ServletSecurityElement i
     private final jakarta.servlet.ServletSecurityElement delegate;
 
     public static ServletSecurityElement from(jakarta.servlet.ServletSecurityElement delegate) {
-        if (delegate instanceof JakartaServletSecurityElementAdapter castDelegate) {
+        if (delegate instanceof JakartaServletSecurityElementAdapter) {
+            JakartaServletSecurityElementAdapter castDelegate = (JakartaServletSecurityElementAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletSecurityElementAdapter::new);

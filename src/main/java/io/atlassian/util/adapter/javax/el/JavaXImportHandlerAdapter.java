@@ -15,7 +15,8 @@ public class JavaXImportHandlerAdapter extends ImportHandler implements Adapted<
     private final jakarta.el.ImportHandler delegate;
 
     public static ImportHandler from(jakarta.el.ImportHandler delegate) {
-        if (delegate instanceof JakartaImportHandlerAdapter castDelegate) {
+        if (delegate instanceof JakartaImportHandlerAdapter) {
+            JakartaImportHandlerAdapter castDelegate = (JakartaImportHandlerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXImportHandlerAdapter::new);

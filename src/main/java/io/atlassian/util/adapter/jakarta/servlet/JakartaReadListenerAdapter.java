@@ -14,7 +14,8 @@ public class JakartaReadListenerAdapter implements ReadListener, Adapted<javax.s
     private final javax.servlet.ReadListener delegate;
 
     public static ReadListener from(javax.servlet.ReadListener delegate) {
-        if (delegate instanceof JavaXReadListenerAdapter castDelegate) {
+        if (delegate instanceof JavaXReadListenerAdapter) {
+            JavaXReadListenerAdapter castDelegate = (JavaXReadListenerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaReadListenerAdapter::new);

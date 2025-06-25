@@ -14,7 +14,8 @@ public class JavaXELContextEventAdapter extends ELContextEvent implements Adapte
     private final jakarta.el.ELContextEvent delegate;
 
     public static ELContextEvent from(jakarta.el.ELContextEvent delegate) {
-        if (delegate instanceof JakartaELContextEventAdapter castDelegate) {
+        if (delegate instanceof JakartaELContextEventAdapter) {
+            JakartaELContextEventAdapter castDelegate = (JakartaELContextEventAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXELContextEventAdapter::new);

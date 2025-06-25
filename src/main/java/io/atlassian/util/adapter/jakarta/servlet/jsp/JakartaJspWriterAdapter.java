@@ -16,10 +16,12 @@ public class JakartaJspWriterAdapter extends JspWriter implements Adapted<javax.
     private final javax.servlet.jsp.JspWriter delegate;
 
     public static JspWriter from(javax.servlet.jsp.JspWriter delegate) {
-        if (delegate instanceof javax.servlet.jsp.tagext.BodyContent castDelegate) {
+        if (delegate instanceof javax.servlet.jsp.tagext.BodyContent) {
+            javax.servlet.jsp.tagext.BodyContent castDelegate = (javax.servlet.jsp.tagext.BodyContent) delegate;
             return JakartaBodyContentAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXJspWriterAdapter castDelegate) {
+        if (delegate instanceof JavaXJspWriterAdapter) {
+            JavaXJspWriterAdapter castDelegate = (JavaXJspWriterAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaJspWriterAdapter::new);

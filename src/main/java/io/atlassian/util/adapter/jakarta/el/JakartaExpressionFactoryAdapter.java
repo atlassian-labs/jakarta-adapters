@@ -21,7 +21,8 @@ public class JakartaExpressionFactoryAdapter extends ExpressionFactory implement
     private final javax.el.ExpressionFactory delegate;
 
     public static ExpressionFactory from(javax.el.ExpressionFactory delegate) {
-        if (delegate instanceof JavaXExpressionFactoryAdapter castDelegate) {
+        if (delegate instanceof JavaXExpressionFactoryAdapter) {
+            JavaXExpressionFactoryAdapter castDelegate = (JavaXExpressionFactoryAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaExpressionFactoryAdapter::new);

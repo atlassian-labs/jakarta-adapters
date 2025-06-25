@@ -15,7 +15,8 @@ public class JakartaServletContextEventAdapter extends ServletContextEvent imple
     private final javax.servlet.ServletContextEvent delegate;
 
     public static ServletContextEvent from(javax.servlet.ServletContextEvent delegate) {
-        if (delegate instanceof JavaXServletContextEventAdapter castDelegate) {
+        if (delegate instanceof JavaXServletContextEventAdapter) {
+            JavaXServletContextEventAdapter castDelegate = (JavaXServletContextEventAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletContextEventAdapter::new);

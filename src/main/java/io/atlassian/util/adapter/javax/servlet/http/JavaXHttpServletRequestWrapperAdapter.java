@@ -15,7 +15,8 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 public class JavaXHttpServletRequestWrapperAdapter extends HttpServletRequestWrapper implements Adapted<jakarta.servlet.http.HttpServletRequestWrapper> {
 
     public static HttpServletRequestWrapper from(jakarta.servlet.http.HttpServletRequestWrapper delegate) {
-        if (delegate instanceof JakartaHttpServletRequestWrapperAdapter castDelegate) {
+        if (delegate instanceof JakartaHttpServletRequestWrapperAdapter) {
+            JakartaHttpServletRequestWrapperAdapter castDelegate = (JakartaHttpServletRequestWrapperAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXHttpServletRequestWrapperAdapter::new);
@@ -32,7 +33,8 @@ public class JavaXHttpServletRequestWrapperAdapter extends HttpServletRequestWra
 
     @Override
     public boolean isWrapperFor(Class<?> wrappedType) {
-        if (getRequest() instanceof ServletRequestWrapper wrapper) {
+        if (getRequest() instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapper = (ServletRequestWrapper) getRequest();
             return wrapper.isWrapperFor(wrappedType);
         }
         return false;
@@ -40,7 +42,8 @@ public class JavaXHttpServletRequestWrapperAdapter extends HttpServletRequestWra
 
     @Override
     public boolean isWrapperFor(ServletRequest wrapped) {
-        if (getRequest() instanceof ServletRequestWrapper wrapper) {
+        if (getRequest() instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapper = (ServletRequestWrapper) getRequest();
             return wrapper.isWrapperFor(wrapped);
         }
         return false;

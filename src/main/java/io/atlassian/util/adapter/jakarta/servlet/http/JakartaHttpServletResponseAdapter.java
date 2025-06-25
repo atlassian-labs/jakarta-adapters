@@ -19,7 +19,8 @@ public class JakartaHttpServletResponseAdapter extends JakartaServletResponseAda
     private final javax.servlet.http.HttpServletResponse delegate;
 
     public static HttpServletResponse from(javax.servlet.http.HttpServletResponse delegate) {
-        if (delegate instanceof JavaXHttpServletResponseAdapter castDelegate) {
+        if (delegate instanceof JavaXHttpServletResponseAdapter) {
+            JavaXHttpServletResponseAdapter castDelegate = (JavaXHttpServletResponseAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaHttpServletResponseAdapter::new);

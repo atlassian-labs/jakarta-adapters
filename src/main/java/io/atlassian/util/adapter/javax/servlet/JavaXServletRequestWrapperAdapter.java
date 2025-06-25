@@ -14,10 +14,12 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 public class JavaXServletRequestWrapperAdapter extends ServletRequestWrapper implements Adapted<jakarta.servlet.ServletRequestWrapper> {
 
     public static ServletRequestWrapper from(jakarta.servlet.ServletRequestWrapper delegate) {
-        if (delegate instanceof jakarta.servlet.http.HttpServletRequestWrapper castDelegate) {
+        if (delegate instanceof jakarta.servlet.http.HttpServletRequestWrapper) {
+            jakarta.servlet.http.HttpServletRequestWrapper castDelegate = (jakarta.servlet.http.HttpServletRequestWrapper) delegate;
             return JavaXHttpServletRequestWrapperAdapter.from(castDelegate);
         }
-        if (delegate instanceof JakartaServletRequestWrapperAdapter castDelegate) {
+        if (delegate instanceof JakartaServletRequestWrapperAdapter) {
+            JakartaServletRequestWrapperAdapter castDelegate = (JakartaServletRequestWrapperAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletRequestWrapperAdapter::new);
@@ -34,7 +36,8 @@ public class JavaXServletRequestWrapperAdapter extends ServletRequestWrapper imp
 
     @Override
     public boolean isWrapperFor(Class<?> wrappedType) {
-        if (getRequest() instanceof ServletRequestWrapper wrapper) {
+        if (getRequest() instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapper = (ServletRequestWrapper) getRequest();
             return wrapper.isWrapperFor(wrappedType);
         }
         return false;
@@ -42,7 +45,8 @@ public class JavaXServletRequestWrapperAdapter extends ServletRequestWrapper imp
 
     @Override
     public boolean isWrapperFor(ServletRequest wrapped) {
-        if (getRequest() instanceof ServletRequestWrapper wrapper) {
+        if (getRequest() instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapper = (ServletRequestWrapper) getRequest();
             return wrapper.isWrapperFor(wrapped);
         }
         return false;

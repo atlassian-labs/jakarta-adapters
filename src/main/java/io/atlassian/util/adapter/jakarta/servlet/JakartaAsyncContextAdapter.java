@@ -22,7 +22,8 @@ public class JakartaAsyncContextAdapter implements AsyncContext, Adapted<javax.s
     private final javax.servlet.AsyncContext delegate;
 
     public static AsyncContext from(javax.servlet.AsyncContext delegate) {
-        if (delegate instanceof JavaXAsyncContextAdapter castDelegate) {
+        if (delegate instanceof JavaXAsyncContextAdapter) {
+            JavaXAsyncContextAdapter castDelegate = (JavaXAsyncContextAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaAsyncContextAdapter::new);

@@ -14,10 +14,12 @@ import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 public class JakartaServletRequestWrapperAdapter extends ServletRequestWrapper implements Adapted<javax.servlet.ServletRequestWrapper> {
 
     public static ServletRequestWrapper from(javax.servlet.ServletRequestWrapper delegate) {
-        if (delegate instanceof javax.servlet.http.HttpServletRequestWrapper castDelegate) {
+        if (delegate instanceof javax.servlet.http.HttpServletRequestWrapper) {
+            javax.servlet.http.HttpServletRequestWrapper castDelegate = (javax.servlet.http.HttpServletRequestWrapper) delegate;
             return JakartaHttpServletRequestWrapperAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXServletRequestWrapperAdapter castDelegate) {
+        if (delegate instanceof JavaXServletRequestWrapperAdapter) {
+            JavaXServletRequestWrapperAdapter castDelegate = (JavaXServletRequestWrapperAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletRequestWrapperAdapter::new);
@@ -34,7 +36,8 @@ public class JakartaServletRequestWrapperAdapter extends ServletRequestWrapper i
 
     @Override
     public boolean isWrapperFor(Class<?> wrappedType) {
-        if (getRequest() instanceof ServletRequestWrapper wrapper) {
+        if (getRequest() instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapper = (ServletRequestWrapper) getRequest();
             return wrapper.isWrapperFor(wrappedType);
         }
         return false;
@@ -42,7 +45,8 @@ public class JakartaServletRequestWrapperAdapter extends ServletRequestWrapper i
 
     @Override
     public boolean isWrapperFor(ServletRequest wrapped) {
-        if (getRequest() instanceof ServletRequestWrapper wrapper) {
+        if (getRequest() instanceof ServletRequestWrapper) {
+            ServletRequestWrapper wrapper = (ServletRequestWrapper) getRequest();
             return wrapper.isWrapperFor(wrapped);
         }
         return false;
