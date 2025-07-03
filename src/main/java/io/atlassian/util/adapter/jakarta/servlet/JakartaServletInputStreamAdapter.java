@@ -8,6 +8,7 @@ import io.atlassian.util.adapter.util.WrapperUtil;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -71,9 +72,14 @@ public class JakartaServletInputStreamAdapter extends ServletInputStream impleme
         return delegate.skip(n);
     }
 
+    // @Override Language level 12+
     public void skipNBytes(long n) throws IOException {
+        reflectiveSkipNBytes(delegate, n);
+    }
+
+    public static void reflectiveSkipNBytes(InputStream delegate, long n) throws IOException {
         try {
-            Method skipNBytes = delegate.getClass().getMethod("skipNBytes", long.class);
+            Method skipNBytes = InputStream.class.getMethod("skipNBytes", long.class);
             skipNBytes.invoke(delegate, n);
         } catch (NoSuchMethodException | IllegalAccessException e) {
             throw new RuntimeException("Could not find or invoke skipNBytes on delegate stream.", e);
