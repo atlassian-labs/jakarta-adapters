@@ -14,7 +14,8 @@ public class JavaXJspEngineInfoAdapter extends JspEngineInfo implements Adapted<
     private final jakarta.servlet.jsp.JspEngineInfo delegate;
 
     public static JspEngineInfo from(jakarta.servlet.jsp.JspEngineInfo delegate) {
-        if (delegate instanceof JakartaJspEngineInfoAdapter castDelegate) {
+        if (delegate instanceof JakartaJspEngineInfoAdapter) {
+            JakartaJspEngineInfoAdapter castDelegate = (JakartaJspEngineInfoAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXJspEngineInfoAdapter::new);

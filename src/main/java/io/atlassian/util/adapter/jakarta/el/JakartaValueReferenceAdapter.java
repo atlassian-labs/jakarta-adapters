@@ -13,7 +13,8 @@ public class JakartaValueReferenceAdapter extends ValueReference implements Adap
     private final javax.el.ValueReference delegate;
 
     public static ValueReference from(javax.el.ValueReference delegate) {
-        if (delegate instanceof JavaXValueReferenceAdapter castDelegate) {
+        if (delegate instanceof JavaXValueReferenceAdapter) {
+            JavaXValueReferenceAdapter castDelegate = (JavaXValueReferenceAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaValueReferenceAdapter::new);

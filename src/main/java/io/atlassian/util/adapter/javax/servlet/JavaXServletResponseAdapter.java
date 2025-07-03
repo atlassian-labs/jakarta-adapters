@@ -19,10 +19,12 @@ public class JavaXServletResponseAdapter implements ServletResponse, Adapted<jak
     private final jakarta.servlet.ServletResponse delegate;
 
     public static ServletResponse from(jakarta.servlet.ServletResponse delegate) {
-        if (delegate instanceof jakarta.servlet.http.HttpServletResponse castDelegate) {
+        if (delegate instanceof jakarta.servlet.http.HttpServletResponse) {
+            jakarta.servlet.http.HttpServletResponse castDelegate = (jakarta.servlet.http.HttpServletResponse) delegate;
             return JavaXHttpServletResponseAdapter.from(castDelegate);
         }
-        if (delegate instanceof JakartaServletResponseAdapter castDelegate) {
+        if (delegate instanceof JakartaServletResponseAdapter) {
+            JakartaServletResponseAdapter castDelegate = (JakartaServletResponseAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXServletResponseAdapter::new);

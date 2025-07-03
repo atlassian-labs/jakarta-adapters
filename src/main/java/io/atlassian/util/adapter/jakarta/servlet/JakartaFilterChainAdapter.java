@@ -19,7 +19,8 @@ public class JakartaFilterChainAdapter implements FilterChain, Adapted<javax.ser
     private final javax.servlet.FilterChain delegate;
 
     public static FilterChain from(javax.servlet.FilterChain delegate) {
-        if (delegate instanceof JavaXFilterChainAdapter castDelegate) {
+        if (delegate instanceof JavaXFilterChainAdapter) {
+            JavaXFilterChainAdapter castDelegate = (JavaXFilterChainAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaFilterChainAdapter::new);

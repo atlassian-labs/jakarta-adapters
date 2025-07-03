@@ -13,7 +13,8 @@ public class JakartaMethodInfoAdapter extends MethodInfo implements Adapted<java
     private final javax.el.MethodInfo delegate;
 
     public static MethodInfo from(javax.el.MethodInfo delegate) {
-        if (delegate instanceof JavaXMethodInfoAdapter castDelegate) {
+        if (delegate instanceof JavaXMethodInfoAdapter) {
+            JavaXMethodInfoAdapter castDelegate = (JavaXMethodInfoAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaMethodInfoAdapter::new);

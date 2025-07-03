@@ -16,7 +16,8 @@ public class JavaXVariableMapperAdapter extends VariableMapper implements Adapte
     private final jakarta.el.VariableMapper delegate;
 
     public static VariableMapper from(jakarta.el.VariableMapper delegate) {
-        if (delegate instanceof JakartaVariableMapperAdapter castDelegate) {
+        if (delegate instanceof JakartaVariableMapperAdapter) {
+            JakartaVariableMapperAdapter castDelegate = (JakartaVariableMapperAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXVariableMapperAdapter::new);

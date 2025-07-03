@@ -16,10 +16,12 @@ public class JakartaFilterRegistrationAdapter extends JakartaRegistrationAdapter
     private final javax.servlet.FilterRegistration delegate;
 
     public static FilterRegistration from(javax.servlet.FilterRegistration delegate) {
-        if (delegate instanceof javax.servlet.FilterRegistration.Dynamic castDelegate) {
+        if (delegate instanceof javax.servlet.FilterRegistration.Dynamic) {
+            javax.servlet.FilterRegistration.Dynamic castDelegate = (javax.servlet.FilterRegistration.Dynamic) delegate;
             return JakartaDynamicFilterRegistrationAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXFilterRegistrationAdapter castDelegate) {
+        if (delegate instanceof JavaXFilterRegistrationAdapter) {
+            JavaXFilterRegistrationAdapter castDelegate = (JavaXFilterRegistrationAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaFilterRegistrationAdapter::new);

@@ -33,17 +33,23 @@ public final class JakartaAdapters {
      * </ul>
      */
     public static Object asJakartaIfJavaX(Object delegate) {
-        if (delegate instanceof javax.servlet.ServletRequest cast) {
+        if (delegate instanceof javax.servlet.ServletRequest) {
+            javax.servlet.ServletRequest cast = (javax.servlet.ServletRequest) delegate;
             return asJakarta(cast);
-        } else if (delegate instanceof javax.servlet.ServletResponse cast) {
+        } else if (delegate instanceof javax.servlet.ServletResponse) {
+            javax.servlet.ServletResponse cast = (javax.servlet.ServletResponse) delegate;
             return asJakarta(cast);
-        } else if (delegate instanceof javax.servlet.ServletContext cast) {
+        } else if (delegate instanceof javax.servlet.ServletContext) {
+            javax.servlet.ServletContext cast = (javax.servlet.ServletContext) delegate;
             return asJakarta(cast);
-        } else if (delegate instanceof javax.servlet.Servlet cast) {
+        } else if (delegate instanceof javax.servlet.Servlet) {
+            javax.servlet.Servlet cast = (javax.servlet.Servlet) delegate;
             return asJakarta(cast);
-        } else if (delegate instanceof javax.servlet.Filter cast) {
+        } else if (delegate instanceof javax.servlet.Filter) {
+            javax.servlet.Filter cast = (javax.servlet.Filter) delegate;
             return asJakarta(cast);
-        } else if (delegate instanceof javax.servlet.http.HttpSession cast) {
+        } else if (delegate instanceof javax.servlet.http.HttpSession) {
+            javax.servlet.http.HttpSession cast = (javax.servlet.http.HttpSession) delegate;
             return asJakarta(cast);
         }
         return delegate;

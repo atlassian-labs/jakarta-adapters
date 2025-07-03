@@ -15,7 +15,8 @@ public class JavaXFunctionMapperAdapter implements FunctionMapper, Adapted<jakar
     private final jakarta.servlet.jsp.el.FunctionMapper delegate;
 
     public static FunctionMapper from(jakarta.servlet.jsp.el.FunctionMapper delegate) {
-        if (delegate instanceof JakartaFunctionMapperAdapter castDelegate) {
+        if (delegate instanceof JakartaFunctionMapperAdapter) {
+            JakartaFunctionMapperAdapter castDelegate = (JakartaFunctionMapperAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXFunctionMapperAdapter::new);

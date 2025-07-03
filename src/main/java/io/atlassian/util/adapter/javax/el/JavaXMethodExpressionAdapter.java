@@ -17,7 +17,8 @@ public class JavaXMethodExpressionAdapter extends MethodExpression implements Ad
     private final jakarta.el.MethodExpression delegate;
 
     public static MethodExpression from(jakarta.el.MethodExpression delegate) {
-        if (delegate instanceof JakartaMethodExpressionAdapter castDelegate) {
+        if (delegate instanceof JakartaMethodExpressionAdapter) {
+            JakartaMethodExpressionAdapter castDelegate = (JakartaMethodExpressionAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXMethodExpressionAdapter::new);

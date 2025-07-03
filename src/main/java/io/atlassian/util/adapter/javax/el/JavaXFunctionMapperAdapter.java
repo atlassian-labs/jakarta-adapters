@@ -15,7 +15,8 @@ public class JavaXFunctionMapperAdapter extends FunctionMapper implements Adapte
     private final jakarta.el.FunctionMapper delegate;
 
     public static FunctionMapper from(jakarta.el.FunctionMapper delegate) {
-        if (delegate instanceof JakartaFunctionMapperAdapter castDelegate) {
+        if (delegate instanceof JakartaFunctionMapperAdapter) {
+            JakartaFunctionMapperAdapter castDelegate = (JakartaFunctionMapperAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXFunctionMapperAdapter::new);

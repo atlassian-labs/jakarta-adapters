@@ -16,13 +16,16 @@ public class JakartaRegistrationAdapter implements Registration, Adapted<javax.s
     private final javax.servlet.Registration delegate;
 
     public static Registration from(javax.servlet.Registration delegate) {
-        if (delegate instanceof javax.servlet.ServletRegistration castDelegate) {
+        if (delegate instanceof javax.servlet.ServletRegistration) {
+            javax.servlet.ServletRegistration castDelegate = (javax.servlet.ServletRegistration) delegate;
             return JakartaServletRegistrationAdapter.from(castDelegate);
         }
-        if (delegate instanceof javax.servlet.FilterRegistration castDelegate) {
+        if (delegate instanceof javax.servlet.FilterRegistration) {
+            javax.servlet.FilterRegistration castDelegate = (javax.servlet.FilterRegistration) delegate;
             return JakartaFilterRegistrationAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXRegistrationAdapter castDelegate) {
+        if (delegate instanceof JavaXRegistrationAdapter) {
+            JavaXRegistrationAdapter castDelegate = (JavaXRegistrationAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaRegistrationAdapter::new);

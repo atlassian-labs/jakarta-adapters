@@ -17,7 +17,8 @@ public class JavaXFilterConfigAdapter implements FilterConfig, Adapted<jakarta.s
     private final jakarta.servlet.FilterConfig delegate;
 
     public static FilterConfig from(jakarta.servlet.FilterConfig delegate) {
-        if (delegate instanceof JakartaFilterConfigAdapter castDelegate) {
+        if (delegate instanceof JakartaFilterConfigAdapter) {
+            JakartaFilterConfigAdapter castDelegate = (JakartaFilterConfigAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXFilterConfigAdapter::new);

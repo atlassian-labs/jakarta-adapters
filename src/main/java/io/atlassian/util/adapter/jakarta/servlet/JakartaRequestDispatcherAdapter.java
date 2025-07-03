@@ -18,7 +18,8 @@ public class JakartaRequestDispatcherAdapter implements RequestDispatcher, Adapt
     private final javax.servlet.RequestDispatcher delegate;
 
     public static RequestDispatcher from(javax.servlet.RequestDispatcher delegate) {
-        if (delegate instanceof JavaXRequestDispatcherAdapter castDelegate) {
+        if (delegate instanceof JavaXRequestDispatcherAdapter) {
+            JavaXRequestDispatcherAdapter castDelegate = (JavaXRequestDispatcherAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaRequestDispatcherAdapter::new);

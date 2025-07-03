@@ -40,7 +40,8 @@ public class JakartaServletContextAdapter implements ServletContext, Adapted<jav
     private final javax.servlet.ServletContext delegate;
 
     public static ServletContext from(javax.servlet.ServletContext delegate) {
-        if (delegate instanceof JavaXServletContextAdapter castDelegate) {
+        if (delegate instanceof JavaXServletContextAdapter) {
+            JavaXServletContextAdapter castDelegate = (JavaXServletContextAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletContextAdapter::new);

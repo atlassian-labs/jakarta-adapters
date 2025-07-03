@@ -16,7 +16,8 @@ public class JakartaEvaluationListenerAdapter extends EvaluationListener impleme
     private final javax.el.EvaluationListener delegate;
 
     public static EvaluationListener from(javax.el.EvaluationListener delegate) {
-        if (delegate instanceof JavaXEvaluationListenerAdapter castDelegate) {
+        if (delegate instanceof JavaXEvaluationListenerAdapter) {
+            JavaXEvaluationListenerAdapter castDelegate = (JavaXEvaluationListenerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaEvaluationListenerAdapter::new);

@@ -19,7 +19,8 @@ public class JakartaBodyContentAdapter extends BodyContent implements Adapted<ja
     private final javax.servlet.jsp.tagext.BodyContent delegate;
 
     public static BodyContent from(javax.servlet.jsp.tagext.BodyContent delegate) {
-        if (delegate instanceof JavaXBodyContentAdapter castDelegate) {
+        if (delegate instanceof JavaXBodyContentAdapter) {
+            JavaXBodyContentAdapter castDelegate = (JavaXBodyContentAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaBodyContentAdapter::new);

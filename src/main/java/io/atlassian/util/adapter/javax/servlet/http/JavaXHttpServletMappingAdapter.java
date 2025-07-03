@@ -15,7 +15,8 @@ public class JavaXHttpServletMappingAdapter implements HttpServletMapping, Adapt
     private final jakarta.servlet.http.HttpServletMapping delegate;
 
     public static HttpServletMapping from(jakarta.servlet.http.HttpServletMapping delegate) {
-        if (delegate instanceof JakartaHttpServletMappingAdapter castDelegate) {
+        if (delegate instanceof JakartaHttpServletMappingAdapter) {
+            JakartaHttpServletMappingAdapter castDelegate = (JakartaHttpServletMappingAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXHttpServletMappingAdapter::new);

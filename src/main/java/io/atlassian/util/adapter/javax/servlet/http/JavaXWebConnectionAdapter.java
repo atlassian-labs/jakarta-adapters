@@ -18,7 +18,8 @@ public class JavaXWebConnectionAdapter implements WebConnection, Adapted<jakarta
     private final jakarta.servlet.http.WebConnection delegate;
 
     public static WebConnection from(jakarta.servlet.http.WebConnection delegate) {
-        if (delegate instanceof JakartaWebConnectionAdapter castDelegate) {
+        if (delegate instanceof JakartaWebConnectionAdapter) {
+            JakartaWebConnectionAdapter castDelegate = (JakartaWebConnectionAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXWebConnectionAdapter::new);

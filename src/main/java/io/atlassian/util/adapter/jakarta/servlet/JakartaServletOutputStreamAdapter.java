@@ -17,7 +17,8 @@ public class JakartaServletOutputStreamAdapter extends ServletOutputStream imple
     private final javax.servlet.ServletOutputStream delegate;
 
     public static ServletOutputStream from(javax.servlet.ServletOutputStream delegate) {
-        if (delegate instanceof JavaXServletOutputStreamAdapter castDelegate) {
+        if (delegate instanceof JavaXServletOutputStreamAdapter) {
+            JavaXServletOutputStreamAdapter castDelegate = (JavaXServletOutputStreamAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletOutputStreamAdapter::new);

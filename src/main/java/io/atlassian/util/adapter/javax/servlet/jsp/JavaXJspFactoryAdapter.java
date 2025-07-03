@@ -22,7 +22,8 @@ public class JavaXJspFactoryAdapter extends JspFactory implements Adapted<jakart
     private final jakarta.servlet.jsp.JspFactory delegate;
 
     public static JspFactory from(jakarta.servlet.jsp.JspFactory delegate) {
-        if (delegate instanceof JakartaJspFactoryAdapter castDelegate) {
+        if (delegate instanceof JakartaJspFactoryAdapter) {
+            JakartaJspFactoryAdapter castDelegate = (JakartaJspFactoryAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXJspFactoryAdapter::new);

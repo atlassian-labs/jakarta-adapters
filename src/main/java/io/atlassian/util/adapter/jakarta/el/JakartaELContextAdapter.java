@@ -24,7 +24,8 @@ public class JakartaELContextAdapter extends ELContext implements Adapted<javax.
     private final javax.el.ELContext delegate;
 
     public static ELContext from(javax.el.ELContext delegate) {
-        if (delegate instanceof JavaXELContextAdapter castDelegate) {
+        if (delegate instanceof JavaXELContextAdapter) {
+            JavaXELContextAdapter castDelegate = (JavaXELContextAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaELContextAdapter::new);

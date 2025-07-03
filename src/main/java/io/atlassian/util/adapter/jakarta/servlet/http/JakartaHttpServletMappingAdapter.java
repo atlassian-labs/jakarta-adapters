@@ -15,7 +15,8 @@ public class JakartaHttpServletMappingAdapter implements HttpServletMapping, Ada
     private final javax.servlet.http.HttpServletMapping delegate;
 
     public static HttpServletMapping from(javax.servlet.http.HttpServletMapping delegate) {
-        if (delegate instanceof JavaXHttpServletMappingAdapter castDelegate) {
+        if (delegate instanceof JavaXHttpServletMappingAdapter) {
+            JavaXHttpServletMappingAdapter castDelegate = (JavaXHttpServletMappingAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaHttpServletMappingAdapter::new);

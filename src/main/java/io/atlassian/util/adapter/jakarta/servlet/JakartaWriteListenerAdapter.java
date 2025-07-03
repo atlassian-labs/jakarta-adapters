@@ -14,7 +14,8 @@ public class JakartaWriteListenerAdapter implements WriteListener, Adapted<javax
     private final javax.servlet.WriteListener delegate;
 
     public static WriteListener from(javax.servlet.WriteListener delegate) {
-        if (delegate instanceof JavaXWriteListenerAdapter castDelegate) {
+        if (delegate instanceof JavaXWriteListenerAdapter) {
+            JavaXWriteListenerAdapter castDelegate = (JavaXWriteListenerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaWriteListenerAdapter::new);

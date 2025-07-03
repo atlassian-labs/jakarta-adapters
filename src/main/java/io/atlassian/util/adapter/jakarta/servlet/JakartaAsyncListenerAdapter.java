@@ -16,7 +16,8 @@ public class JakartaAsyncListenerAdapter implements AsyncListener, Adapted<javax
     private final javax.servlet.AsyncListener delegate;
 
     public static AsyncListener from(javax.servlet.AsyncListener delegate) {
-        if (delegate instanceof JavaXAsyncListenerAdapter castDelegate) {
+        if (delegate instanceof JavaXAsyncListenerAdapter) {
+            JavaXAsyncListenerAdapter castDelegate = (JavaXAsyncListenerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaAsyncListenerAdapter::new);

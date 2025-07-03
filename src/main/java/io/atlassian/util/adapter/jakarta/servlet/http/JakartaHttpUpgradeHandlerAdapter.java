@@ -16,7 +16,8 @@ public class JakartaHttpUpgradeHandlerAdapter implements HttpUpgradeHandler, Ada
     private final javax.servlet.http.HttpUpgradeHandler delegate;
 
     public static HttpUpgradeHandler from(javax.servlet.http.HttpUpgradeHandler delegate) {
-        if (delegate instanceof JavaXHttpUpgradeHandlerAdapter castDelegate) {
+        if (delegate instanceof JavaXHttpUpgradeHandlerAdapter) {
+            JavaXHttpUpgradeHandlerAdapter castDelegate = (JavaXHttpUpgradeHandlerAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaHttpUpgradeHandlerAdapter::new);

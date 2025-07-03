@@ -25,10 +25,12 @@ public class JakartaGenericFilterAdapter extends GenericFilter implements Adapte
     private final javax.servlet.GenericFilter delegate;
 
     public static GenericFilter from(javax.servlet.GenericFilter delegate) {
-        if (delegate instanceof javax.servlet.http.HttpFilter castDelegate) {
+        if (delegate instanceof javax.servlet.http.HttpFilter) {
+            javax.servlet.http.HttpFilter castDelegate = (javax.servlet.http.HttpFilter) delegate;
             return JakartaHttpFilterAdapter.from(castDelegate);
         }
-        if (delegate instanceof JavaXGenericFilterAdapter castDelegate) {
+        if (delegate instanceof JavaXGenericFilterAdapter) {
+            JavaXGenericFilterAdapter castDelegate = (JavaXGenericFilterAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaGenericFilterAdapter::new);

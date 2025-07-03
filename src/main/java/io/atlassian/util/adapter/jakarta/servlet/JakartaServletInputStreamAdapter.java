@@ -9,6 +9,8 @@ import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static io.atlassian.util.adapter.util.WrapperUtil.applyIfNonNull;
 import static java.util.Objects.requireNonNull;
@@ -18,7 +20,8 @@ public class JakartaServletInputStreamAdapter extends ServletInputStream impleme
     private final javax.servlet.ServletInputStream delegate;
 
     public static ServletInputStream from(javax.servlet.ServletInputStream delegate) {
-        if (delegate instanceof JavaXServletInputStreamAdapter castDelegate) {
+        if (delegate instanceof JavaXServletInputStreamAdapter) {
+            JavaXServletInputStreamAdapter castDelegate = (JavaXServletInputStreamAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaServletInputStreamAdapter::new);
@@ -68,9 +71,21 @@ public class JakartaServletInputStreamAdapter extends ServletInputStream impleme
         return delegate.skip(n);
     }
 
-    @Override
     public void skipNBytes(long n) throws IOException {
-        delegate.skipNBytes(n);
+        try {
+            Method skipNBytes = delegate.getClass().getMethod("skipNBytes", long.class);
+            skipNBytes.invoke(delegate, n);
+        } catch (NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException("Could not find or invoke skipNBytes on delegate stream.", e);
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof RuntimeException) {
+                throw (RuntimeException) e.getCause();
+            } else if (e.getCause() instanceof IOException) {
+                throw (IOException) e.getCause();
+            } else {
+                throw new RuntimeException(e.getCause());
+            }
+        }
     }
 
     @Override

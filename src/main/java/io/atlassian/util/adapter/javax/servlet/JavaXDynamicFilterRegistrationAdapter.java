@@ -13,7 +13,8 @@ public class JavaXDynamicFilterRegistrationAdapter extends JavaXFilterRegistrati
     private final jakarta.servlet.FilterRegistration.Dynamic delegate;
 
     public static FilterRegistration.Dynamic from(jakarta.servlet.FilterRegistration.Dynamic delegate) {
-        if (delegate instanceof JakartaDynamicFilterRegistrationAdapter castDelegate) {
+        if (delegate instanceof JakartaDynamicFilterRegistrationAdapter) {
+            JakartaDynamicFilterRegistrationAdapter castDelegate = (JakartaDynamicFilterRegistrationAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXDynamicFilterRegistrationAdapter::new);

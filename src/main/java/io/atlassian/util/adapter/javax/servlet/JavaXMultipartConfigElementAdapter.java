@@ -14,7 +14,8 @@ public class JavaXMultipartConfigElementAdapter extends MultipartConfigElement i
     private final jakarta.servlet.MultipartConfigElement delegate;
 
     public static MultipartConfigElement from(jakarta.servlet.MultipartConfigElement delegate) {
-        if (delegate instanceof JakartaMultipartConfigElementAdapter castDelegate) {
+        if (delegate instanceof JakartaMultipartConfigElementAdapter) {
+            JakartaMultipartConfigElementAdapter castDelegate = (JakartaMultipartConfigElementAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXMultipartConfigElementAdapter::new);

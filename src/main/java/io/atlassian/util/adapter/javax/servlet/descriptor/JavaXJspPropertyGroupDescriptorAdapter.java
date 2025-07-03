@@ -15,7 +15,8 @@ public class JavaXJspPropertyGroupDescriptorAdapter implements JspPropertyGroupD
     private final jakarta.servlet.descriptor.JspPropertyGroupDescriptor delegate;
 
     public static JspPropertyGroupDescriptor from(jakarta.servlet.descriptor.JspPropertyGroupDescriptor delegate) {
-        if (delegate instanceof JakartaJspPropertyGroupDescriptorAdapter castDelegate) {
+        if (delegate instanceof JakartaJspPropertyGroupDescriptorAdapter) {
+            JakartaJspPropertyGroupDescriptorAdapter castDelegate = (JakartaJspPropertyGroupDescriptorAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXJspPropertyGroupDescriptorAdapter::new);

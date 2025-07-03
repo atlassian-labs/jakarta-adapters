@@ -17,7 +17,8 @@ public class JakartaExpressionAdapter extends Expression implements Adapted<java
     private final javax.servlet.jsp.el.Expression delegate;
 
     public static Expression from(javax.servlet.jsp.el.Expression delegate) {
-        if (delegate instanceof JavaXExpressionAdapter castDelegate) {
+        if (delegate instanceof JavaXExpressionAdapter) {
+            JavaXExpressionAdapter castDelegate = (JavaXExpressionAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaExpressionAdapter::new);

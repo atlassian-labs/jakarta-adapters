@@ -17,7 +17,8 @@ public class JavaXPartAdapter implements Part, Adapted<jakarta.servlet.http.Part
     private final jakarta.servlet.http.Part delegate;
 
     public static Part from(jakarta.servlet.http.Part delegate) {
-        if (delegate instanceof JakartaPartAdapter castDelegate) {
+        if (delegate instanceof JakartaPartAdapter) {
+            JakartaPartAdapter castDelegate = (JakartaPartAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JavaXPartAdapter::new);

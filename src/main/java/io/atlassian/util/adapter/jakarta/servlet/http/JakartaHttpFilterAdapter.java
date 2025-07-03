@@ -24,7 +24,8 @@ public class JakartaHttpFilterAdapter extends HttpFilter implements Adapted<java
     private final javax.servlet.http.HttpFilter delegate;
 
     public static HttpFilter from(javax.servlet.http.HttpFilter delegate) {
-        if (delegate instanceof JavaXHttpFilterAdapter castDelegate) {
+        if (delegate instanceof JavaXHttpFilterAdapter) {
+            JavaXHttpFilterAdapter castDelegate = (JavaXHttpFilterAdapter) delegate;
             return castDelegate.getDelegate();
         }
         return applyIfNonNull(delegate, JakartaHttpFilterAdapter::new);
