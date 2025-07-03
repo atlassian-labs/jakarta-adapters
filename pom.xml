@@ -27,13 +27,13 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
 
-        <servlet.tc90.version>4.0.1</servlet.tc90.version>
-        <servlet.jsp.tc90.version>2.3.3</servlet.jsp.tc90.version>
-        <servlet.el.tc90.version>3.0.0</servlet.el.tc90.version>
+        <jee8.servlet.version>4.0.1</jee8.servlet.version>
+        <jee8.servlet.jsp.version>2.3.3</jee8.servlet.jsp.version>
+        <jee8.servlet.el.version>3.0.0</jee8.servlet.el.version>
 
-        <servlet.tc101.version>6.0.0</servlet.tc101.version>
-        <servlet.jsp.tc101.version>3.1.1</servlet.jsp.tc101.version>
-        <servlet.el.tc101.version>5.0.1</servlet.el.tc101.version>
+        <jee10.servlet.version>6.0.0</jee10.servlet.version>
+        <jee10.servlet.jsp.version>3.1.1</jee10.servlet.jsp.version>
+        <jee10.servlet.el.version>5.0.1</jee10.servlet.el.version>
 
         <junit.version>5.11.0</junit.version>
         <mockito.version>5.13.0</mockito.version>
@@ -68,37 +68,37 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>${servlet.tc101.version}</version>
+            <version>${jee10.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.tc90.version}</version>
+            <version>${jee8.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
             <artifactId>jakarta.servlet.jsp-api</artifactId>
-            <version>${servlet.jsp.tc101.version}</version>
+            <version>${jee10.servlet.jsp.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>${servlet.jsp.tc90.version}</version>
+            <version>${jee8.servlet.jsp.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.el</groupId>
             <artifactId>jakarta.el-api</artifactId>
-            <version>${servlet.el.tc101.version}</version>
+            <version>${jee10.servlet.el.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>javax.el-api</artifactId>
-            <version>${servlet.el.tc90.version}</version>
+            <version>${jee8.servlet.el.version}</version>
             <scope>provided</scope>
         </dependency>
 
