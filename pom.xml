@@ -35,9 +35,9 @@
         <jee10.servlet.jsp.version>3.1.1</jee10.servlet.jsp.version>
         <jee10.servlet.el.version>5.0.1</jee10.servlet.el.version>
 
-        <junit.version>5.11.0</junit.version>
-        <mockito.version>5.13.0</mockito.version>
-        <assertj.version>3.26.3</assertj.version>
+        <junit.version>5.13.2</junit.version>
+        <mockito.version>5.18.0</mockito.version>
+        <assertj.version>3.27.3</assertj.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>io.github.classgraph</groupId>
             <artifactId>classgraph</artifactId>
-            <version>4.8.177</version>
+            <version>4.8.180</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
